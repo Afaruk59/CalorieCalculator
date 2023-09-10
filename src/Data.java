@@ -14,8 +14,8 @@ public class Data {
 	String[] today = new String[4];
 	String[] weeklyCal = new String[7];
 	String[] weeklyMacros = new String[21];
+	String[][] table = new String[100][5];
 	
-	//ADD A FOOD
 	public void addFood(String newName, String newProtein, String newCarb, String newFat, String newCal) throws IOException{
 		
 		File file= new File("foods.txt");
@@ -43,7 +43,6 @@ public class Data {
 		bWrite.close();
 	}
 	
-	//READ FOODS
 	public void readFoods() throws IOException {
 		
 		File file= new File("foods.txt");
@@ -64,7 +63,6 @@ public class Data {
 		}
 	}
 	
-	//REMOVE ALL FOODS
 	public void removeFoods() throws IOException {
 		
 		File file= new File("foods.txt");
@@ -343,4 +341,26 @@ public class Data {
 		}
 		bWrite.close();
 	}
+	
+	public void writeTable() {
+		
+		int i=0, k=0;
+		
+		while(array[k] != null) {
+			
+			table[i][0]= array[k];
+			table[i][1]= array[k+1];
+			table[i][2]= array[k+2];
+			table[i][3]= array[k+3];
+			table[i][4]= array[k+4];
+			
+			k+=5;
+			i+=1;
+			if(k >= 1000) {
+				break;
+			}
+		}
+	}
 }
+
+	

@@ -1,5 +1,5 @@
-import java.awt.Point;
 import java.io.IOException;
+import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -16,6 +16,8 @@ public class Main {
 		
 		//SHOW GUI
 		gui.gui();
+		
+		//CALCULATE CHARTS
 		gui.pieChart(d.today[0], d.today[1], d.today[2]);
 		gui.gPieChart(d.goals[1], d.goals[2], d.goals[3]);
 		gui.weeklyMacChart(d.weeklyMacros[0], d.weeklyMacros[1], d.weeklyMacros[2], d.weeklyMacros[3], d.weeklyMacros[4], d.weeklyMacros[5], 
@@ -24,11 +26,14 @@ public class Main {
 				d.weeklyMacros[20]);
 		gui.weeklyCalChart(d.weeklyCal[0], d.weeklyCal[1], d.weeklyCal[2], d.weeklyCal[3], d.weeklyCal[4], d.weeklyCal[5], d.weeklyCal[6]);
 		
-		gui.vp.setViewPosition(new Point(gui.vp.getViewPosition().x + 1, gui.vp.getViewPosition().y));
-		gui.vp.setViewPosition(new Point(gui.vp.getViewPosition().x - 1, gui.vp.getViewPosition().y));
+		SwingUtilities.updateComponentTreeUI(gui.panel);
 		
-		/*if(gui.cB.isSelected()) {
+		//SHOW WELCOME SCREEN
+		if(gui.cB.isSelected()) {
 			gui.welcomeFrame();
-		}*/
+		}
+		
+		//COFFEE ANIMATION
+		gui.coffeeAnimation();
 	}
 }

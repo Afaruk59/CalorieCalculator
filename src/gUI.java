@@ -1,19 +1,18 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Point;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -24,11 +23,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
-public class gUI {
+public class gUI{
 	
 	Data d= new Data();
 	
-	JFrame f= new JFrame("Afaruk59's Calorie Calculator ver_2.0.0");
+	JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator ver_2.1.0");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -36,9 +35,19 @@ public class gUI {
 	Font label = new Font("Arial", Font.PLAIN, 13);
 	Font tab = new Font("Arial", Font.PLAIN, 13);
 	
-	JScrollPane scrollPane = new JScrollPane();
-	JViewport vp= scrollPane.getViewport();
+	TitledBorder title1= new TitledBorder("Diary");
+	TitledBorder title2= new TitledBorder("Goals");
+	TitledBorder title3= new TitledBorder("Today");
+	TitledBorder title4= new TitledBorder("Past Week Macros");
+	TitledBorder title5= new TitledBorder("Past Week Calories");
+	TitledBorder title6= new TitledBorder("Add Food");
+	TitledBorder title7= new TitledBorder("Add New Food");
+	TitledBorder title8= new TitledBorder("Added Foods");
+	TitledBorder title9= new TitledBorder("Set Goals");
+
 	JPanel panel = new JPanel();
+	JPanel panelUp = new JPanel();
+	JPanel panelDown = new JPanel();
 	JPanel sPanel1 = new JPanel();
 	JPanel sPanel2 = new JPanel();
 	JPanel sPanel3 = new JPanel();
@@ -68,6 +77,7 @@ public class gUI {
 	
 	JPanel panel_1 = new JPanel();
 	JPanel fPanelWest = new JPanel();
+	JPanel fPanelUp = new JPanel();
 	JComboBox comboBox = new JComboBox();
 	SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 100, 1);
 	JSpinner spinner = new JSpinner(model);
@@ -76,7 +86,12 @@ public class gUI {
 	JButton btn1 = new JButton("Add");
 	JButton btn2 = new JButton("Reset All Food");
 	
-	JPanel fPanelEast = new JPanel();
+	String[] titles = {"NAME","PROTEIN","CARB","FAT","CALORIE"};
+	JTable table = new JTable(d.table, titles);
+	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+	JScrollPane fPanelEast = new JScrollPane(table);
+	
+	JPanel fPanelDown = new JPanel();
 	JLabel label22 = new JLabel("Add New Food");
 	JLabel label17 = new JLabel("Name:");
 	JLabel label18 = new JLabel("Protein (per 1g):");
@@ -94,6 +109,7 @@ public class gUI {
 	JPanel panel_2 = new JPanel();
 	JPanel gPanelWest= new JPanel();
 	JPanel gPanelEast= new JPanel();
+	JPanel chartPanel= new JPanel();
 	JLabel label27 = new JLabel("Set Goals");
 	JLabel label23 = new JLabel("Calorie (kJ):");
 	JLabel label24 = new JLabel("Carb (g):");
@@ -116,100 +132,109 @@ public class gUI {
 	
 	public void gui() throws IOException {
 		
+		//READ SAVED DATA
 		d.readFoods();
 		d.readGoals();
 		d.readToday();
 		d.readWeeklyCal();
 		d.readWeeklyMacros();
+		d.writeTable();
 		
 		//CONTENT PANE
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-		f.setContentPane(contentPane);
+		mainFrame.setContentPane(contentPane);
 		
 		//TABBED PANE
 		contentPane.add(tabbedPane);
 //---------------------------------------------------------------------------------------------		
 		//SUMMARY PANE
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		tabbedPane.addTab("Summary", null, scrollPane, null);
+		tabbedPane.addTab("Summary", null, panel, null);
 		tabbedPane.setFont(tab);
 		
-		scrollPane.setViewportView(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(new EmptyBorder(10,10,10,10));
 		
+		panelUp.setLayout(new BoxLayout(panelUp, BoxLayout.X_AXIS));
+		panel.add(panelUp);
+		
+		panelDown.setLayout(new BoxLayout(panelDown, BoxLayout.X_AXIS));
+		panel.add(panelDown);
 		
 		sPanel1.setPreferredSize(new Dimension(250,341));
-		panel.add(sPanel1);
+		panelUp.add(sPanel1);
 		sPanel1.setLayout(null);
-		sPanel1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		
-		sPanel2.setPreferredSize(new Dimension(402,341));
-		panel.add(sPanel2);
-		sPanel2.setLayout(new BoxLayout(sPanel2, BoxLayout.X_AXIS));
-		sPanel2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		sPanel1.setBorder(title1);
+		title1.setTitleFont(title);
 		
 		sPanel3.setPreferredSize(new Dimension(400,341));
-		panel.add(sPanel3);
+		panelUp.add(sPanel3);
 		sPanel3.setLayout(null);
-		sPanel3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		sPanel3.setBorder(title2);
+		title2.setTitleFont(title);
+		
+		sPanel2.setPreferredSize(new Dimension(402,341));
+		panelUp.add(sPanel2);
+		sPanel2.setLayout(new BoxLayout(sPanel2, BoxLayout.X_AXIS));
+		sPanel2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		sPanel2.setBorder(title3);
+		title3.setTitleFont(title);
 		
 		sPanel4.setPreferredSize(new Dimension(653,341));
-		panel.add(sPanel4);
+		panelDown.add(sPanel4);
 		sPanel4.setLayout(new BoxLayout(sPanel4, BoxLayout.X_AXIS));
-		sPanel4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		sPanel4.setBorder(title4);
+		title4.setTitleFont(title);
+		title4.setTitlePosition(5);
 		
 		sPanel5.setPreferredSize(new Dimension(653,341));
-		panel.add(sPanel5);
+		panelDown.add(sPanel5);
 		sPanel5.setLayout(new BoxLayout(sPanel5, BoxLayout.X_AXIS));
-		sPanel5.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		sPanel5.setBorder(title5);
+		title5.setTitleFont(title);
+		title5.setTitlePosition(5);
 		
-		label1.setHorizontalAlignment(SwingConstants.CENTER);
-		label1.setBounds(22, 75, 213, 25);
-		label1.setFont(title);
-		sPanel1.add(label1);
-		
-		label2.setBounds(22, 106, 100, 30);
+		label2.setBounds(32, 86, 100, 30);
 		sPanel1.add(label2);
 		label2.setFont(label);
 		
-		label3.setBounds(22, 148, 100, 30);
+		label3.setBounds(32, 128, 100, 30);
 		sPanel1.add(label3);
 		label3.setFont(label);
 		
-		label4.setBounds(22, 190, 100, 30);
+		label4.setBounds(32, 170, 100, 30);
 		sPanel1.add(label4);
 		label4.setFont(label);
 		
-		label5.setBounds(22, 232, 100, 30);
+		label5.setBounds(32, 212, 100, 30);
 		sPanel1.add(label5);
 		label5.setFont(label);
 		
 		label6.setHorizontalAlignment(SwingConstants.CENTER);
-		label6.setBounds(161, 106, 100, 30);
+		label6.setBounds(171, 86, 100, 30);
 		sPanel1.add(label6);
 		label6.setText(d.today[0]);
 		label6.setFont(label);
 		
 		label7.setHorizontalAlignment(SwingConstants.CENTER);
-		label7.setBounds(161, 148, 100, 30);
+		label7.setBounds(171, 128, 100, 30);
 		sPanel1.add(label7);
 		label7.setText(d.today[1]);
 		label7.setFont(label);
 		
 		label8.setHorizontalAlignment(SwingConstants.CENTER);
-		label8.setBounds(161, 190, 100, 30);
+		label8.setBounds(171, 170, 100, 30);
 		sPanel1.add(label8);
 		label8.setText(d.today[2]);
 		label8.setFont(label);
 		
 		label9.setHorizontalAlignment(SwingConstants.CENTER);
-		label9.setBounds(161, 232, 100, 30);
+		label9.setBounds(171, 212, 100, 30);
 		sPanel1.add(label9);
 		label9.setText(d.today[3]);
 		label9.setFont(label);
 		
-		btn6.setBounds(22, 280, 200, 30);
+		btn6.setBounds(32, 260, 200, 30);
 		sPanel1.add(btn6);
 		btn6.addActionListener(new ActionListener() {
 
@@ -242,49 +267,48 @@ public class gUI {
 				label8.setText("0");
 				label9.setText("0");
 				
-				progressBar.setValue(0);
-				progressBar_1.setValue(0);
-				progressBar_2.setValue(0);
-				progressBar_3.setValue(0);
-				
-				sPanel2.removeAll();
-				
 				try {
 					d.writeToday("0", "0", "0", "0");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				
+				sPanel2.removeAll();
 				pieChart("0", "0", "0");
 				
-				JOptionPane.showMessageDialog(f, "Passed the next day.", "Information", JOptionPane.INFORMATION_MESSAGE);
+				progressBar.setValue(0);
+				progressBar_1.setValue(0);
+				progressBar_2.setValue(0);
+				progressBar_3.setValue(0);
+				SwingUtilities.updateComponentTreeUI(sPanel3);
+				
+				sPanel3.add(progressBar);
+				sPanel3.add(progressBar_1);
+				sPanel3.add(progressBar_2);
+				sPanel3.add(progressBar_3);
+				
+				JOptionPane.showMessageDialog(mainFrame, "Passed the next day.", "Information", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
-		
-		label10.setHorizontalAlignment(SwingConstants.CENTER);
-		label10.setFont(title);
-		label10.setBounds(12, 29, 376, 30);
-		sPanel3.add(label10);
-		
-		label11.setBounds(46, 56, 70, 15);
+		label11.setBounds(46, 41, 70, 15);
 		sPanel3.add(label11);
 		label11.setFont(label);
 		
-		label12.setBounds(46, 130, 70, 15);
+		label12.setBounds(46, 110, 70, 15);
 		sPanel3.add(label12);
 		label12.setFont(label);
 		
-		label13.setBounds(46, 204, 70, 15);
+		label13.setBounds(46, 179, 70, 15);
 		sPanel3.add(label13);
 		label13.setFont(label);
 		
-		label14.setBounds(46, 278, 70, 15);
+		label14.setBounds(46, 248, 70, 15);
 		sPanel3.add(label14);
 		label14.setFont(label);
 		
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(46, 83, 318, 35);
+		progressBar.setBounds(46, 62, 318, 30);
 		sPanel3.add(progressBar);
 		progressBar.setMinimum(0);
 		progressBar.setMaximum(Integer.parseInt(d.goals[1]));
@@ -292,7 +316,7 @@ public class gUI {
 		progressBar.setFont(label);
 		
 		progressBar_1.setStringPainted(true);
-		progressBar_1.setBounds(46, 157, 318, 35);
+		progressBar_1.setBounds(46, 132, 318, 30);
 		sPanel3.add(progressBar_1);
 		progressBar_1.setMinimum(0);
 		progressBar_1.setMaximum(Integer.parseInt(d.goals[2]));
@@ -300,7 +324,7 @@ public class gUI {
 		progressBar_1.setFont(label);
 		
 		progressBar_2.setStringPainted(true);
-		progressBar_2.setBounds(46, 231, 318, 35);
+		progressBar_2.setBounds(46, 201, 318, 30);
 		sPanel3.add(progressBar_2);
 		progressBar_2.setMinimum(0);
 		progressBar_2.setMaximum(Integer.parseInt(d.goals[3]));
@@ -308,7 +332,7 @@ public class gUI {
 		progressBar_2.setFont(label);
 		
 		progressBar_3.setStringPainted(true);
-		progressBar_3.setBounds(46, 305, 318, 35);
+		progressBar_3.setBounds(46, 270, 318, 30);
 		sPanel3.add(progressBar_3);
 		progressBar_3.setMinimum(0);
 		progressBar_3.setMaximum(Integer.parseInt(d.goals[0]));
@@ -318,34 +342,37 @@ public class gUI {
 		//FOOD PANE
 		tabbedPane.addTab("Food", null, panel_1, null);
 		panel_1.setLayout(new BoxLayout(panel_1 , BoxLayout.X_AXIS));
+		panel_1.setBorder(new EmptyBorder(10,10,10,10));
 		
 		//WEST SIDE
-		fPanelWest.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		fPanelWest.setLayout(null);
+		fPanelWest.setLayout(new BoxLayout(fPanelWest , BoxLayout.Y_AXIS));
 		panel_1.add(fPanelWest);
+		fPanelWest.setPreferredSize(new Dimension(400,500));
 		
-		comboBox.setBounds(146, 65, 156, 24);
+		//UP SIDE
+		fPanelUp.setBorder(BorderFactory.createTitledBorder(title6));
+		title6.setTitleFont(title);
+		fPanelUp.setLayout(null);
+		fPanelWest.add(fPanelUp);
+		
+		comboBox.setBounds(122, 65, 281, 35);
 		for(int i=0; i<100; i++) {
 			if(d.name[i] != null) {
 				comboBox.addItem(d.name[i]);
 			}
 		}
-		fPanelWest.add(comboBox);
+		fPanelUp.add(comboBox);
 		
-		spinner.setBounds(146, 130, 156, 20);
-		fPanelWest.add(spinner);
-	
-		label15.setBounds(22, 48, 177, 60);
-		fPanelWest.add(label15);
-		label15.setFont(label);
+		spinner.setBounds(246, 130, 156, 20);
+		fPanelUp.add(spinner);
 		
-		label16.setBounds(22, 109, 177, 60);
-		fPanelWest.add(label16);
+		label16.setBounds(123, 109, 177, 60);
+		fPanelUp.add(label16);
 		label16.setFont(label);
 		
 		//ADD FOOD BUTTON
-		btn1.setBounds(146, 180, 156, 34);
-		fPanelWest.add(btn1);
+		btn1.setBounds(246, 180, 156, 34);
+		fPanelUp.add(btn1);
 		btn1.addActionListener(new ActionListener() {
 
 			@Override
@@ -388,13 +415,13 @@ public class gUI {
 				progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
 				progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 				
-				JOptionPane.showMessageDialog(f, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(mainFrame, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
 		//RESET BUTTON
-		btn2.setBounds(22, 235, 280, 34);
-		fPanelWest.add(btn2);
+		btn2.setBounds(122, 235, 280, 34);
+		fPanelUp.add(btn2);
 		btn2.addActionListener(new ActionListener() {
 
 			@Override
@@ -419,71 +446,68 @@ public class gUI {
 				
 				pieChart("0", "0", "0");
 				
-				JOptionPane.showMessageDialog(f, "All meals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(mainFrame, "All meals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
-		//EASTSIDE
-		fPanelEast.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		panel_1.add(fPanelEast);
-		fPanelEast.setLayout(null);
+		//DOWN SIDE
+		fPanelDown.setBorder(BorderFactory.createTitledBorder(title7));
+		title7.setTitleFont(title);
+		title7.setTitlePosition(5);
+		fPanelWest.add(fPanelDown);
+		fPanelDown.setLayout(null);
 		
-		label22.setHorizontalAlignment(SwingConstants.CENTER);
-		label22.setFont(title);
-		label22.setBounds(70, 51, 192, 20);
-		fPanelEast.add(label22);
-		
-		label17.setBounds(20, 96, 120, 20);
-		fPanelEast.add(label17);
+		label17.setBounds(120, 46, 120, 20);
+		fPanelDown.add(label17);
 		label17.setFont(label);
 		
-		label18.setBounds(20, 127, 120, 20);
-		fPanelEast.add(label18);
+		label18.setBounds(120, 77, 120, 20);
+		fPanelDown.add(label18);
 		label18.setFont(label);
 		
-		label19.setBounds(20, 158, 120, 20);
-		fPanelEast.add(label19);
+		label19.setBounds(120, 108, 120, 20);
+		fPanelDown.add(label19);
 		label19.setFont(label);
 		
-		label20.setBounds(20, 189, 120, 20);
-		fPanelEast.add(label20);
+		label20.setBounds(120, 139, 120, 20);
+		fPanelDown.add(label20);
 		label20.setFont(label);
 		
-		label21.setBounds(20, 220, 120, 20);
-		fPanelEast.add(label21);
+		label21.setBounds(120, 170, 120, 20);
+		fPanelDown.add(label21);
 		label21.setFont(label);
 		
 		//NEW FOOD NAME
-		textField.setBounds(175, 96, 120, 25);
-		fPanelEast.add(textField);
+		textField.setBounds(275, 45, 125, 25);
+		fPanelDown.add(textField);
 		
 		//NEW FOOD PROTEIN
-		textField_1.setBounds(175, 127, 120, 25);
+		textField_1.setBounds(275, 76, 125, 25);
 		textField_1.setText("0");
-		fPanelEast.add(textField_1);
+		fPanelDown.add(textField_1);
 		textField_1.setColumns(10);
 		
 		//NEW FOOD CARB
-		textField_2.setBounds(175, 158, 120, 25);
+		textField_2.setBounds(275, 107, 125, 25);
 		textField_2.setText("0");
-		fPanelEast.add(textField_2);
+		fPanelDown.add(textField_2);
 		textField_2.setColumns(10);
 		
 		//NEW FOOD FAT
-		textField_3.setBounds(175, 189, 120, 25);
+		textField_3.setBounds(275, 138, 125, 25);
 		textField_3.setText("0");
-		fPanelEast.add(textField_3);
+		fPanelDown.add(textField_3);
 		textField_3.setColumns(10);
 		
 		//NEW FOOD CALORIE
-		textField_4.setBounds(175, 220, 120, 25);
+		textField_4.setBounds(275, 169, 125, 25);
 		textField_4.setText("0");
-		fPanelEast.add(textField_4);
+		fPanelDown.add(textField_4);
 		textField_4.setColumns(10);
 		
 		//ADD NEW BUTTON
-		btn3.setBounds(60, 260, 200, 30);
-		fPanelEast.add(btn3);
+		btn3.setBounds(274, 210, 125, 34);
+		fPanelDown.add(btn3);
 		btn3.addActionListener(new ActionListener() {
 							
 			@Override
@@ -497,16 +521,19 @@ public class gUI {
 							
 					d.addFood(newName, newProtein, newCarb, newFat, newCal);
 					comboBox.addItem(newName);
-					JOptionPane.showMessageDialog(f, "The new food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				d.writeTable();
+				panel_1.remove(fPanelEast);
+				panel_1.add(fPanelEast);
+				JOptionPane.showMessageDialog(mainFrame, "The new food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
 		//REMOVE ALL BUTTON
-		btn4.setBounds(60, 300, 200, 30);
-		fPanelEast.add(btn4);
+		btn4.setBounds(120, 260, 279, 34);
+		fPanelDown.add(btn4);
 		btn4.addActionListener(new ActionListener() {
 			
 			@Override
@@ -523,77 +550,94 @@ public class gUI {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(f, "All meals have been removed.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				
+				for(int i=0; i<100; i++) {
+					for(int j=0; j<5; j++) {
+						d.table[i][j]= null;
+					}
+				}
+				panel_1.remove(fPanelEast);
+				panel_1.add(fPanelEast);
+				JOptionPane.showMessageDialog(mainFrame, "All meals have been removed.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+		
+		//EAST SIDE
+		panel_1.add(fPanelEast);
+		fPanelEast.setBorder(BorderFactory.createTitledBorder(title8));
+		title8.setTitleFont(title);
+		
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(1).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(renderer);
 //---------------------------------------------------------------------------------------------
 		//GOALS PANE
 		tabbedPane.addTab("Goals", null, panel_2, null);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		panel_2.setBorder(new EmptyBorder(10,10,10,10));
 		
 		//WEST SIDE
-		gPanelWest.setPreferredSize(new Dimension(700,341));
-		gPanelWest.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		gPanelWest.setPreferredSize(new Dimension(925,341));
+		gPanelWest.setBorder(BorderFactory.createTitledBorder(title9));
+		title9.setTitleFont(title);
 		gPanelWest.setLayout(null);
 		panel_2.add(gPanelWest);
 		
-		label27.setHorizontalAlignment(SwingConstants.CENTER);
-		label27.setFont(title);
-		label27.setBounds(30, 56, 195, 24);
-		gPanelWest.add(label27);
-		
-		label23.setHorizontalAlignment(SwingConstants.CENTER);
-		label23.setBounds(10, 99, 89, 20);
+		label23.setHorizontalAlignment(SwingConstants.LEFT);
+		label23.setBounds(125, 199, 89, 20);
 		gPanelWest.add(label23);
 		label23.setFont(label);
 		
-		label24.setHorizontalAlignment(SwingConstants.CENTER);
-		label24.setBounds(10, 163, 89, 20);
+		label24.setHorizontalAlignment(SwingConstants.LEFT);
+		label24.setBounds(125, 263, 89, 20);
 		gPanelWest.add(label24);
 		label24.setFont(label);
 		
-		label25.setHorizontalAlignment(SwingConstants.CENTER);
-		label25.setBounds(10, 195, 89, 20);
+		label25.setHorizontalAlignment(SwingConstants.LEFT);
+		label25.setBounds(125, 295, 89, 20);
 		gPanelWest.add(label25);
 		label25.setFont(label);
 		
-		label26.setHorizontalAlignment(SwingConstants.CENTER);
-		label26.setBounds(10, 130, 89, 20);
+		label26.setHorizontalAlignment(SwingConstants.LEFT);
+		label26.setBounds(125, 230, 89, 20);
 		gPanelWest.add(label26);
 		label26.setFont(label);
 		
 		label28.setHorizontalAlignment(SwingConstants.CENTER);
-		label28.setBounds(20, 330, 89, 20);
+		label28.setBounds(130, 530, 100, 50);
 		gPanelWest.add(label28);
-		label28.setFont(new Font("Arial" , Font.BOLD , 18));
+		label28.setFont(new Font("Arial" , Font.BOLD , 25));
 		
 		label29.setHorizontalAlignment(SwingConstants.CENTER);
-		label29.setBounds(145, 330, 89, 20);
+		label29.setBounds(280, 530, 100, 50);
 		gPanelWest.add(label29);
-		label29.setFont(new Font("Arial" , Font.BOLD , 18));
+		label29.setFont(new Font("Arial" , Font.BOLD , 25));
 		label29.setText(d.goals[0]);
 		
-		textField_5.setBounds(130, 96, 120, 25);
+		textField_5.setBounds(240, 196, 140, 25);
 		textField_5.setText("0");
 		gPanelWest.add(textField_5);
 		textField_5.setColumns(10);
 		
-		textField_6.setBounds(130, 127, 120, 25);
+		textField_6.setBounds(240, 227, 140, 25);
 		textField_6.setText("0");
 		gPanelWest.add(textField_6);
 		textField_6.setColumns(10);
 		
-		textField_7.setBounds(130, 160, 120, 25);
+		textField_7.setBounds(240, 260, 140, 25);
 		textField_7.setText("0");
 		gPanelWest.add(textField_7);
 		textField_7.setColumns(10);
 		
-		textField_8.setBounds(130, 192, 120, 25);
+		textField_8.setBounds(240, 292, 140, 25);
 		textField_8.setText("0");
 		gPanelWest.add(textField_8);
 		textField_8.setColumns(10);
 		
-		btn5.setBounds(130,230,119,27);
+		btn5.setBounds(240,330,139,34);
 		gPanelWest.add(btn5);
 		btn5.addActionListener(new ActionListener() {
 
@@ -607,7 +651,7 @@ public class gUI {
 				carbgoal= Integer.parseInt(textField_7.getText());
 				fatgoal= Integer.parseInt(textField_8.getText());
 				
-				gPanelEast.removeAll();
+				chartPanel.removeAll();
 				
 				try {
 					d.writeGoals(Integer.toString(calgoal), Integer.toString(progoal), Integer.toString(carbgoal), Integer.toString(fatgoal));
@@ -632,11 +676,11 @@ public class gUI {
 				progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 				
 				label29.setText(d.goals[0]);
-				JOptionPane.showMessageDialog(f, "Goals have been set.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(mainFrame, "Goals have been set.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
-		btn7.setBounds(130,268,119,27);
+		btn7.setBounds(124,377,255,34);
 		gPanelWest.add(btn7);
 		btn7.addActionListener(new ActionListener() {
 
@@ -648,7 +692,7 @@ public class gUI {
 				progressBar_2.setMaximum(0);
 				progressBar_3.setMaximum(0);
 				
-				gPanelEast.removeAll();
+				chartPanel.removeAll();
 				
 				try {
 					d.writeGoals("0", "0", "0", "0");
@@ -657,23 +701,27 @@ public class gUI {
 					e1.printStackTrace();
 				}
 				label29.setText(d.goals[0]);
-				JOptionPane.showMessageDialog(f, "Goals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(mainFrame, "Goals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 		});
 		
 		//EAST SIDE
 		panel_2.add(gPanelEast);
-		gPanelEast.setLayout(new BoxLayout(gPanelEast, BoxLayout.X_AXIS));
-		gPanelEast.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		gPanelEast.setLayout(null);
+		gPanelEast.setBorder(BorderFactory.createTitledBorder(title2));
+		gPanelEast.setPreferredSize(new Dimension(1047,341));
 		
+		chartPanel.setLayout(new BoxLayout(chartPanel, BoxLayout.X_AXIS));
+		chartPanel.setBounds(45,110,500,450);
+		gPanelEast.add(chartPanel);
 //---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
 		tabbedPane.addTab("Settings", null, panel_3, null);
-		panel_3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panel_3.setLayout(null);
+		panel_3.setBorder(new EmptyBorder(10,10,10,10));
 		
-		lbl.setBounds(20,20,150,30);
+		lbl.setBounds(40,30,150,30);
 		panel_3.add(lbl);
 		lbl.setFont(label);
 
@@ -687,7 +735,7 @@ public class gUI {
 				if(comboBox2.getSelectedIndex()==0) {
 					try {
 			            UIManager.setLookAndFeel( new FlatLightLaf() );
-			            SwingUtilities.updateComponentTreeUI(f);
+			            SwingUtilities.updateComponentTreeUI(mainFrame);
 			            d.writeThemeSetting(0);
 			        } catch( Exception ex ) {
 			            System.err.println( "Failed to initialize LaF" );
@@ -696,7 +744,7 @@ public class gUI {
 				else if(comboBox2.getSelectedIndex()==1) {
 					try {
 			            UIManager.setLookAndFeel( new FlatDarkLaf() );
-			            SwingUtilities.updateComponentTreeUI(f);
+			            SwingUtilities.updateComponentTreeUI(mainFrame);
 			            d.writeThemeSetting(1);
 			        } catch( Exception ex ) {
 			            System.err.println( "Failed to initialize LaF" );
@@ -704,7 +752,7 @@ public class gUI {
 				}
 			}
         });
-        comboBox2.setBounds(20,60,300,30);
+        comboBox2.setBounds(40,70,300,30);
         panel_3.add(comboBox2);
         try {
 			comboBox2.setSelectedIndex(d.readThemeSetting());
@@ -712,7 +760,7 @@ public class gUI {
 			e1.printStackTrace();
 		}
         
-        /*cB.setBounds(20,110,500,30);
+        cB.setBounds(40,120,500,30);
         cB.setBackground(null);
         panel_3.add(cB);
         cB.setFont(tab);
@@ -739,9 +787,9 @@ public class gUI {
 						e1.printStackTrace();
 					}
 			}
-        });*/
+        });
         
-        btn8.setBounds(20,160,300,30);
+        btn8.setBounds(40,170,300,30);
         SwingUtilities.updateComponentTreeUI(btn8);
         panel_3.add(btn8);
         btn8.addActionListener(new ActionListener() {
@@ -749,7 +797,7 @@ public class gUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int result = JOptionPane.showConfirmDialog(f, "Are you sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
@@ -759,44 +807,194 @@ public class gUI {
 						d.removeWeeklyCal();
 						d.resetSettings();
 						d.removeWeeklyMacros();
+						
+						JOptionPane.showMessageDialog(mainFrame, "Everything have been reset.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
+						System.exit(0);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				}
-				JOptionPane.showMessageDialog(f, "Everything have been reset.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
-				System.exit(0);
 			}
         });
         
 		//FRAME		
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setBounds(620, 300, 680, 465);
-		f.setResizable(false);
-		f.setVisible(true);
-		
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setBounds(420, 150, 1150, 800);
+        mainFrame.setResizable(false);
+        mainFrame.setVisible(true);
+        mainFrame.setLayout(null);
+        
 		ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
 	}
 	
-	public void welcomeFrame() throws InterruptedException {
+	public void welcomeFrame() throws InterruptedException, IOException {
 		
-		JFrame tf= new JFrame("Welcome");
-		JButton btn= new JButton("OK");
-		btn.setBounds(300, 400, 150, 30);
-		tf.add(btn);
-        SwingUtilities.updateComponentTreeUI(btn);
-		btn.addActionListener(new ActionListener() {
+		JFrame frame= new JFrame("Welcome to ACC ver_2.1");
+		frame.setBounds(620, 300, 750, 500);
+		frame.setResizable(false);
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(10,10,10,10));
+		frame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JPanel fotoPanel = new JPanel();
+		fotoPanel.setBounds(10, 11, 714, 405);
+		fotoPanel.setLayout(new BoxLayout(fotoPanel, BoxLayout.X_AXIS));
+		contentPane.add(fotoPanel);
+		
+		ImageIcon img1 = new ImageIcon("img\\tutorial_1.png");
+		Image scaledImage1 = img1.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
+        JLabel imgLab1 = new JLabel(scaledIcon1);
+        fotoPanel.add(imgLab1);
+        imgLab1.setVisible(false);
+        
+		ImageIcon img2 = new ImageIcon("img\\tutorial_2.png");
+		Image scaledImage2 = img2.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+        JLabel imgLab2 = new JLabel(scaledIcon2);
+        fotoPanel.add(imgLab2);
+        imgLab2.setVisible(false);
+        
+		ImageIcon img3 = new ImageIcon("img\\tutorial_3.png");
+		Image scaledImage3 = img3.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
+        JLabel imgLab3 = new JLabel(scaledIcon3);
+        fotoPanel.add(imgLab3);
+        imgLab3.setVisible(false);
+        
+		ImageIcon img4 = new ImageIcon("img\\tutorial_a.png");
+		Image scaledImage4 = img4.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon4 = new ImageIcon(scaledImage4);
+        JLabel imgLab4 = new JLabel(scaledIcon4);
+        fotoPanel.add(imgLab4);
+        imgLab4.setVisible(false);
+        
+		ImageIcon img5 = new ImageIcon("img\\tutorial_b.png");
+		Image scaledImage5 = img5.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon5 = new ImageIcon(scaledImage5);
+        JLabel imgLab5 = new JLabel(scaledIcon5);
+        fotoPanel.add(imgLab5);
+        imgLab5.setVisible(false);
+        
+		ImageIcon img6 = new ImageIcon("img\\tutorial_c.png");
+		Image scaledImage6 = img6.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon6 = new ImageIcon(scaledImage6);
+        JLabel imgLab6 = new JLabel(scaledIcon6);
+        fotoPanel.add(imgLab6);
+        imgLab6.setVisible(false);
+        
+        if(comboBox2.getSelectedIndex() == 0) {
+			imgLab4.setVisible(true);
+        }else {
+        	imgLab1.setVisible(true);
+        }
+		
+		JButton nextButton = new JButton("Next");
+		nextButton.setBounds(614, 427, 110, 23);
+		contentPane.add(nextButton);
+		nextButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tf.setVisible(false);
+					
+				if(imgLab1.isVisible() == true) {
+				     imgLab1.setVisible(false);      
+				     imgLab2.setVisible(true);
+				}
+				else if(imgLab2.isVisible() == true) {
+				     imgLab2.setVisible(false);      
+				     imgLab3.setVisible(true);
+				}
+				else if(imgLab3.isVisible() == true) {
+				     imgLab3.setVisible(false);      
+				     imgLab1.setVisible(true);
+				}
+				else if(imgLab4.isVisible() == true) {
+				     imgLab4.setVisible(false);      
+				     imgLab5.setVisible(true);
+				}
+				else if(imgLab5.isVisible() == true) {
+				     imgLab5.setVisible(false);      
+				     imgLab6.setVisible(true);
+				}
+				else if(imgLab6.isVisible() == true) {
+				     imgLab6.setVisible(false);      
+				     imgLab4.setVisible(true);
+				}
 			}
 		});
 		
-        tf.setBounds(580, 280, 750, 500);
-        tf.setLayout(null);
-		tf.setResizable(true);
+		JButton skipButton = new JButton("Skip");
+		skipButton.setBounds(10, 427, 110, 23);
+		contentPane.add(skipButton);
+		skipButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+			}
+		});
 		
 		Thread.sleep(1200);
-		tf.setVisible(true);
+		frame.setVisible(true);
+	}
+	
+	public void coffeeAnimation() throws InterruptedException {
+		
+		JPanel coffeePanel = new JPanel();
+		coffeePanel.setLayout(new BoxLayout(coffeePanel, BoxLayout.X_AXIS));
+		coffeePanel.setBounds(1101,6,25,25);
+		mainFrame.add(coffeePanel);
+		
+		ImageIcon img1 = new ImageIcon("img\\acc1.png");
+		Image scaledImage1 = img1.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
+        ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
+        JLabel imgLab1 = new JLabel(scaledIcon1);
+        coffeePanel.add(imgLab1);
+        imgLab1.setVisible(false);
+        
+		ImageIcon img2 = new ImageIcon("img\\acc2.png");
+		Image scaledImage2 = img2.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
+        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+        JLabel imgLab2 = new JLabel(scaledIcon2);
+        coffeePanel.add(imgLab2);
+        imgLab2.setVisible(false);
+        
+		ImageIcon img3 = new ImageIcon("img\\acc3.png");
+		Image scaledImage3 = img3.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
+        ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
+        JLabel imgLab3 = new JLabel(scaledIcon3);
+        coffeePanel.add(imgLab3);
+        imgLab3.setVisible(false);
+        
+		ImageIcon img4 = new ImageIcon("img\\acc4.png");
+		Image scaledImage4 = img4.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
+        ImageIcon scaledIcon4 = new ImageIcon(scaledImage4);
+        JLabel imgLab4 = new JLabel(scaledIcon4);
+        coffeePanel.add(imgLab4);
+        imgLab4.setVisible(false);
+        
+        while(true) {
+    		if(comboBox2.getSelectedIndex() == 1) {
+				imgLab3.setVisible(true);
+				Thread.sleep(1000);
+				imgLab3.setVisible(false);
+				imgLab4.setVisible(true);
+				Thread.sleep(1000);
+				imgLab4.setVisible(false);
+    		}
+    		else if(comboBox2.getSelectedIndex() == 0) {
+				imgLab1.setVisible(true);
+				Thread.sleep(1000);
+				imgLab1.setVisible(false);
+				imgLab2.setVisible(true);
+				Thread.sleep(1000);
+				imgLab2.setVisible(false);
+			}
+        }
 	}
 	
 	public void pieChart(String pro, String carb, String fat) {
@@ -811,17 +1009,15 @@ public class gUI {
             dataset.setValue("Carb", c);
             dataset.setValue("Fat", f);
 
-            JFreeChart chart = ChartFactory.createPieChart("Today", dataset, true, true, false);
+            JFreeChart chart = ChartFactory.createPieChart(null, dataset, true, true, false);
             
             chart.setBackgroundPaint(null);
             chart.getLegend().setBackgroundPaint(null);
-            chart.getTitle().setFont(title);
             chart.getLegend().setItemPaint(Color.GRAY);
-            chart.getTitle().setPaint(Color.GRAY);
             chart.getPlot().setBackgroundPaint(null);
-          
+            
             ChartPanel chartPanel = new ChartPanel(chart);
-            sPanel2.add(chartPanel); 
+            sPanel2.add(chartPanel);
 	}
 	
 	public void gPieChart(String pro, String carb, String fat) {
@@ -835,64 +1031,58 @@ public class gUI {
         dataset.setValue("Carb", c);
         dataset.setValue("Fat", f);
 
-        JFreeChart chart = ChartFactory.createPieChart("Goals", dataset, true, true, false);
+        JFreeChart chart = ChartFactory.createPieChart(null, dataset, true, true, false);
 
         chart.setBackgroundPaint(null);
         chart.getLegend().setBackgroundPaint(null);
-        chart.getTitle().setFont(title);
         chart.getLegend().setItemPaint(Color.GRAY);
-        chart.getTitle().setPaint(Color.GRAY);
         chart.getPlot().setBackgroundPaint(null);
-        
+
         ChartPanel chartPanel = new ChartPanel(chart);
-        
-        gPanelEast.add(chartPanel);
+        this.chartPanel.add(chartPanel);    
 	}
 	
 	public void weeklyMacChart(String a, String b, String c, String d, String e, String f, String g, String h, String i, String j, 
 			String k, String l, String m, String n, String o, String p, String r, String s, String t, String u, String v) {
 		
-       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-       dataset.addValue(Double.parseDouble(v), "Protein", "T-7");
-       dataset.addValue(Double.parseDouble(u), "Carb", "T-7");
-       dataset.addValue(Double.parseDouble(t), "Fat", "T-7");
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.addValue(Double.parseDouble(v), "Protein", "T-7");
+		dataset.addValue(Double.parseDouble(u), "Carb", "T-7");
+		dataset.addValue(Double.parseDouble(t), "Fat", "T-7");
        
-       dataset.addValue(Double.parseDouble(s), "Protein", "T-6");
-       dataset.addValue(Double.parseDouble(r), "Carb", "T-6");
-       dataset.addValue(Double.parseDouble(p), "Fat", "T-6");
+		dataset.addValue(Double.parseDouble(s), "Protein", "T-6");
+		dataset.addValue(Double.parseDouble(r), "Carb", "T-6");
+		dataset.addValue(Double.parseDouble(p), "Fat", "T-6");
        
-       dataset.addValue(Double.parseDouble(o), "Protein", "T-5");
-       dataset.addValue(Double.parseDouble(n), "Carb", "T-5");
-       dataset.addValue(Double.parseDouble(m), "Fat", "T-5");
+		dataset.addValue(Double.parseDouble(o), "Protein", "T-5");
+		dataset.addValue(Double.parseDouble(n), "Carb", "T-5");
+		dataset.addValue(Double.parseDouble(m), "Fat", "T-5");
        
-       dataset.addValue(Double.parseDouble(l), "Protein", "T-4");
-       dataset.addValue(Double.parseDouble(k), "Carb", "T-4");
-       dataset.addValue(Double.parseDouble(j), "Fat", "T-4");
+		dataset.addValue(Double.parseDouble(l), "Protein", "T-4");
+		dataset.addValue(Double.parseDouble(k), "Carb", "T-4");
+		dataset.addValue(Double.parseDouble(j), "Fat", "T-4");
+		
+		dataset.addValue(Double.parseDouble(i), "Protein", "T-3");
+		dataset.addValue(Double.parseDouble(h), "Carb", "T-3");
+		dataset.addValue(Double.parseDouble(g), "Fat", "T-3");
        
-       dataset.addValue(Double.parseDouble(i), "Protein", "T-3");
-       dataset.addValue(Double.parseDouble(h), "Carb", "T-3");
-       dataset.addValue(Double.parseDouble(g), "Fat", "T-3");
+		dataset.addValue(Double.parseDouble(f), "Protein", "T-2");
+		dataset.addValue(Double.parseDouble(e), "Carb", "T-2");
+		dataset.addValue(Double.parseDouble(d), "Fat", "T-2");
        
-       dataset.addValue(Double.parseDouble(f), "Protein", "T-2");
-       dataset.addValue(Double.parseDouble(e), "Carb", "T-2");
-       dataset.addValue(Double.parseDouble(d), "Fat", "T-2");
+		dataset.addValue(Double.parseDouble(c), "Protein", "Yesterday");
+		dataset.addValue(Double.parseDouble(b), "Carb", "Yesterday");
+		dataset.addValue(Double.parseDouble(a), "Fat", "Yesterday");
        
-       dataset.addValue(Double.parseDouble(c), "Protein", "Yesterday");
-       dataset.addValue(Double.parseDouble(b), "Carb", "Yesterday");
-       dataset.addValue(Double.parseDouble(a), "Fat", "Yesterday");
-       
-       JFreeChart chart = ChartFactory.createBarChart("Past Week Macros", null, null, dataset);
+		JFreeChart chart = ChartFactory.createBarChart(null, null, null, dataset);
         
-       chart.setBackgroundPaint(null);
-       chart.getLegend().setBackgroundPaint(null);
-       chart.getTitle().setFont(title);
-       chart.getLegend().setItemPaint(Color.GRAY);
-       chart.getTitle().setPaint(Color.GRAY);
-       chart.getPlot().setBackgroundPaint(null);
-       
-       ChartPanel chartPanel = new ChartPanel(chart);
-       
-       sPanel4.add(chartPanel);
+		chart.setBackgroundPaint(null);
+		chart.getLegend().setBackgroundPaint(null);
+		chart.getLegend().setItemPaint(Color.GRAY);
+		chart.getPlot().setBackgroundPaint(null);
+
+		ChartPanel chartPanel = new ChartPanel(chart);
+		sPanel4.add(chartPanel);
 	}
 	
 	public void weeklyCalChart(String first, String second, String third, String fourth, String fifth, String sixth, String seventh) {
@@ -914,17 +1104,14 @@ public class gUI {
         dataset.addValue(tue, "Calorie", "T-2");
         dataset.addValue(mon, "Calorie", "Yesterday");
         
-        JFreeChart chart = ChartFactory.createLineChart("Past Week Calories", null, null, dataset, PlotOrientation.VERTICAL, true, true, false );
+        JFreeChart chart = ChartFactory.createLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, true, true, false );
         
         chart.setBackgroundPaint(null);
         chart.getLegend().setBackgroundPaint(null);
-        chart.getTitle().setFont(title);
         chart.getLegend().setItemPaint(Color.GRAY);
-        chart.getTitle().setPaint(Color.GRAY);
         chart.getPlot().setBackgroundPaint(null);
-      
-        ChartPanel chartPanel = new ChartPanel(chart);
         
+        ChartPanel chartPanel = new ChartPanel(chart);
         sPanel5.add(chartPanel);	
 	}
 }
