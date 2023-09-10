@@ -2,14 +2,20 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 public class Data {
+	
+	/**
+	 * 
+	 * @author Afaruk59
+	 */
 	
 	String[] addedMeals = new String[1000];
 	String[] defaultFoods = new String[1000];
@@ -20,13 +26,11 @@ public class Data {
 	String[] weeklyMacros = new String[21];
 	String[][] table_1 = new String[200][5];
 	String[][] table_2 = new String[200][5];
-	Properties profile = new Properties();
-	
-	User us = new User();
-	
+	static Properties profile = new Properties();
+		
 	public void addFood(String newName, String newProtein, String newCarb, String newFat, String newCal) throws IOException{
 		
-		File file= new File("users\\" + us.userName + "\\foods.acc");
+		File file= new File("users\\" + User.userName + "\\foods.acc");
 		
 		FileWriter fWrite= new FileWriter(file, false);
 		BufferedWriter bWrite= new BufferedWriter(fWrite);
@@ -71,7 +75,7 @@ public class Data {
 	
 	public void readFoods() throws IOException {
 		
-		File file= new File("users\\" + us.userName + "\\foods.acc");
+		File file= new File("users\\" + User.userName + "\\foods.acc");
 		if(file.exists() == false) {
 			file.createNewFile();
 		}
@@ -92,23 +96,39 @@ public class Data {
 	
 	public void readDefaultFoods() throws IOException {
 		
-		File file= new File("resources\\defFoods.acc");
-		if(file.exists() == false) {
-			file.createNewFile();
+		if(profile.getProperty("lang").equals("eng") == true) {
+			File file= new File("resources\\defFoodsEng.acc");
+			if(file.exists() == false) {
+				file.createNewFile();
+			}
+			
+			FileReader fRead= new FileReader(file);        
+			BufferedReader bRead= new BufferedReader(fRead);
+			
+			for(int i=0; i<1000; i++) {
+				defaultFoods[i]= bRead.readLine();
+			}
+			bRead.close();
 		}
-		
-		FileReader fRead= new FileReader(file);        
-		BufferedReader bRead= new BufferedReader(fRead);
-		
-		for(int i=0; i<1000; i++) {
-			defaultFoods[i]= bRead.readLine();
+		else if(profile.getProperty("lang").equals("tr") == true) {
+			File file= new File("resources\\defFoodsTr.acc");
+			if(file.exists() == false) {
+				file.createNewFile();
+			}
+			
+			FileReader fRead= new FileReader(file);        
+			BufferedReader bRead= new BufferedReader(fRead);
+			
+			for(int i=0; i<1000; i++) {
+				defaultFoods[i]= bRead.readLine();
+			}
+			bRead.close();
 		}
-		bRead.close();
 	}
 	
 	public void removeFoods() throws IOException {
 		
-		File file= new File("users\\" + us.userName + "\\foods.acc");
+		File file= new File("users\\" + User.userName + "\\foods.acc");
 		
 		FileWriter fWrite= new FileWriter(file, false);
 		BufferedWriter bWrite= new BufferedWriter(fWrite);
@@ -162,15 +182,30 @@ public class Data {
 		profile.setProperty("bmi", "0");
 		profile.setProperty("bmiType", "");
 		profile.setProperty("calorie", "0");
+		profile.setProperty("lang", "eng");
+		profile.setProperty("lang", "eng");
+		profile.setProperty("lang", "eng");
+		profile.setProperty("lang", "eng");
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		LocalDateTime currentDate = LocalDateTime.now();
+		
+    	DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
+    	profile.setProperty("day", currentDate.format(dayFormat));
+    	
+    	DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MM");
+    	profile.setProperty("month", currentDate.format(monthFormat));
+    	
+    	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("yyyy");
+    	profile.setProperty("year", currentDate.format(yearFormat));
+		
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output ,"PROFILE#");
 		output.close();
 	}
 	
 	public void loadProfile() throws IOException {
 		
-		FileInputStream input = new FileInputStream("users\\" + us.userName + "\\profile.acc");
+		FileInputStream input = new FileInputStream("users\\" + User.userName + "\\profile.acc");
 		profile.load(input);
 		input.close();
 		
@@ -219,7 +254,7 @@ public class Data {
 		
 		profile.setProperty("Theme", Integer.toString(theme));
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -233,7 +268,7 @@ public class Data {
 		
 		profile.setProperty("welcomeScreen", Integer.toString(setting));
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -243,11 +278,33 @@ public class Data {
 		return Integer.parseInt(profile.getProperty("welcomeScreen"));
 	}
 	
+	public void writeLangSetting(String lang) throws IOException {
+		
+		profile.setProperty("lang", lang);
+		
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
+		profile.store(output, "PROFILE#");
+		output.close();
+	}
+	
+	public int readLangSetting() {
+		
+		int index = 0;
+		
+		if(profile.getProperty("lang").equals("eng") == true) {
+			index = 0;
+		}
+		else if(profile.getProperty("lang").equals("tr") == true) {
+			index = 1;
+		}
+		return index;
+	}
+	
 	public void writeBodyFatResult(String bodyFat) throws IOException {
 		
 		profile.setProperty("bodyFat", bodyFat);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -256,7 +313,7 @@ public class Data {
 		
 		profile.setProperty("bodyFatType", bodyFatType);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -275,7 +332,7 @@ public class Data {
 		
 		profile.setProperty("bmi", bmi);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -284,7 +341,7 @@ public class Data {
 		
 		profile.setProperty("bmiType", bmiType);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -303,7 +360,7 @@ public class Data {
 		
 		profile.setProperty("calorie", cal);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -325,7 +382,7 @@ public class Data {
 		profile.setProperty("carbGoal", carb);
 		profile.setProperty("fatGoal", fat);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -342,7 +399,7 @@ public class Data {
 		profile.setProperty("fatToday", fat);
 		profile.setProperty("calorieToday", cal);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -365,7 +422,7 @@ public class Data {
 		profile.setProperty("weeklyCal_5", weeklyCal[5]);
 		profile.setProperty("weeklyCal_6", weeklyCal[6]);
 		
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
@@ -414,7 +471,7 @@ public class Data {
 		profile.setProperty("weeklyMacros_19", weeklyMacros[19]);
 		profile.setProperty("weeklyMacros_20", weeklyMacros[20]);
 
-		FileOutputStream output = new FileOutputStream("users\\" + us.userName + "\\profile.acc");
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}

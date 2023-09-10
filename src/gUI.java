@@ -1,8 +1,5 @@
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -10,6 +7,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,31 +16,32 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.chart.StandardChartTheme;
-import org.jfree.chart.plot.PlotOrientation;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 public class gUI{
-		
+	
+	/**
+	 * 
+	 * @author Afaruk59
+	 */
+	
 	Data d= new Data();
 	User u= new User();
 	Body b = new Body();
-
+	Language l = new Language();
+		
 	//MAIN FRAME
-	JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator V3.0.0");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator build");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
 	//FONTS
-	Font title = new Font("Arial", Font.BOLD, 20);
-	Font label = new Font("Arial", Font.PLAIN, 13);
-	Font tab = new Font("Arial", Font.PLAIN, 13);
+	Font titleFont = new Font("Arial", Font.BOLD, 20);
+	Font labelFont = new Font("Arial", Font.PLAIN, 13);
+	Font tabFont = new Font("Arial", Font.PLAIN, 13);
 	
 	//BORDER TITLES
 	TitledBorder title1= new TitledBorder("Diary");
@@ -57,158 +57,159 @@ public class gUI{
 	TitledBorder title11= new TitledBorder("Body Fat Calculator");
 	TitledBorder title12= new TitledBorder("BMI Calculator");
 	TitledBorder title13= new TitledBorder("Calorie Calculator");
+	TitledBorder title14= new TitledBorder("Body Stats");
 	
     //SUMMARY PANELS
-	JPanel panel = new JPanel();
+	JPanel summaryPage = new JPanel();
 	JPanel panelUp = new JPanel();
 	JPanel panelDown = new JPanel();
 	JPanel sPanel1 = new JPanel();
-	JPanel sPanel2 = new JPanel();
+	static JPanel sPanel2 = new JPanel();
 	JPanel sPanel3 = new JPanel();
-	JPanel sPanel4 = new JPanel();
-	JPanel sPanel5 = new JPanel();
+	static JPanel sPanel4 = new JPanel();
+	static JPanel sPanel5 = new JPanel();
 	
-	JLabel label1 = new JLabel("Diary");
-	JLabel label2 = new JLabel("Protein (g):");
-	JLabel label3 = new JLabel("Carb (g):");
-	JLabel label4 = new JLabel("Fat (g):");
-	JLabel label5 = new JLabel("Calorie (kJ):");
-	JLabel label6 = new JLabel();
-	JLabel label7 = new JLabel();
-	JLabel label8 = new JLabel();
-	JLabel label9 = new JLabel();
-	JButton btn6 = new  JButton("Skip to the Next Day  --->");
+	JLabel diaryProteinLbl = new JLabel();
+	JLabel diaryCarbLbl = new JLabel();
+	JLabel diaryFatLbl = new JLabel();
+	JLabel diaryCalLbl = new JLabel();
+	JLabel proteinValue = new JLabel();
+	JLabel carbValue = new JLabel();
+	JLabel fatValue = new JLabel();
+	JLabel calValue = new JLabel();
 	
-	JLabel label10 = new JLabel("Goals");
-	JLabel label11 = new JLabel("Protein");
-	JLabel label12 = new JLabel("Carb");
-	JLabel label13 = new JLabel("Fat");
-	JLabel label14 = new JLabel("Calorie");
+	JLabel proGoalLbl = new JLabel();
+	JLabel carbGoalLbl = new JLabel();
+	JLabel fatGoalLbl = new JLabel();
+	JLabel calGoalLbl = new JLabel();
 	JProgressBar progressBar = new JProgressBar();
 	JProgressBar progressBar_1 = new JProgressBar();
 	JProgressBar progressBar_2 = new JProgressBar();
 	JProgressBar progressBar_3 = new JProgressBar();
 	
 	//FOOD PANEL
-	JPanel panel_1 = new JPanel();
+	JPanel foodPage = new JPanel();
 	JPanel fPanelWest = new JPanel();
 	JPanel fPanelUp = new JPanel();
-	JComboBox comboBox = new JComboBox();
-	SpinnerNumberModel model = new SpinnerNumberModel(1, 1, 100, 1);
+	JComboBox<String> comboBox = new JComboBox<String>();
+	SpinnerNumberModel model = new SpinnerNumberModel(1, 1, null, 1);
 	JSpinner spinner = new JSpinner(model);
-	JLabel label15 = new JLabel("Add Food :");
-	JLabel label16 = new JLabel("Amount (g) :");
-	JButton btn1 = new JButton("Add");
-	JButton btn2 = new JButton("Reset All Food");
+	JLabel amountLbl = new JLabel();
+	JButton addBtn = new JButton();
+	JButton resetAllFoodBtn = new JButton();
 	
 	JPanel fPanelDown = new JPanel();
-	JLabel label22 = new JLabel("Add New Food");
-	JLabel label17 = new JLabel("Name:");
-	JLabel label18 = new JLabel("Protein (per 1g):");
-	JLabel label19 = new JLabel("Carb (per 1g);");
-	JLabel label20 = new JLabel("Fat (per 1g):");
-	JLabel label21 = new JLabel("Calorie (per 1g);");
+	JLabel newNameLbl = new JLabel();
+	JLabel newProLbl = new JLabel();
+	JLabel newCarbLbl = new JLabel();
+	JLabel newFatLbl = new JLabel();
+	JLabel newCalLbl = new JLabel();
 	JTextField textField = new JTextField();
 	JTextField textField_1 = new JTextField();
 	JTextField textField_2 = new JTextField();
 	JTextField textField_3 = new JTextField();
 	JTextField textField_4 = new JTextField();
-	JButton btn3 = new JButton("Add New");
-	JButton btn4 = new JButton("Remove Added Meals");
+	JButton addNewBtn = new JButton();
+	JButton removeMealsBtn = new JButton();
 	
-	String[] titles = {"NAME","PROTEIN","CARB","FAT","CALORIE"};
-	JTable table = new JTable(d.table_1, titles);
+	JTable table = new JTable(d.table_1, l.tableTitlesEng);
 	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 	JPanel fPanelEast = new JPanel();
 	JScrollPane fPanelUp_2 = new JScrollPane(table);
 	
-	JTable table_2 = new JTable(d.table_2, titles);
+	JTable table_2 = new JTable(d.table_2, l.tableTitlesEng);
 	JScrollPane fPanelDown_2 = new JScrollPane(table_2);
-	JPopupMenu popMenu = new JPopupMenu("Menu");
-    JMenuItem mi = new JMenuItem("Add to Favourites");
+	JPopupMenu popMenu = new JPopupMenu();
+    JMenuItem addFavItem = new JMenuItem();
     Object tableValue;
 	
 	//GOALS PANEL
-	JPanel panel_2 = new JPanel();
+	JPanel goalsPage = new JPanel();
 	JPanel gPanelWest= new JPanel();
 	JPanel gPanelEast= new JPanel();
-	JPanel chartPanel= new JPanel();
-	JLabel label27 = new JLabel("Set Goals");
-	JLabel label23 = new JLabel("Calorie (kJ):");
-	JLabel label24 = new JLabel("Carb (g):");
-	JLabel label25 = new JLabel("Fat (g):");
-	JLabel label26 = new JLabel("Protein (g):");
-	JLabel label28 = new JLabel("Calorie: ");
-	JLabel label29 = new JLabel();
+	static JPanel chartPanel= new JPanel();
+	JLabel setCalGoalLbl = new JLabel();
+	JLabel setCarbGoalLbl = new JLabel();
+	JLabel setFatGoalLbl = new JLabel();
+	JLabel setProGoalLbl = new JLabel();
+	JLabel calGoalTitleLbl = new JLabel();
+	JLabel calGoalValueLbl = new JLabel();
 	JTextField textField_5 = new JTextField();
 	JTextField textField_6 = new JTextField();
 	JTextField textField_7 = new JTextField();
 	JTextField textField_8 = new JTextField();
-	JButton btn5= new JButton("Set");
-	JButton btn7= new JButton("Reset");
+	JButton setGoalBtn= new JButton();
+	JButton resetGoalBtn= new JButton();
 	
-	//SETTINGS PANEL
-	JPanel panel_3 = new JPanel();
-	JLabel lbl= new JLabel("Choose GUI Theme");
-	JComboBox comboBox2= new JComboBox();
-	JCheckBox cB= new JCheckBox("Show Welcome Screen");
-	JButton btn8 = new  JButton("Reset Profile");
-    JLabel lbl2= new JLabel("Github Page:");
-    JButton btn9 = new JButton("Afaruk59/CalorieCalculator");
-    JButton btn10 = new JButton("Delete Profile");
-    
     //BODY PANEL
-    JPanel panel_4 = new JPanel();
+    JPanel bodyPage = new JPanel();
     
     JPanel bPanel_1 = new JPanel();
-	JLabel lblWaist = new JLabel("Waist (cm):");
-	JLabel lblGender = new JLabel("Gender:");
-	JLabel lblHip = new JLabel("Hip (cm):");
-	JLabel lblHeight = new JLabel("Height (cm):");
-	JLabel lblNeck = new JLabel("Neck (cm):");
-	JRadioButton maleRadio = new JRadioButton("Male");
-	JRadioButton femaleRadio = new JRadioButton("Female");
+	JLabel lblWaist = new JLabel();
+	JLabel lblGender = new JLabel();
+	JLabel lblHip = new JLabel();
+	JLabel lblHeight = new JLabel();
+	JLabel lblNeck = new JLabel();
+	JRadioButton maleRadio = new JRadioButton();
+	JRadioButton femaleRadio = new JRadioButton();
 	ButtonGroup bg_1 = new ButtonGroup();
 	JTextField hipTF = new JTextField();
 	JTextField heightTF = new JTextField();
 	JTextField neckTF = new JTextField();
 	JTextField waistTF = new JTextField();
-	JButton bodyFatBtn = new JButton("Calculate");
-	JLabel lblBFResultTitle = new JLabel("Final Body Fat Result");
+	JButton bodyFatBtn = new JButton();
+	JLabel lblBFResultTitle = new JLabel();
 	JLabel bodyFatResult = new JLabel("% 0");
 	JLabel bFResultType = new JLabel("Essential Fat");
 	
 	JPanel bPanel_2 = new JPanel();
-	JLabel lblWeight_2 = new JLabel("Weight (kg):");
-	JLabel lblHeight_2 = new JLabel("Height (cm):");
+	JLabel lblWeight_2 = new JLabel();
+	JLabel lblHeight_2 = new JLabel();
 	JTextField weightTF_2 = new JTextField();
 	JTextField heightTF_2 = new JTextField();
-	JButton bmiBtn = new JButton("Calculate");
-	JLabel lblBmiResultTitle = new JLabel("Final BMI Result");
+	JButton bmiBtn = new JButton();
+	JLabel lblBmiResultTitle = new JLabel();
 	JLabel bmiResult = new JLabel("% 0");
 	JLabel bmiResultType = new JLabel("Severe Thinness");
 	
     JPanel bPanel_3 = new JPanel();
-	JLabel lblGender_3 = new JLabel("Gender:");
-	JLabel lblAge_3 = new JLabel("Age:");
-	JLabel lblWeight_3 = new JLabel("Weight (kg):");
-	JLabel lblHeight_3 = new JLabel("Height (cm):");
-	JLabel lblActivitiy = new JLabel("Activitiy:");
-	JRadioButton maleRadio_3 = new JRadioButton("Male");
-	JRadioButton femaleRadio_3 = new JRadioButton("Female");
+	JLabel lblGender_3 = new JLabel();
+	JLabel lblAge_3 = new JLabel();
+	JLabel lblWeight_3 = new JLabel();
+	JLabel lblHeight_3 = new JLabel();
+	JLabel lblActivitiy = new JLabel();
+	JRadioButton maleRadio_3 = new JRadioButton();
+	JRadioButton femaleRadio_3 = new JRadioButton();
 	ButtonGroup bg_3 = new ButtonGroup();
 	JTextField ageTF_3 = new JTextField();
 	JTextField weightTF_3 = new JTextField();
 	JTextField heightTF_3 = new JTextField();
 	String[] activity = {"BMR (Basal Metabolic Rate)" , "Sedentary", "Moderate" , "Active"};
-	JComboBox activityBox = new JComboBox(activity);
-	JButton calBtn = new JButton("Calculate");
-	JLabel calResultTitle = new JLabel("Final Calorie Result");
+	JComboBox<String> activityBox = new JComboBox<String>(activity);
+	JButton calBtn = new JButton();
+	JLabel calResultTitle = new JLabel();
 	JLabel calResult = new JLabel("0 Calories/Day");
 	JLabel calResultType = new JLabel("Maintain Weight");
 	
+	//STATS PANEL
+	JScrollPane scrollPane = new JScrollPane();
+	JPanel statsPage = new JPanel();
+	
+	
+	//SETTINGS PANEL
+	JPanel settingsPage = new JPanel();
+	JLabel themeTitleLbl= new JLabel();
+	JComboBox<String> themeComboBox= new JComboBox<String>();
+	JCheckBox welcomeScrenCb= new JCheckBox();
+	JButton resetProfileBtn = new  JButton();
+    JLabel gitPageTitleLbl= new JLabel();
+    JButton gitPageBtn = new JButton("Afaruk59/CalorieCalculator");
+    JButton deleteProfileBtn = new JButton();
+    JLabel langSettingLbl = new JLabel();
+    JComboBox<String> langComboBox= new JComboBox<String>();
+	
 	public void gui() throws IOException {
-				
+		
 		//READ SAVED DATA
 		d.loadProfile();
 		d.readFoods();
@@ -216,6 +217,8 @@ public class gUI{
 		d.writeTable1();
 		d.writeTable2();
 		
+		Charts c = new Charts();
+				
 		//CONTENT PANE
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -225,163 +228,111 @@ public class gUI{
 		contentPane.add(tabbedPane);
 //---------------------------------------------------------------------------------------------		
 		//SUMMARY PANE
-		tabbedPane.addTab("Summary", null, panel, null);
-		tabbedPane.setFont(tab);
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Summary", null, summaryPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Özet", null, summaryPage, null);
+		}
+		tabbedPane.setFont(tabFont);
 		
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(new EmptyBorder(10,10,10,10));
+		summaryPage.setLayout(new BoxLayout(summaryPage, BoxLayout.Y_AXIS));
+		summaryPage.setBorder(new EmptyBorder(10,10,10,10));
 		
 		panelUp.setLayout(new BoxLayout(panelUp, BoxLayout.X_AXIS));
-		panel.add(panelUp);
+		summaryPage.add(panelUp);
 		
 		panelDown.setLayout(new BoxLayout(panelDown, BoxLayout.X_AXIS));
-		panel.add(panelDown);
+		summaryPage.add(panelDown);
 		
 		sPanel1.setPreferredSize(new Dimension(250,341));
 		panelUp.add(sPanel1);
 		sPanel1.setLayout(null);
 		sPanel1.setBorder(title1);
-		title1.setTitleFont(title);
+		title1.setTitleFont(titleFont);
 		
 		sPanel3.setPreferredSize(new Dimension(400,341));
 		panelUp.add(sPanel3);
 		sPanel3.setLayout(null);
 		sPanel3.setBorder(title2);
-		title2.setTitleFont(title);
+		title2.setTitleFont(titleFont);
 		
 		sPanel2.setPreferredSize(new Dimension(402,341));
 		panelUp.add(sPanel2);
 		sPanel2.setLayout(new BoxLayout(sPanel2, BoxLayout.X_AXIS));
 		sPanel2.setBorder(new EmptyBorder(5, 5, 5, 5));
 		sPanel2.setBorder(title3);
-		title3.setTitleFont(title);
+		title3.setTitleFont(titleFont);
 		
 		sPanel4.setPreferredSize(new Dimension(653,341));
 		panelDown.add(sPanel4);
 		sPanel4.setLayout(new BoxLayout(sPanel4, BoxLayout.X_AXIS));
 		sPanel4.setBorder(title4);
-		title4.setTitleFont(title);
+		title4.setTitleFont(titleFont);
 		title4.setTitlePosition(5);
 		
 		sPanel5.setPreferredSize(new Dimension(653,341));
 		panelDown.add(sPanel5);
 		sPanel5.setLayout(new BoxLayout(sPanel5, BoxLayout.X_AXIS));
 		sPanel5.setBorder(title5);
-		title5.setTitleFont(title);
+		title5.setTitleFont(titleFont);
 		title5.setTitlePosition(5);
 		
-		label2.setBounds(32, 86, 100, 30);
-		sPanel1.add(label2);
-		label2.setFont(label);
+		diaryProteinLbl.setBounds(32, 106, 100, 30);
+		sPanel1.add(diaryProteinLbl);
+		diaryProteinLbl.setFont(labelFont);
 		
-		label3.setBounds(32, 128, 100, 30);
-		sPanel1.add(label3);
-		label3.setFont(label);
+		diaryCarbLbl.setBounds(32, 148, 100, 30);
+		sPanel1.add(diaryCarbLbl);
+		diaryCarbLbl.setFont(labelFont);
 		
-		label4.setBounds(32, 170, 100, 30);
-		sPanel1.add(label4);
-		label4.setFont(label);
+		diaryFatLbl.setBounds(32, 190, 100, 30);
+		sPanel1.add(diaryFatLbl);
+		diaryFatLbl.setFont(labelFont);
 		
-		label5.setBounds(32, 212, 100, 30);
-		sPanel1.add(label5);
-		label5.setFont(label);
+		diaryCalLbl.setBounds(32, 232, 100, 30);
+		sPanel1.add(diaryCalLbl);
+		diaryCalLbl.setFont(labelFont);
 		
-		label6.setHorizontalAlignment(SwingConstants.CENTER);
-		label6.setBounds(171, 86, 100, 30);
-		sPanel1.add(label6);
-		label6.setText(d.today[0]);
-		label6.setFont(label);
+		proteinValue.setHorizontalAlignment(SwingConstants.CENTER);
+		proteinValue.setBounds(171, 106, 100, 30);
+		sPanel1.add(proteinValue);
+		proteinValue.setText(d.today[0]);
+		proteinValue.setFont(labelFont);
 		
-		label7.setHorizontalAlignment(SwingConstants.CENTER);
-		label7.setBounds(171, 128, 100, 30);
-		sPanel1.add(label7);
-		label7.setText(d.today[1]);
-		label7.setFont(label);
+		carbValue.setHorizontalAlignment(SwingConstants.CENTER);
+		carbValue.setBounds(171, 148, 100, 30);
+		sPanel1.add(carbValue);
+		carbValue.setText(d.today[1]);
+		carbValue.setFont(labelFont);
 		
-		label8.setHorizontalAlignment(SwingConstants.CENTER);
-		label8.setBounds(171, 170, 100, 30);
-		sPanel1.add(label8);
-		label8.setText(d.today[2]);
-		label8.setFont(label);
+		fatValue.setHorizontalAlignment(SwingConstants.CENTER);
+		fatValue.setBounds(171, 190, 100, 30);
+		sPanel1.add(fatValue);
+		fatValue.setText(d.today[2]);
+		fatValue.setFont(labelFont);
 		
-		label9.setHorizontalAlignment(SwingConstants.CENTER);
-		label9.setBounds(171, 212, 100, 30);
-		sPanel1.add(label9);
-		label9.setText(d.today[3]);
-		label9.setFont(label);
+		calValue.setHorizontalAlignment(SwingConstants.CENTER);
+		calValue.setBounds(171, 232, 100, 30);
+		sPanel1.add(calValue);
+		calValue.setText(d.today[3]);
+		calValue.setFont(labelFont);
 		
-		btn6.setBounds(32, 260, 200, 30);
-		sPanel1.add(btn6);
-		btn6.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					d.writeWeeklyCal(d.today[3]);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				sPanel5.removeAll();
-				weeklyCalChart(d.weeklyCal[0], d.weeklyCal[1], d.weeklyCal[2], d.weeklyCal[3], d.weeklyCal[4], d.weeklyCal[5], d.weeklyCal[6]);
-				
-				try {
-					d.writeWeeklyMacros(d.today[0], d.today[1], d.today[2]);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				sPanel4.removeAll();
-				weeklyMacChart(d.weeklyMacros[0], d.weeklyMacros[1], d.weeklyMacros[2], d.weeklyMacros[3], d.weeklyMacros[4], d.weeklyMacros[5], 
-						d.weeklyMacros[6], d.weeklyMacros[7], d.weeklyMacros[8], d.weeklyMacros[9], d.weeklyMacros[10], d.weeklyMacros[11], d.weeklyMacros[12], 
-						d.weeklyMacros[13], d.weeklyMacros[14], d.weeklyMacros[15], d.weeklyMacros[16], d.weeklyMacros[17], d.weeklyMacros[18], d.weeklyMacros[19], 
-						d.weeklyMacros[20]);
-				
-				label6.setText("0");
-				label7.setText("0");
-				label8.setText("0");
-				label9.setText("0");
-				
-				try {
-					d.writeToday("0", "0", "0", "0");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				sPanel2.removeAll();
-				pieChart("0", "0", "0");
-				
-				progressBar.setValue(0);
-				progressBar_1.setValue(0);
-				progressBar_2.setValue(0);
-				progressBar_3.setValue(0);
-				SwingUtilities.updateComponentTreeUI(sPanel3);
-				
-				sPanel3.add(progressBar);
-				sPanel3.add(progressBar_1);
-				sPanel3.add(progressBar_2);
-				sPanel3.add(progressBar_3);
-				
-				JOptionPane.showMessageDialog(mainFrame, "Passed the next day.", "Information", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
+		proGoalLbl.setBounds(46, 41, 70, 15);
+		sPanel3.add(proGoalLbl);
+		proGoalLbl.setFont(labelFont);
 		
-		label11.setBounds(46, 41, 70, 15);
-		sPanel3.add(label11);
-		label11.setFont(label);
+		carbGoalLbl.setBounds(46, 110, 70, 15);
+		sPanel3.add(carbGoalLbl);
+		carbGoalLbl.setFont(labelFont);
 		
-		label12.setBounds(46, 110, 70, 15);
-		sPanel3.add(label12);
-		label12.setFont(label);
+		fatGoalLbl.setBounds(46, 179, 70, 15);
+		sPanel3.add(fatGoalLbl);
+		fatGoalLbl.setFont(labelFont);
 		
-		label13.setBounds(46, 179, 70, 15);
-		sPanel3.add(label13);
-		label13.setFont(label);
-		
-		label14.setBounds(46, 248, 70, 15);
-		sPanel3.add(label14);
-		label14.setFont(label);
+		calGoalLbl.setBounds(46, 248, 70, 15);
+		sPanel3.add(calGoalLbl);
+		calGoalLbl.setFont(labelFont);
 		
 		progressBar.setStringPainted(true);
 		progressBar.setBounds(46, 62, 318, 30);
@@ -389,7 +340,7 @@ public class gUI{
 		progressBar.setMinimum(0);
 		progressBar.setMaximum(Integer.parseInt(d.goals[1]));
 		progressBar.setValue((int) Double.parseDouble(d.today[0]));
-		progressBar.setFont(label);
+		progressBar.setFont(labelFont);
 		
 		progressBar_1.setStringPainted(true);
 		progressBar_1.setBounds(46, 132, 318, 30);
@@ -397,7 +348,7 @@ public class gUI{
 		progressBar_1.setMinimum(0);
 		progressBar_1.setMaximum(Integer.parseInt(d.goals[2]));
 		progressBar_1.setValue((int) Double.parseDouble(d.today[1]));
-		progressBar_1.setFont(label);
+		progressBar_1.setFont(labelFont);
 		
 		progressBar_2.setStringPainted(true);
 		progressBar_2.setBounds(46, 201, 318, 30);
@@ -405,7 +356,7 @@ public class gUI{
 		progressBar_2.setMinimum(0);
 		progressBar_2.setMaximum(Integer.parseInt(d.goals[3]));
 		progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
-		progressBar_2.setFont(label);
+		progressBar_2.setFont(labelFont);
 		
 		progressBar_3.setStringPainted(true);
 		progressBar_3.setBounds(46, 270, 318, 30);
@@ -413,21 +364,26 @@ public class gUI{
 		progressBar_3.setMinimum(0);
 		progressBar_3.setMaximum(Integer.parseInt(d.goals[0]));
 		progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
-		progressBar_3.setFont(label);
+		progressBar_3.setFont(labelFont);
 //---------------------------------------------------------------------------------------------		
 		//FOOD PANE
-		tabbedPane.addTab("Food", null, panel_1, null);
-		panel_1.setLayout(new BoxLayout(panel_1 , BoxLayout.X_AXIS));
-		panel_1.setBorder(new EmptyBorder(10,10,10,10));
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Food", null, foodPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Yiyecek", null, foodPage, null);
+		}
+		foodPage.setLayout(new BoxLayout(foodPage , BoxLayout.X_AXIS));
+		foodPage.setBorder(new EmptyBorder(10,10,10,10));
 		
 		//WEST SIDE
 		fPanelWest.setLayout(new BoxLayout(fPanelWest , BoxLayout.Y_AXIS));
-		panel_1.add(fPanelWest);
+		foodPage.add(fPanelWest);
 		fPanelWest.setPreferredSize(new Dimension(400,500));
 		
 		//UP SIDE
 		fPanelUp.setBorder(BorderFactory.createTitledBorder(title6));
-		title6.setTitleFont(title);
+		title6.setTitleFont(titleFont);
 		fPanelUp.setLayout(null);
 		fPanelWest.add(fPanelUp);
 		
@@ -442,70 +398,76 @@ public class gUI{
 		spinner.setBounds(246, 130, 156, 20);
 		fPanelUp.add(spinner);
 		
-		label16.setBounds(123, 109, 177, 60);
-		fPanelUp.add(label16);
-		label16.setFont(label);
+		amountLbl.setBounds(123, 109, 177, 60);
+		fPanelUp.add(amountLbl);
+		amountLbl.setFont(labelFont);
 		
 		//ADD FOOD BUTTON
-		btn1.setBounds(246, 180, 156, 34);
-		fPanelUp.add(btn1);
-		btn1.addActionListener(new ActionListener() {
+		addBtn.setBounds(246, 180, 156, 34);
+		fPanelUp.add(addBtn);
+		addBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 						
-				double pro,carb,fat,cal;
-						
-				pro= Double.parseDouble(label6.getText());
-				carb= Double.parseDouble(label7.getText());
-				fat= Double.parseDouble(label8.getText());
-				cal= Double.parseDouble(label9.getText());
-						
-				for(int i=0; i<100; i++) {
-					if(comboBox.getSelectedItem() == d.addedMeals[i]) {
-								
-						pro += (Double.parseDouble(d.addedMeals[i+1]) * (int) spinner.getValue());
-						carb += (Double.parseDouble(d.addedMeals[i+2]) * (int) spinner.getValue());
-						fat += (Double.parseDouble(d.addedMeals[i+3]) * (int) spinner.getValue());
-						cal += (Double.parseDouble(d.addedMeals[i+4]) * (int) spinner.getValue());
-						break;
+				if(comboBox.getSelectedItem() == null) {
+					JOptionPane.showMessageDialog(mainFrame, "Please add a meal or add to Favourites a food.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					double pro,carb,fat,cal;
+					
+					pro= Double.parseDouble(proteinValue.getText());
+					carb= Double.parseDouble(carbValue.getText());
+					fat= Double.parseDouble(fatValue.getText());
+					cal= Double.parseDouble(calValue.getText());
+							
+					for(int i=0; i<100; i++) {
+						if(comboBox.getSelectedItem() == d.addedMeals[i]) {
+									
+							pro += (Double.parseDouble(d.addedMeals[i+1]) * (int) spinner.getValue());
+							carb += (Double.parseDouble(d.addedMeals[i+2]) * (int) spinner.getValue());
+							fat += (Double.parseDouble(d.addedMeals[i+3]) * (int) spinner.getValue());
+							cal += (Double.parseDouble(d.addedMeals[i+4]) * (int) spinner.getValue());
+							break;
+						}
 					}
+							
+					proteinValue.setText(Double.toString(pro));
+					carbValue.setText(Double.toString(carb));
+					fatValue.setText(Double.toString(fat));
+					calValue.setText(Double.toString(cal));
+					
+					sPanel2.removeAll();
+					
+					try {
+						d.writeToday(proteinValue.getText(), carbValue.getText(), fatValue.getText(), calValue.getText());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					c.pieChart(proteinValue.getText(), carbValue.getText(), fatValue.getText());
+					
+					progressBar.setValue((int) Double.parseDouble(d.today[0]));
+					progressBar_1.setValue((int) Double.parseDouble(d.today[1]));
+					progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
+					progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
+					
+					JOptionPane.showMessageDialog(mainFrame, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				}
-						
-				label6.setText(Double.toString(pro));
-				label7.setText(Double.toString(carb));
-				label8.setText(Double.toString(fat));
-				label9.setText(Double.toString(cal));
-				
-				sPanel2.removeAll();
-				
-				try {
-					d.writeToday(label6.getText(), label7.getText(), label8.getText(), label9.getText());
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				pieChart(label6.getText(), label7.getText(), label8.getText());
-				
-				progressBar.setValue((int) Double.parseDouble(d.today[0]));
-				progressBar_1.setValue((int) Double.parseDouble(d.today[1]));
-				progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
-				progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
-				
-				JOptionPane.showMessageDialog(mainFrame, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+
 			}
 		});
 		
 		//RESET BUTTON
-		btn2.setBounds(122, 235, 280, 34);
-		fPanelUp.add(btn2);
-		btn2.addActionListener(new ActionListener() {
+		resetAllFoodBtn.setBounds(122, 235, 280, 34);
+		fPanelUp.add(resetAllFoodBtn);
+		resetAllFoodBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				label6.setText("0");
-				label7.setText("0");
-				label8.setText("0");
-				label9.setText("0");
+				proteinValue.setText("0");
+				carbValue.setText("0");
+				fatValue.setText("0");
+				calValue.setText("0");
 				
 				progressBar.setValue(0);
 				progressBar_1.setValue(0);
@@ -520,7 +482,7 @@ public class gUI{
 					e1.printStackTrace();
 				}
 				
-				pieChart("0", "0", "0");
+				c.pieChart("0", "0", "0");
 				
 				JOptionPane.showMessageDialog(mainFrame, "All meals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -528,34 +490,35 @@ public class gUI{
 		
 		//DOWN SIDE
 		fPanelDown.setBorder(BorderFactory.createTitledBorder(title7));
-		title7.setTitleFont(title);
+		title7.setTitleFont(titleFont);
 		title7.setTitlePosition(5);
 		fPanelWest.add(fPanelDown);
 		fPanelDown.setLayout(null);
 		
-		label17.setBounds(120, 46, 120, 20);
-		fPanelDown.add(label17);
-		label17.setFont(label);
+		newNameLbl.setBounds(120, 46, 120, 20);
+		fPanelDown.add(newNameLbl);
+		newNameLbl.setFont(labelFont);
 		
-		label18.setBounds(120, 77, 120, 20);
-		fPanelDown.add(label18);
-		label18.setFont(label);
+		newProLbl.setBounds(120, 77, 120, 20);
+		fPanelDown.add(newProLbl);
+		newProLbl.setFont(labelFont);
 		
-		label19.setBounds(120, 108, 120, 20);
-		fPanelDown.add(label19);
-		label19.setFont(label);
+		newCarbLbl.setBounds(120, 108, 120, 20);
+		fPanelDown.add(newCarbLbl);
+		newCarbLbl.setFont(labelFont);
 		
-		label20.setBounds(120, 139, 120, 20);
-		fPanelDown.add(label20);
-		label20.setFont(label);
+		newFatLbl.setBounds(120, 139, 120, 20);
+		fPanelDown.add(newFatLbl);
+		newFatLbl.setFont(labelFont);
 		
-		label21.setBounds(120, 170, 120, 20);
-		fPanelDown.add(label21);
-		label21.setFont(label);
+		newCalLbl.setBounds(120, 170, 120, 20);
+		fPanelDown.add(newCalLbl);
+		newCalLbl.setFont(labelFont);
 		
 		//NEW FOOD NAME
 		textField.setBounds(275, 45, 125, 25);
 		fPanelDown.add(textField);
+		textField.setText(null);
 		
 		//NEW FOOD PROTEIN
 		textField_1.setBounds(275, 76, 125, 25);
@@ -582,35 +545,41 @@ public class gUI{
 		textField_4.setColumns(10);
 		
 		//ADD NEW BUTTON
-		btn3.setBounds(274, 210, 125, 34);
-		fPanelDown.add(btn3);
-		btn3.addActionListener(new ActionListener() {
+		addNewBtn.setBounds(274, 210, 125, 34);
+		fPanelDown.add(addNewBtn);
+		addNewBtn.addActionListener(new ActionListener() {
 							
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String newName= textField.getText();
-					String newProtein= textField_1.getText();
-					String newCarb= textField_2.getText();
-					String newFat= textField_3.getText();
-					String newCal= textField_4.getText();
-							
-					d.addFood(newName, newProtein, newCarb, newFat, newCal);
-					comboBox.addItem(newName);
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				
+				if(textField.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(mainFrame, "Please enter the new meal's name.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 				}
-				d.writeTable1();
-				panel_1.remove(fPanelEast);
-				panel_1.add(fPanelEast);
-				JOptionPane.showMessageDialog(mainFrame, "The new meal has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				else {
+					try {
+						String newName= textField.getText();
+						String newProtein= textField_1.getText();
+						String newCarb= textField_2.getText();
+						String newFat= textField_3.getText();
+						String newCal= textField_4.getText();
+								
+						d.addFood(newName, newProtein, newCarb, newFat, newCal);
+						comboBox.addItem(newName);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					d.writeTable1();
+					foodPage.remove(fPanelEast);
+					foodPage.add(fPanelEast);
+					JOptionPane.showMessageDialog(mainFrame, "The new meal has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
 		//REMOVE ALL BUTTON
-		btn4.setBounds(120, 260, 279, 34);
-		fPanelDown.add(btn4);
-		btn4.addActionListener(new ActionListener() {
+		removeMealsBtn.setBounds(120, 260, 279, 34);
+		fPanelDown.add(removeMealsBtn);
+		removeMealsBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -632,19 +601,19 @@ public class gUI{
 						d.table_1[i][j]= null;
 					}
 				}
-				panel_1.remove(fPanelEast);
-				panel_1.add(fPanelEast);
+				foodPage.remove(fPanelEast);
+				foodPage.add(fPanelEast);
 				JOptionPane.showMessageDialog(mainFrame, "All saved meals have been removed.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
 		//EAST SIDE
-		panel_1.add(fPanelEast);
+		foodPage.add(fPanelEast);
 		fPanelEast.setLayout(new BoxLayout(fPanelEast, BoxLayout.Y_AXIS));
 		
 		fPanelEast.add(fPanelUp_2);
 		fPanelUp_2.setBorder(BorderFactory.createTitledBorder(title8));
-		title8.setTitleFont(title);
+		title8.setTitleFont(titleFont);
 		
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(renderer);
@@ -656,7 +625,7 @@ public class gUI{
         
 		fPanelEast.add(fPanelDown_2);
 		fPanelDown_2.setBorder(BorderFactory.createTitledBorder(title10));
-		title10.setTitleFont(title);
+		title10.setTitleFont(titleFont);
 		title10.setTitlePosition(5);
 		
         table_2.getColumnModel().getColumn(0).setCellRenderer(renderer);
@@ -666,8 +635,8 @@ public class gUI{
         table_2.getColumnModel().getColumn(4).setCellRenderer(renderer);
         table_2.setEnabled(false);
         
-        popMenu.add(mi);        
-        mi.addActionListener(new ActionListener() {
+        popMenu.add(addFavItem);        
+        addFavItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -681,8 +650,8 @@ public class gUI{
 					comboBox.addItem(tableValue.toString());
 					
 					d.writeTable1();
-					panel_1.remove(fPanelEast);
-					panel_1.add(fPanelEast);
+					foodPage.remove(fPanelEast);
+					foodPage.add(fPanelEast);
 				}
 				else if(tableValue == null) {
 					JOptionPane.showMessageDialog(contentPane, "Food name is null.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
@@ -700,53 +669,61 @@ public class gUI{
                     int column = table_2.columnAtPoint(e.getPoint());
                     
                     tableValue = table_2.getValueAt(row, column);
-                    popMenu.show(table_2, e.getX(), e.getY());
+                    
+                    if(column == 0) {
+                    	popMenu.show(table_2, e.getX(), e.getY());
+                    }
                 }
             }
         });
 //---------------------------------------------------------------------------------------------
 		//GOALS PANE
-		tabbedPane.addTab("Goals", null, panel_2, null);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
-		panel_2.setBorder(new EmptyBorder(10,10,10,10));
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Goals", null, goalsPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Hedefler", null, goalsPage, null);
+		}
+		goalsPage.setLayout(new BoxLayout(goalsPage, BoxLayout.X_AXIS));
+		goalsPage.setBorder(new EmptyBorder(10,10,10,10));
 		
 		//WEST SIDE
 		gPanelWest.setPreferredSize(new Dimension(925,341));
 		gPanelWest.setBorder(BorderFactory.createTitledBorder(title9));
-		title9.setTitleFont(title);
+		title9.setTitleFont(titleFont);
 		gPanelWest.setLayout(null);
-		panel_2.add(gPanelWest);
+		goalsPage.add(gPanelWest);
 		
-		label23.setHorizontalAlignment(SwingConstants.LEFT);
-		label23.setBounds(125, 199, 89, 20);
-		gPanelWest.add(label23);
-		label23.setFont(label);
+		setCalGoalLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		setCalGoalLbl.setBounds(125, 199, 89, 20);
+		gPanelWest.add(setCalGoalLbl);
+		setCalGoalLbl.setFont(labelFont);
 		
-		label24.setHorizontalAlignment(SwingConstants.LEFT);
-		label24.setBounds(125, 263, 89, 20);
-		gPanelWest.add(label24);
-		label24.setFont(label);
+		setCarbGoalLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		setCarbGoalLbl.setBounds(125, 263, 89, 20);
+		gPanelWest.add(setCarbGoalLbl);
+		setCarbGoalLbl.setFont(labelFont);
 		
-		label25.setHorizontalAlignment(SwingConstants.LEFT);
-		label25.setBounds(125, 295, 89, 20);
-		gPanelWest.add(label25);
-		label25.setFont(label);
+		setFatGoalLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		setFatGoalLbl.setBounds(125, 295, 89, 20);
+		gPanelWest.add(setFatGoalLbl);
+		setFatGoalLbl.setFont(labelFont);
 		
-		label26.setHorizontalAlignment(SwingConstants.LEFT);
-		label26.setBounds(125, 230, 89, 20);
-		gPanelWest.add(label26);
-		label26.setFont(label);
+		setProGoalLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		setProGoalLbl.setBounds(125, 230, 89, 20);
+		gPanelWest.add(setProGoalLbl);
+		setProGoalLbl.setFont(labelFont);
 		
-		label28.setHorizontalAlignment(SwingConstants.CENTER);
-		label28.setBounds(130, 530, 100, 50);
-		gPanelWest.add(label28);
-		label28.setFont(new Font("Arial" , Font.BOLD , 25));
+		calGoalTitleLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		calGoalTitleLbl.setBounds(130, 530, 100, 50);
+		gPanelWest.add(calGoalTitleLbl);
+		calGoalTitleLbl.setFont(new Font("Arial" , Font.BOLD , 25));
 		
-		label29.setHorizontalAlignment(SwingConstants.CENTER);
-		label29.setBounds(280, 530, 100, 50);
-		gPanelWest.add(label29);
-		label29.setFont(new Font("Arial" , Font.BOLD , 25));
-		label29.setText(d.goals[0]);
+		calGoalValueLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		calGoalValueLbl.setBounds(280, 530, 100, 50);
+		gPanelWest.add(calGoalValueLbl);
+		calGoalValueLbl.setFont(new Font("Arial" , Font.BOLD , 25));
+		calGoalValueLbl.setText(d.goals[0]);
 		
 		textField_5.setBounds(240, 196, 140, 25);
 		textField_5.setText("0");
@@ -768,9 +745,9 @@ public class gUI{
 		gPanelWest.add(textField_8);
 		textField_8.setColumns(10);
 		
-		btn5.setBounds(240,330,139,34);
-		gPanelWest.add(btn5);
-		btn5.addActionListener(new ActionListener() {
+		setGoalBtn.setBounds(240,330,139,34);
+		gPanelWest.add(setGoalBtn);
+		setGoalBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -786,7 +763,7 @@ public class gUI{
 				
 				try {
 					d.writeGoals(Integer.toString(calgoal), Integer.toString(progoal), Integer.toString(carbgoal), Integer.toString(fatgoal));
-					gPieChart(d.goals[1], d.goals[2], d.goals[3]);
+					c.gPieChart(d.goals[1], d.goals[2], d.goals[3]);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -806,14 +783,14 @@ public class gUI{
 				progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
 				progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 				
-				label29.setText(d.goals[0]);
+				calGoalValueLbl.setText(d.goals[0]);
 				JOptionPane.showMessageDialog(mainFrame, "Goals have been set.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
-		btn7.setBounds(124,377,255,34);
-		gPanelWest.add(btn7);
-		btn7.addActionListener(new ActionListener() {
+		resetGoalBtn.setBounds(124,377,255,34);
+		gPanelWest.add(resetGoalBtn);
+		resetGoalBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -827,18 +804,18 @@ public class gUI{
 				
 				try {
 					d.writeGoals("0", "0", "0", "0");
-					gPieChart(d.goals[1], d.goals[2], d.goals[3]);
+					c.gPieChart(d.goals[1], d.goals[2], d.goals[3]);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				label29.setText(d.goals[0]);
+				calGoalValueLbl.setText(d.goals[0]);
 				JOptionPane.showMessageDialog(mainFrame, "Goals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 		});
 		
 		//EAST SIDE
-		panel_2.add(gPanelEast);
+		goalsPage.add(gPanelEast);
 		gPanelEast.setLayout(null);
 		gPanelEast.setBorder(BorderFactory.createTitledBorder(title2));
 		gPanelEast.setPreferredSize(new Dimension(1047,341));
@@ -849,43 +826,48 @@ public class gUI{
 		
 //---------------------------------------------------------------------------------------------
 		//BODY PANE
-		tabbedPane.addTab("Body", null, panel_4, null);
-		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
-		panel_4.setBorder(new EmptyBorder(10,10,10,10));
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Body", null, bodyPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Vücut", null, bodyPage, null);
+		}
+		bodyPage.setLayout(new BoxLayout(bodyPage, BoxLayout.X_AXIS));
+		bodyPage.setBorder(new EmptyBorder(10,10,10,10));
 		
 		//BODY FAT
-		panel_4.add(bPanel_1);
+		bodyPage.add(bPanel_1);
 		bPanel_1.setBorder(title11);
-		title11.setTitleFont(title);
+		title11.setTitleFont(titleFont);
 		bPanel_1.setLayout(null);
 		
 		lblWaist.setBounds(75, 334, 100, 30);
 		bPanel_1.add(lblWaist);
-		lblWaist.setFont(label);
+		lblWaist.setFont(labelFont);
 		
 		lblGender.setBounds(75, 170, 100, 30);
 		bPanel_1.add(lblGender);
-		lblGender.setFont(label);
+		lblGender.setFont(labelFont);
 		
 		lblHip.setBounds(75, 211, 100, 30);
 		bPanel_1.add(lblHip);
-		lblHip.setFont(label);
+		lblHip.setFont(labelFont);
 		
 		lblHeight.setBounds(75, 252, 100, 30);
 		bPanel_1.add(lblHeight);
-		lblHeight.setFont(label);
+		lblHeight.setFont(labelFont);
 		
 		lblNeck.setBounds(75, 293, 100, 30);
 		bPanel_1.add(lblNeck);
-		lblNeck.setFont(label);
+		lblNeck.setFont(labelFont);
 		
-		maleRadio.setBounds(160, 174, 54, 23);
+		maleRadio.setBounds(160, 174, 70, 23);
 		bPanel_1.add(maleRadio);
-		maleRadio.setFont(label);
-		
+		maleRadio.setFont(labelFont);
+				
 		femaleRadio.setBounds(216, 174, 70, 23);
 		bPanel_1.add(femaleRadio);
-		femaleRadio.setFont(label);
+		femaleRadio.setFont(labelFont);
 		
 		bg_1.add(maleRadio);
 		bg_1.add(femaleRadio);
@@ -920,13 +902,13 @@ public class gUI{
 				b.bodyFatCalc(maleRadio.isSelected(), femaleRadio.isSelected(), hipTF.getText(),
 						heightTF.getText(), neckTF.getText(), waistTF.getText());
 				
-				String result = b.bodyFat_;
+				String result = Body.bodyFat_;
 				
-				if(b.bodyFat_.equals("0") == false) {
+				if(Body.bodyFat_.equals("0") == false) {
 					bodyFatResult.setText("% " + result);
 				}
 				
-				if(maleRadio.isSelected() == true && b.bodyFat_.equals("0") == false) {
+				if(maleRadio.isSelected() == true && Body.bodyFat_.equals("0") == false) {
 					if(Double.parseDouble(result) <= 5) {
 						bFResultType.setText("Essential Fat");
 					}
@@ -944,7 +926,7 @@ public class gUI{
 					}
 				}
 				
-				if(femaleRadio.isSelected() == true && b.bodyFat_.equals("0") == false) {
+				if(femaleRadio.isSelected() == true && Body.bodyFat_.equals("0") == false) {
 					if(Double.parseDouble(result) <= 13) {
 						bFResultType.setText("Essential Fat");
 					}
@@ -962,7 +944,7 @@ public class gUI{
 					}
 				}
 				
-				if(b.bodyFat_.equals("0") == false) {
+				if(Body.bodyFat_.equals("0") == false) {
 					
 					try {
 						d.writeBodyFatResult(result);
@@ -977,33 +959,33 @@ public class gUI{
 		lblBFResultTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBFResultTitle.setBounds(55, 451, 251, 30);
 		bPanel_1.add(lblBFResultTitle);
-		lblBFResultTitle.setFont(title);
+		lblBFResultTitle.setFont(titleFont);
 		
 		bodyFatResult.setHorizontalAlignment(SwingConstants.CENTER);
 		bodyFatResult.setBounds(75, 492, 211, 30);
 		bPanel_1.add(bodyFatResult);
-		bodyFatResult.setFont(label);
+		bodyFatResult.setFont(labelFont);
 		bodyFatResult.setText("% " + d.readBodyFatResult());
 		
 		bFResultType.setHorizontalAlignment(SwingConstants.CENTER);
 		bFResultType.setBounds(75, 533, 211, 30);
 		bPanel_1.add(bFResultType);
-		bFResultType.setFont(label);
+		bFResultType.setFont(labelFont);
 		bFResultType.setText(d.readBodyFatResultType());
 		
 		//BMI
-		panel_4.add(bPanel_2);
+		bodyPage.add(bPanel_2);
 		bPanel_2.setBorder(title12);
-		title12.setTitleFont(title);
+		title12.setTitleFont(titleFont);
 		bPanel_2.setLayout(null);
 		
 		lblWeight_2.setBounds(75, 262, 100, 30);
 		bPanel_2.add(lblWeight_2);
-		lblWeight_2.setFont(label);
+		lblWeight_2.setFont(labelFont);
 		
 		lblHeight_2.setBounds(75, 303, 100, 30);
 		bPanel_2.add(lblHeight_2);
-		lblHeight_2.setFont(label);
+		lblHeight_2.setFont(labelFont);
 		
 		weightTF_2.setBounds(156, 267, 130, 25);
 		bPanel_2.add(weightTF_2);
@@ -1022,13 +1004,13 @@ public class gUI{
 				
 				b.bmiCalc(weightTF_2.getText(), heightTF_2.getText());
 				
-				String result = b.bmi_;
+				String result = Body.bmi_;
 				
-				if(b.bmi_.equals("0") == false) {
+				if(Body.bmi_.equals("0") == false) {
 					bmiResult.setText("% " + result);
 				}
 				
-				if(b.bmi_.equals("0") == false) {
+				if(Body.bmi_.equals("0") == false) {
 					if(Double.parseDouble(result) <= 16) {
 						bmiResultType.setText("Severe Thinness");
 					}
@@ -1049,7 +1031,7 @@ public class gUI{
 					}
 				}
 				
-				if(b.bmi_.equals("0") == false) {
+				if(Body.bmi_.equals("0") == false) {
 					
 					try {
 						d.writeBmiResult(result);
@@ -1064,53 +1046,53 @@ public class gUI{
 		lblBmiResultTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBmiResultTitle.setBounds(55, 451, 251, 30);
 		bPanel_2.add(lblBmiResultTitle);
-		lblBmiResultTitle.setFont(title);
+		lblBmiResultTitle.setFont(titleFont);
 			
 		bmiResult.setHorizontalAlignment(SwingConstants.CENTER);
 		bmiResult.setBounds(75, 492, 211, 30);
 		bPanel_2.add(bmiResult);
-		bmiResult.setFont(label);
+		bmiResult.setFont(labelFont);
 		bmiResult.setText("% " + d.readBmiResult());
 			
 		bmiResultType.setHorizontalAlignment(SwingConstants.CENTER);
 		bmiResultType.setBounds(75, 533, 211, 30);
 		bPanel_2.add(bmiResultType);
-		bmiResultType.setFont(label);
+		bmiResultType.setFont(labelFont);
 		bmiResultType.setText(d.readBmiResultType());
 		
 		//CALORIE
-		panel_4.add(bPanel_3);
+		bodyPage.add(bPanel_3);
 		bPanel_3.setBorder(title13);
-		title13.setTitleFont(title);
+		title13.setTitleFont(titleFont);
 		bPanel_3.setLayout(null);
 		
 		lblGender_3.setBounds(75, 150, 100, 30);
 		bPanel_3.add(lblGender_3);
-		lblGender_3.setFont(label);
+		lblGender_3.setFont(labelFont);
 				
 		lblAge_3.setBounds(75, 191, 100, 30);
 		bPanel_3.add(lblAge_3);
-		lblAge_3.setFont(label);
+		lblAge_3.setFont(labelFont);
 				
 		lblWeight_3.setBounds(75, 232, 100, 30);
 		bPanel_3.add(lblWeight_3);
-		lblWeight_3.setFont(label);
+		lblWeight_3.setFont(labelFont);
 				
 		lblHeight_3.setBounds(75, 273, 100, 30);
 		bPanel_3.add(lblHeight_3);
-		lblHeight_3.setFont(label);
+		lblHeight_3.setFont(labelFont);
 				
 		lblActivitiy.setBounds(76, 309, 100, 30);
 		bPanel_3.add(lblActivitiy);
-		lblActivitiy.setFont(label);
+		lblActivitiy.setFont(labelFont);
 				
-		maleRadio_3.setBounds(160, 154, 54, 23);
+		maleRadio_3.setBounds(160, 154, 70, 23);
 		bPanel_3.add(maleRadio_3);
-		maleRadio_3.setFont(label);
+		maleRadio_3.setFont(labelFont);
 				
 		femaleRadio_3.setBounds(216, 154, 70, 23);
 		bPanel_3.add(femaleRadio_3);
-		femaleRadio_3.setFont(label);
+		femaleRadio_3.setFont(labelFont);
 		
 		bg_3.add(maleRadio_3);
 		bg_3.add(femaleRadio_3);
@@ -1141,12 +1123,12 @@ public class gUI{
 				b.calorieCalc(maleRadio_3.isSelected(), femaleRadio_3.isSelected(), ageTF_3.getText(), weightTF_3.getText(),
 						heightTF_3.getText(), activityBox.getSelectedIndex());
 				
-				if(b.calorie.equals("0") == false) {
+				if(Body.calorie.equals("0") == false) {
 					
-					calResult.setText(b.calorie + " Calories/Day");
+					calResult.setText(Body.calorie + " Calories/Day");
 					
 					try {
-						d.writeCalorieResult(b.calorie);
+						d.writeCalorieResult(Body.calorie);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -1157,37 +1139,68 @@ public class gUI{
 		calResultTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		calResultTitle.setBounds(55, 451, 251, 30);
 		bPanel_3.add(calResultTitle);
-		calResultTitle.setFont(title);
+		calResultTitle.setFont(titleFont);
 				
 		calResult.setHorizontalAlignment(SwingConstants.LEFT);
 		calResult.setBounds(70, 492, 300, 30);
 		bPanel_3.add(calResult);
-		calResult.setFont(label);
+		calResult.setFont(labelFont);
 		calResult.setText(d.readCalorieResult() + " Calories/Day");
 				
 		calResultType.setHorizontalAlignment(SwingConstants.CENTER);
 		calResultType.setBounds(185, 492, 120, 30);
 		bPanel_3.add(calResultType);
-		calResultType.setFont(label);
+		calResultType.setFont(labelFont);
 				
 //---------------------------------------------------------------------------------------------
-		//SETTINGS PANE
-		tabbedPane.addTab("Settings", null, panel_3, null);
-		panel_3.setLayout(null);
-		panel_3.setBorder(new EmptyBorder(10,10,10,10));
+		//STATS PANE
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Stats", null, scrollPane, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("İstatistikler", null, scrollPane, null);
+		}
 		
-		lbl.setBounds(40,30,150,30);
-		panel_3.add(lbl);
-		lbl.setFont(label);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setViewportView(statsPage);
+		
+		statsPage.setLayout(new BoxLayout(statsPage, BoxLayout.X_AXIS));
+		
+		JPanel monthlyPanel = new JPanel();
+		monthlyPanel.setLayout(new BoxLayout(monthlyPanel, BoxLayout.Y_AXIS));
+		monthlyPanel.setPreferredSize(new Dimension(1120,500));
+		statsPage.add(monthlyPanel);
+		
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setLayout(null);
+		bodyPanel.setPreferredSize(new Dimension(1120,500));
+		statsPage.add(bodyPanel);
+		bodyPanel.setBorder(title14);
+		title14.setTitleFont(titleFont);
+		
+//---------------------------------------------------------------------------------------------
+		//SETTINGS PANE
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Settings", null, settingsPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Ayarlar", null, settingsPage, null);
+		}
+		settingsPage.setLayout(null);
+		settingsPage.setBorder(new EmptyBorder(10,10,10,10));
+		
+		themeTitleLbl.setBounds(40,30,150,30);
+		settingsPage.add(themeTitleLbl);
+		themeTitleLbl.setFont(labelFont);
 
-        comboBox2.addItem("Light");
-        comboBox2.addItem("Dark");
-        comboBox2.addActionListener(new ActionListener() {
+		themeComboBox.addItem("Light");
+		themeComboBox.addItem("Dark");
+		themeComboBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if(comboBox2.getSelectedIndex()==0) {
+				if(themeComboBox.getSelectedIndex()==0) {
 					try {
 			            UIManager.setLookAndFeel( new FlatLightLaf() );
 			            SwingUtilities.updateComponentTreeUI(mainFrame);
@@ -1197,7 +1210,7 @@ public class gUI{
 			            System.err.println( "Failed to initialize LaF" );
 			        }
 				}
-				else if(comboBox2.getSelectedIndex()==1) {
+				else if(themeComboBox.getSelectedIndex()==1) {
 					try {
 			            UIManager.setLookAndFeel( new FlatDarkLaf() );
 			            SwingUtilities.updateComponentTreeUI(mainFrame);
@@ -1209,28 +1222,27 @@ public class gUI{
 				}
 			}
         });
-        comboBox2.setBounds(40,70,300,30);
-        panel_3.add(comboBox2);
+		themeComboBox.setBounds(40,70,300,30);
+        settingsPage.add(themeComboBox);
         try {
-			comboBox2.setSelectedIndex(d.readThemeSetting());
+        	themeComboBox.setSelectedIndex(d.readThemeSetting());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
         
-        cB.setBounds(40,120,500,30);
-        cB.setBackground(null);
-        panel_3.add(cB);
-        cB.setFont(tab);
-        SwingUtilities.updateComponentTreeUI(cB);
+        welcomeScrenCb.setBounds(40,120,500,30);
+        welcomeScrenCb.setBackground(null);
+        settingsPage.add(welcomeScrenCb);
+        welcomeScrenCb.setFont(tabFont);
         int set= d.readWSetting();
         if(set==1) {
-        	cB.setSelected(true);
+        	welcomeScrenCb.setSelected(true);
         }
-        cB.addActionListener(new ActionListener() {
+        welcomeScrenCb.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(cB.isSelected()) {
+				if(welcomeScrenCb.isSelected()) {
 					try {
 						d.writeWSetting(1);
 					} catch (IOException e1) {
@@ -1246,10 +1258,9 @@ public class gUI{
 			}
         });
         
-        btn8.setBounds(40,170,300,30);
-        panel_3.add(btn8);
-		SwingUtilities.updateComponentTreeUI(btn8);
-        btn8.addActionListener(new ActionListener() {
+        resetProfileBtn.setBounds(40,170,300,30);
+        settingsPage.add(resetProfileBtn);
+		resetProfileBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1269,15 +1280,14 @@ public class gUI{
 			}
         });
         
-        lbl2.setBounds(371,30,150,30);
-        lbl2.setFont(label);
-        panel_3.add(lbl2);
-		SwingUtilities.updateComponentTreeUI(lbl2);
+		gitPageTitleLbl.setBounds(371,30,150,30);
+		gitPageTitleLbl.setFont(labelFont);
+        settingsPage.add(gitPageTitleLbl);
+		SwingUtilities.updateComponentTreeUI(gitPageTitleLbl);
         
-        btn9.setBounds(370,70,300,30);
-        panel_3.add(btn9);
-		SwingUtilities.updateComponentTreeUI(btn9);
-        btn9.addActionListener(new ActionListener() {
+		gitPageBtn.setBounds(370,70,300,30);
+        settingsPage.add(gitPageBtn);
+		gitPageBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1291,10 +1301,9 @@ public class gUI{
 			}
         });
         
-        btn10.setBounds(40,230,300,30);
-        panel_3.add(btn10);
-		SwingUtilities.updateComponentTreeUI(btn10);
-		btn10.addActionListener(new ActionListener() {
+		deleteProfileBtn.setBounds(40,230,300,30);
+        settingsPage.add(deleteProfileBtn);
+		deleteProfileBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1312,6 +1321,44 @@ public class gUI{
 				}
 			}
         });
+		
+		langSettingLbl.setBounds(41,290,300,30);
+		settingsPage.add(langSettingLbl);
+		
+		langComboBox.setBounds(110,290,230,30);
+		langComboBox.addItem("English");
+		langComboBox.addItem("Türkçe");
+		settingsPage.add(langComboBox);
+		langComboBox.setSelectedIndex(d.readLangSetting());
+		langComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Language l = new Language();
+				
+				if(langComboBox.getSelectedIndex()==0) {
+					try {
+						l.english();
+						d.writeLangSetting("eng");
+						langTranslator();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				else if(langComboBox.getSelectedIndex()==1) {
+					try {
+						l.turkish();
+						d.writeLangSetting("tr");
+						langTranslator();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+        });
+		
+		SwingUtilities.updateComponentTreeUI(settingsPage);
         
 		//FRAME		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1321,320 +1368,159 @@ public class gUI{
         mainFrame.setLayout(null);
         
 		ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
-		
-		try {
-			profileName();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
 	}
 	
-	public void welcomeFrame() throws InterruptedException, IOException {
-		
-		JFrame frame= new JFrame("Welcome to ACC V3.0.0");
-		frame.setBounds(620, 300, 750, 500);
-		frame.setResizable(false);
-		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(10,10,10,10));
-		frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel fotoPanel = new JPanel();
-		fotoPanel.setBounds(10, 11, 714, 405);
-		fotoPanel.setLayout(new BoxLayout(fotoPanel, BoxLayout.X_AXIS));
-		contentPane.add(fotoPanel);
-		
-		ImageIcon img1 = new ImageIcon("resources\\img\\tutorial_1.png");
-		Image scaledImage1 = img1.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
-        JLabel imgLab1 = new JLabel(scaledIcon1);
-        fotoPanel.add(imgLab1);
-        imgLab1.setVisible(false);
-        
-		ImageIcon img2 = new ImageIcon("resources\\img\\tutorial_2.png");
-		Image scaledImage2 = img2.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
-        JLabel imgLab2 = new JLabel(scaledIcon2);
-        fotoPanel.add(imgLab2);
-        imgLab2.setVisible(false);
-        
-		ImageIcon img3 = new ImageIcon("resources\\img\\tutorial_3.png");
-		Image scaledImage3 = img3.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
-        JLabel imgLab3 = new JLabel(scaledIcon3);
-        fotoPanel.add(imgLab3);
-        imgLab3.setVisible(false);
-        
-		ImageIcon img4 = new ImageIcon("resources\\img\\tutorial_a.png");
-		Image scaledImage4 = img4.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon4 = new ImageIcon(scaledImage4);
-        JLabel imgLab4 = new JLabel(scaledIcon4);
-        fotoPanel.add(imgLab4);
-        imgLab4.setVisible(false);
-        
-		ImageIcon img5 = new ImageIcon("resources\\img\\tutorial_b.png");
-		Image scaledImage5 = img5.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon5 = new ImageIcon(scaledImage5);
-        JLabel imgLab5 = new JLabel(scaledIcon5);
-        fotoPanel.add(imgLab5);
-        imgLab5.setVisible(false);
-        
-		ImageIcon img6 = new ImageIcon("resources\\img\\tutorial_c.png");
-		Image scaledImage6 = img6.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon6 = new ImageIcon(scaledImage6);
-        JLabel imgLab6 = new JLabel(scaledIcon6);
-        fotoPanel.add(imgLab6);
-        imgLab6.setVisible(false);
-        
-        if(comboBox2.getSelectedIndex() == 0) {
-			imgLab4.setVisible(true);
-        }else {
-        	imgLab1.setVisible(true);
-        }
-		
-		JButton nextButton = new JButton("Next");
-		nextButton.setBounds(614, 427, 110, 23);
-		contentPane.add(nextButton);
-		nextButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-					
-				if(imgLab1.isVisible() == true) {
-				     imgLab1.setVisible(false);      
-				     imgLab2.setVisible(true);
-				}
-				else if(imgLab2.isVisible() == true) {
-				     imgLab2.setVisible(false);      
-				     imgLab3.setVisible(true);
-				}
-				else if(imgLab3.isVisible() == true) {
-				     imgLab3.setVisible(false);      
-				     imgLab1.setVisible(true);
-				}
-				else if(imgLab4.isVisible() == true) {
-				     imgLab4.setVisible(false);      
-				     imgLab5.setVisible(true);
-				}
-				else if(imgLab5.isVisible() == true) {
-				     imgLab5.setVisible(false);      
-				     imgLab6.setVisible(true);
-				}
-				else if(imgLab6.isVisible() == true) {
-				     imgLab6.setVisible(false);      
-				     imgLab4.setVisible(true);
-				}
-			}
-		});
-		
-		JButton skipButton = new JButton("Skip");
-		skipButton.setBounds(10, 427, 110, 23);
-		contentPane.add(skipButton);
-		skipButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
+	public void langTranslator() throws IOException {
 				
-				frame.setVisible(false);
+		tabbedPane.setTitleAt(0, Language.lang.getProperty("tab1"));
+		tabbedPane.setTitleAt(1, Language.lang.getProperty("tab2"));
+		tabbedPane.setTitleAt(2, Language.lang.getProperty("tab3"));
+		tabbedPane.setTitleAt(3, Language.lang.getProperty("tab4"));
+		tabbedPane.setTitleAt(4, Language.lang.getProperty("tab5"));
+		tabbedPane.setTitleAt(5, Language.lang.getProperty("tab6"));
+
+		title1.setTitle(Language.lang.getProperty("title1"));
+		title2.setTitle(Language.lang.getProperty("title2"));
+		title3.setTitle(Language.lang.getProperty("title3"));
+		title4.setTitle(Language.lang.getProperty("title4"));
+		title5.setTitle(Language.lang.getProperty("title5"));
+		title6.setTitle(Language.lang.getProperty("title6"));
+		title7.setTitle(Language.lang.getProperty("title7"));
+		title8.setTitle(Language.lang.getProperty("title8"));
+		title9.setTitle(Language.lang.getProperty("title9"));
+		title10.setTitle(Language.lang.getProperty("title10"));
+		title11.setTitle(Language.lang.getProperty("title11"));
+		title12.setTitle(Language.lang.getProperty("title12"));
+		title13.setTitle(Language.lang.getProperty("title13"));
+		
+		diaryProteinLbl.setText(Language.lang.getProperty("diaryProteinLbl"));
+		diaryCarbLbl.setText(Language.lang.getProperty("diaryCarbLbl"));
+		diaryFatLbl.setText(Language.lang.getProperty("diaryFatLbl"));
+		diaryCalLbl.setText(Language.lang.getProperty("diaryCalLbl"));
+		
+		proGoalLbl.setText(Language.lang.getProperty("proGoalLbl"));
+		carbGoalLbl.setText(Language.lang.getProperty("carbGoalLbl"));
+		fatGoalLbl.setText(Language.lang.getProperty("fatGoalLbl"));
+		calGoalLbl.setText(Language.lang.getProperty("calGoalLbl"));
+		
+		amountLbl.setText(Language.lang.getProperty("amountLbl"));
+		addBtn.setText(Language.lang.getProperty("addBtn"));
+		resetAllFoodBtn.setText(Language.lang.getProperty("resetAllFoodBtn"));
+		
+		newNameLbl.setText(Language.lang.getProperty("newNameLbl"));
+		newProLbl.setText(Language.lang.getProperty("newProLbl"));
+		newCarbLbl.setText(Language.lang.getProperty("newCarbLbl"));
+		newFatLbl.setText(Language.lang.getProperty("newFatLbl"));
+		newCalLbl.setText(Language.lang.getProperty("newCalLbl"));
+		addNewBtn.setText(Language.lang.getProperty("addNewBtn"));
+		removeMealsBtn.setText(Language.lang.getProperty("removeMealsBtn"));
+		
+		addFavItem.setText(Language.lang.getProperty("addFavItem"));
+		
+		setCalGoalLbl.setText(Language.lang.getProperty("setCalGoalLbl"));
+		setCarbGoalLbl.setText(Language.lang.getProperty("setCarbGoalLbl"));
+		setFatGoalLbl.setText(Language.lang.getProperty("setFatGoalLbl"));
+		setProGoalLbl.setText(Language.lang.getProperty("setProGoalLbl"));
+		calGoalTitleLbl.setText(Language.lang.getProperty("calGoalTitleLbl"));
+		setGoalBtn.setText(Language.lang.getProperty("setGoalBtn"));
+		resetGoalBtn.setText(Language.lang.getProperty("resetGoalBtn"));
+		
+		themeTitleLbl.setText(Language.lang.getProperty("themeTitleLbl"));
+		welcomeScrenCb.setText(Language.lang.getProperty("welcomeScrenCb"));
+		resetProfileBtn.setText(Language.lang.getProperty("resetProfileBtn"));
+		gitPageTitleLbl.setText(Language.lang.getProperty("gitPageTitleLbl"));
+		deleteProfileBtn.setText(Language.lang.getProperty("deleteProfileBtn"));
+		langSettingLbl.setText(Language.lang.getProperty("langSettingLbl"));
+		
+		lblWaist.setText(Language.lang.getProperty("lblWaist"));
+		lblGender.setText(Language.lang.getProperty("lblGender"));
+		lblHip.setText(Language.lang.getProperty("lblHip"));
+		lblHeight.setText(Language.lang.getProperty("lblHeight"));
+		lblNeck.setText(Language.lang.getProperty("lblNeck"));
+		maleRadio.setText(Language.lang.getProperty("maleRadio"));
+		femaleRadio.setText(Language.lang.getProperty("femaleRadio"));
+		bodyFatBtn.setText(Language.lang.getProperty("bodyFatBtn"));
+		lblBFResultTitle.setText(Language.lang.getProperty("lblBFResultTitle"));
+		
+		lblWeight_2.setText(Language.lang.getProperty("lblWeight_2"));
+		lblHeight_2.setText(Language.lang.getProperty("lblHeight_2"));
+		bmiBtn.setText(Language.lang.getProperty("bmiBtn"));
+		lblBmiResultTitle.setText(Language.lang.getProperty("lblBmiResultTitle"));
+		
+		lblGender_3.setText(Language.lang.getProperty("lblGender_3"));
+		lblAge_3.setText(Language.lang.getProperty("lblAge_3"));
+		lblWeight_3.setText(Language.lang.getProperty("lblWeight_3"));
+		lblHeight_3.setText(Language.lang.getProperty("lblHeight_3"));
+		lblActivitiy.setText(Language.lang.getProperty("lblActivitiy"));
+		maleRadio_3.setText(Language.lang.getProperty("maleRadio_3"));
+		femaleRadio_3.setText(Language.lang.getProperty("femaleRadio_3"));
+		calBtn.setText(Language.lang.getProperty("calBtn"));
+		calResultTitle.setText(Language.lang.getProperty("calResultTitle"));
+		calResultType.setText(Language.lang.getProperty("calResultType"));
+		
+		d.readDefaultFoods();
+		d.writeTable2();
+	}
+	
+	public void nextDay() {
+				
+		Charts c = new Charts();
+    	
+    	LocalDate currentDate = LocalDate.now();
+    	
+    	LocalDate pastDate = LocalDate.of(Integer.parseInt(Data.profile.getProperty("year")),
+    										Integer.parseInt(Data.profile.getProperty("month")),
+    										Integer.parseInt(Data.profile.getProperty("day")));
+    	
+    	int gap = (int) ChronoUnit.DAYS.between(pastDate, currentDate);
+		
+    	for(int i=0; i<gap; i++) {
+    		
+			try {
+				d.writeWeeklyCal(d.today[3]);
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-		});
-		
-		Thread.sleep(1200);
-		frame.setVisible(true);
-	}
-
-	public void coffeeAnimation() throws InterruptedException {
-		
-		JPanel coffeePanel = new JPanel();
-		coffeePanel.setLayout(new BoxLayout(coffeePanel, BoxLayout.X_AXIS));
-		coffeePanel.setBounds(1101,6,25,25);
-		mainFrame.add(coffeePanel);
-		
-		ImageIcon img1 = new ImageIcon("resources\\img\\acc1.png");
-		Image scaledImage1 = img1.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
-        ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
-        JLabel imgLab1 = new JLabel(scaledIcon1);
-        coffeePanel.add(imgLab1);
-        imgLab1.setVisible(false);
-        
-		ImageIcon img2 = new ImageIcon("resources\\img\\acc2.png");
-		Image scaledImage2 = img2.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
-        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
-        JLabel imgLab2 = new JLabel(scaledIcon2);
-        coffeePanel.add(imgLab2);
-        imgLab2.setVisible(false);
-        
-		ImageIcon img3 = new ImageIcon("resources\\img\\acc3.png");
-		Image scaledImage3 = img3.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
-        ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
-        JLabel imgLab3 = new JLabel(scaledIcon3);
-        coffeePanel.add(imgLab3);
-        imgLab3.setVisible(false);
-        
-		ImageIcon img4 = new ImageIcon("resources\\img\\acc4.png");
-		Image scaledImage4 = img4.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
-        ImageIcon scaledIcon4 = new ImageIcon(scaledImage4);
-        JLabel imgLab4 = new JLabel(scaledIcon4);
-        coffeePanel.add(imgLab4);
-        imgLab4.setVisible(false);
-        
-        while(true) {
-    		if(comboBox2.getSelectedIndex() == 1) {
-				imgLab3.setVisible(true);
-				Thread.sleep(1000);
-				imgLab3.setVisible(false);
-				imgLab4.setVisible(true);
-				Thread.sleep(1000);
-				imgLab4.setVisible(false);
-    		}
-    		else if(comboBox2.getSelectedIndex() == 0) {
-				imgLab1.setVisible(true);
-				Thread.sleep(1000);
-				imgLab1.setVisible(false);
-				imgLab2.setVisible(true);
-				Thread.sleep(1000);
-				imgLab2.setVisible(false);
+			
+			sPanel5.removeAll();
+			c.weeklyCalChart(d.weeklyCal[0], d.weeklyCal[1], d.weeklyCal[2], d.weeklyCal[3], d.weeklyCal[4], d.weeklyCal[5], d.weeklyCal[6]);
+			
+			try {
+				d.writeWeeklyMacros(d.today[0], d.today[1], d.today[2]);
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-        }
-	}
-	
-	public void profileName() throws InterruptedException {
-		
-		User u= new User();
-		
-		JPanel profilePanel = new JPanel();
-		profilePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		profilePanel.setBounds(890,3,200,40);
-		mainFrame.add(profilePanel);
-		
-		ImageIcon img1 = new ImageIcon("resources\\img\\user.png");
-		Image scaledImage1 = img1.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
-        ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
-        JLabel imgLab1 = new JLabel(scaledIcon1);
-        profilePanel.add(imgLab1);
-		
-		JLabel name = new JLabel(u.userName);
-		Font font = new Font("Arial", Font.BOLD, 15);
-		name.setFont(font);
-		profilePanel.add(name);
-	}
-
-	public void pieChart(String pro, String carb, String fat) {
-		
-		double p = Double.parseDouble(pro);
-		double c = Double.parseDouble(carb);
-		double f = Double.parseDouble(fat);
-        	
-        	//DATA SET
-            DefaultPieDataset dataset = new DefaultPieDataset();
-            dataset.setValue("Protein", p);
-            dataset.setValue("Carb", c);
-            dataset.setValue("Fat", f);
-
-            JFreeChart chart = ChartFactory.createPieChart(null, dataset, true, true, false);
-            
-            chart.setBackgroundPaint(null);
-            chart.getLegend().setBackgroundPaint(null);
-            chart.getLegend().setItemPaint(Color.GRAY);
-            chart.getPlot().setBackgroundPaint(null);
-            
-            ChartPanel chartPanel = new ChartPanel(chart);
-            sPanel2.add(chartPanel);
-	}
-	
-	public void gPieChart(String pro, String carb, String fat) {
-		
-		int p = Integer.parseInt(pro);
-		int c = Integer.parseInt(carb);
-		int f = Integer.parseInt(fat);
-		
-		DefaultPieDataset dataset = new DefaultPieDataset();
-        dataset.setValue("Protein", p);
-        dataset.setValue("Carb", c);
-        dataset.setValue("Fat", f);
-
-        JFreeChart chart = ChartFactory.createPieChart(null, dataset, true, true, false);
-
-        chart.setBackgroundPaint(null);
-        chart.getLegend().setBackgroundPaint(null);
-        chart.getLegend().setItemPaint(Color.GRAY);
-        chart.getPlot().setBackgroundPaint(null);
-
-        ChartPanel chartPanel = new ChartPanel(chart);
-        this.chartPanel.add(chartPanel);    
-	}
-	
-	public void weeklyMacChart(String a, String b, String c, String d, String e, String f, String g, String h, String i, String j, 
-			String k, String l, String m, String n, String o, String p, String r, String s, String t, String u, String v) {
-		
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(Double.parseDouble(v), "Protein", "T-7");
-		dataset.addValue(Double.parseDouble(u), "Carb", "T-7");
-		dataset.addValue(Double.parseDouble(t), "Fat", "T-7");
-       
-		dataset.addValue(Double.parseDouble(s), "Protein", "T-6");
-		dataset.addValue(Double.parseDouble(r), "Carb", "T-6");
-		dataset.addValue(Double.parseDouble(p), "Fat", "T-6");
-       
-		dataset.addValue(Double.parseDouble(o), "Protein", "T-5");
-		dataset.addValue(Double.parseDouble(n), "Carb", "T-5");
-		dataset.addValue(Double.parseDouble(m), "Fat", "T-5");
-       
-		dataset.addValue(Double.parseDouble(l), "Protein", "T-4");
-		dataset.addValue(Double.parseDouble(k), "Carb", "T-4");
-		dataset.addValue(Double.parseDouble(j), "Fat", "T-4");
-		
-		dataset.addValue(Double.parseDouble(i), "Protein", "T-3");
-		dataset.addValue(Double.parseDouble(h), "Carb", "T-3");
-		dataset.addValue(Double.parseDouble(g), "Fat", "T-3");
-       
-		dataset.addValue(Double.parseDouble(f), "Protein", "T-2");
-		dataset.addValue(Double.parseDouble(e), "Carb", "T-2");
-		dataset.addValue(Double.parseDouble(d), "Fat", "T-2");
-       
-		dataset.addValue(Double.parseDouble(c), "Protein", "Yesterday");
-		dataset.addValue(Double.parseDouble(b), "Carb", "Yesterday");
-		dataset.addValue(Double.parseDouble(a), "Fat", "Yesterday");
-       
-		JFreeChart chart = ChartFactory.createBarChart(null, null, null, dataset);
-        
-		chart.setBackgroundPaint(null);
-		chart.getLegend().setBackgroundPaint(null);
-		chart.getLegend().setItemPaint(Color.GRAY);
-		chart.getPlot().setBackgroundPaint(null);
-
-		ChartPanel chartPanel = new ChartPanel(chart);
-		sPanel4.add(chartPanel);
-	}
-	
-	public void weeklyCalChart(String first, String second, String third, String fourth, String fifth, String sixth, String seventh) {
-		
-		double mon = Double.parseDouble(first);
-		double tue = Double.parseDouble(second);
-		double wed = Double.parseDouble(third);
-		double thu = Double.parseDouble(fourth);
-		double fri = Double.parseDouble(fifth);
-		double sat = Double.parseDouble(sixth);
-		double sun = Double.parseDouble(seventh);
-		
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(sun, "Calorie", "T-7");
-        dataset.addValue(sat, "Calorie", "T-6");
-        dataset.addValue(fri, "Calorie", "T-5");
-        dataset.addValue(thu, "Calorie", "T-4");
-        dataset.addValue(wed, "Calorie", "T-3");
-        dataset.addValue(tue, "Calorie", "T-2");
-        dataset.addValue(mon, "Calorie", "Yesterday");
-        
-        JFreeChart chart = ChartFactory.createLineChart(null, null, null, dataset, PlotOrientation.VERTICAL, true, true, false );
-        
-        chart.setBackgroundPaint(null);
-        chart.getLegend().setBackgroundPaint(null);
-        chart.getLegend().setItemPaint(Color.GRAY);
-        chart.getPlot().setBackgroundPaint(null);
-        
-        ChartPanel chartPanel = new ChartPanel(chart);
-        sPanel5.add(chartPanel);	
+			
+			sPanel4.removeAll();
+			c.weeklyMacChart(d.weeklyMacros[0], d.weeklyMacros[1], d.weeklyMacros[2], d.weeklyMacros[3], d.weeklyMacros[4], d.weeklyMacros[5], 
+					d.weeklyMacros[6], d.weeklyMacros[7], d.weeklyMacros[8], d.weeklyMacros[9], d.weeklyMacros[10], d.weeklyMacros[11], d.weeklyMacros[12], 
+					d.weeklyMacros[13], d.weeklyMacros[14], d.weeklyMacros[15], d.weeklyMacros[16], d.weeklyMacros[17], d.weeklyMacros[18], d.weeklyMacros[19], 
+					d.weeklyMacros[20]);
+			
+			proteinValue.setText("0");
+			carbValue.setText("0");
+			fatValue.setText("0");
+			calValue.setText("0");
+			
+			try {
+				d.writeToday("0", "0", "0", "0");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			sPanel2.removeAll();
+			c.pieChart("0", "0", "0");
+			
+			progressBar.setValue(0);
+			progressBar_1.setValue(0);
+			progressBar_2.setValue(0);
+			progressBar_3.setValue(0);
+			SwingUtilities.updateComponentTreeUI(sPanel3);
+			
+			sPanel3.add(progressBar);
+			sPanel3.add(progressBar_1);
+			sPanel3.add(progressBar_2);
+			sPanel3.add(progressBar_3);
+    	}
 	}
 }

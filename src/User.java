@@ -29,11 +29,16 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 public class User{
 	
+	/**
+	 * 
+	 * @author Afaruk59
+	 */
+	
 	JFrame frame = new JFrame("User Selection");
 	JPanel contentPane = new JPanel();
 	JPanel panelUp = new JPanel();
 	JPanel panelDown = new JPanel();
-	JComboBox userBox = new JComboBox();
+	JComboBox<String> userBox = new JComboBox<String>();
 	JButton selectButton = new JButton("Select");
 	JButton newUserButton = new JButton("New User");
 	JTextField newUserName = new JTextField();

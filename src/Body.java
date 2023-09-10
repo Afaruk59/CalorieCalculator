@@ -1,8 +1,12 @@
 import java.text.DecimalFormat;
-
 import javax.swing.JOptionPane;
 
 public class Body {
+	
+	/**
+	 * 
+	 * @author Afaruk59
+	 */
 	
 	static String bodyFat_;
 	static String bmi_;
