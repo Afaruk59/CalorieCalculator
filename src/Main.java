@@ -1,18 +1,42 @@
 import java.io.IOException;
+
 import javax.swing.SwingUtilities;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
+	
+	/*
+_______________                    ______ ___________________        
+___    |__  __/_____ ___________  ____  /____  ____/_  __ \( )_______
+__  /| |_  /_ _  __ `/_  ___/  / / /_  //_/_____ \ _  /_/ /|/__  ___/
+_  ___ |  __/ / /_/ /_  /   / /_/ /_  ,<   ____/ / _\__, /   _(__  ) 
+/_/  |_/_/    \__,_/ /_/    \__,_/ /_/|_| /_____/  /____/    /____/  
+   
+_________      ______            _____           _________      ______            ______      _____              
+__  ____/_____ ___  /_______________(_)____      __  ____/_____ ___  /_________  ____  /_____ __  /______________
+_  /    _  __ `/_  /_  __ \_  ___/_  /_  _ \     _  /    _  __ `/_  /_  ___/  / / /_  /_  __ `/  __/  __ \_  ___/
+/ /___  / /_/ /_  / / /_/ /  /   _  / /  __/     / /___  / /_/ /_  / / /__ / /_/ /_  / / /_/ // /_ / /_/ /  /    
+\____/  \__,_/ /_/  \____//_/    /_/  \___/      \____/  \__,_/ /_/  \___/ \__,_/ /_/  \__,_/ \__/ \____//_/     
+                                                                                                                                                                                      
+	 */
+	
+	/*
+	 * @author Afaruk59
+	 */
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException, InterruptedException{
 		
-		Data d= new Data();
-		gUI gui= new gUI();
+		User u = new User();
+		gUI gui = new gUI();
+		Data d = new Data();
 		
-		//READ SAVED DATA
-		d.readGoals();
-		d.readToday();
-		d.readWeeklyCal();
-		d.readWeeklyMacros();
+		//USER SCREEN
+		u.userScreen();
+		
+		//LOAD SAVED DATA
+		d.loadProfile();
+		d.readFoods();
+		d.readDefaultFoods();
 		
 		//SHOW GUI
 		gui.gui();
