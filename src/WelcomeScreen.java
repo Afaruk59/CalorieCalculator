@@ -20,8 +20,6 @@ public class WelcomeScreen {
 		
 	public void welcomeFrame() throws InterruptedException, IOException {
 				
-		Data d = new Data();
-
 		JFrame frame= new JFrame("Welcome to ACC build");
 		frame.setBounds(620, 300, 750, 500);
 		frame.setResizable(false);
@@ -78,7 +76,7 @@ public class WelcomeScreen {
         fotoPanel.add(imgLab6);
         imgLab6.setVisible(false);
         
-        if(d.profile.getProperty("Theme").equals("0") == true) {
+        if(Data.profile.getProperty("Theme").equals("0") == true) {
 			imgLab4.setVisible(true);
         }else {
         	imgLab1.setVisible(true);

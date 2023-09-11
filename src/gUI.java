@@ -34,7 +34,7 @@ public class gUI{
 	Language l = new Language();
 		
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator build");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator build_9.11.23");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -1199,7 +1199,7 @@ public class gUI{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 				if(themeComboBox.getSelectedIndex()==0) {
 					try {
 			            UIManager.setLookAndFeel( new FlatLightLaf() );

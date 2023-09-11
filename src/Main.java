@@ -15,6 +15,8 @@ _  /    _  __ `/_  /_  __ \_  ___/_  /_  _ \     _  /    _  __ `/_  /_  ___/  / 
 
 import java.io.IOException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -25,7 +27,7 @@ public class Main {
 	 * @author Afaruk59
 	 */
 
-	public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException, InterruptedException{
+	public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException{
 		
 		User u = new User();
 		gUI gui = new gUI();
@@ -35,6 +37,7 @@ public class Main {
 		WelcomeScreen w = new WelcomeScreen();
 		ProfileName p = new ProfileName();
 		DateAndTime t = new DateAndTime();
+		Ambients a = new Ambients();
 		
 		//USER SCREEN
 		u.userScreen();
@@ -108,5 +111,8 @@ public class Main {
 		if(gui.welcomeScrenCb.isSelected()) {
 			w.welcomeFrame();
 		}
+		
+		//AMBIENT SOUNDS
+		a.musicStarter();
 	}
 }
