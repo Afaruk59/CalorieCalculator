@@ -10,6 +10,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Ambients {
 	
+	/**
+	 * 
+	 * @author Afaruk59
+	 */
+	
 	static Clip music_1;
 	static Clip music_2;
 	static Clip music_3;
