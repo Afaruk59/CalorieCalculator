@@ -34,8 +34,8 @@ public class DateAndTime extends gUI{
             
             if(Data.profile.getProperty("lang").equals("eng") == true) {
             	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss");
-            	String saat = currentDate.format(timeFormat); 
-            	time.setText(saat);
+            	String clock = currentDate.format(timeFormat); 
+            	time.setText(clock);
             	datePanel.setBounds(385,8,300,40);
             }
             else if(Data.profile.getProperty("lang").equals("tr") == true) {

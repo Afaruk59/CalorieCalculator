@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,9 +23,13 @@ public class Ambients {
 	
 	public void musicStarter() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		
-		//Thread.sleep(10000);
+		Thread.sleep(10000);
+		
+		LocalDateTime currentDate = LocalDateTime.now();
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+		String clock = currentDate.format(timeFormat);
 				
-		if(Data.profile.getProperty("Theme").equals("0") == true) {
+		if(clock.compareTo("06:00") >= 0 && clock.compareTo("18:00") < 0) {
 			
 			Thread t3 = new Thread(new Runnable() {
 
@@ -40,7 +46,7 @@ public class Ambients {
 			});
 			t3.start();
 		}
-		else if(Data.profile.getProperty("Theme").equals("1") == true) {
+		else {
 			Thread t = new Thread(new Runnable() {
 
 				@Override
@@ -98,7 +104,6 @@ public class Ambients {
             newVolume += 1.0f;
             volumeControl.setValue(newVolume);
             
-            System.out.println(newVolume);
             Thread.sleep(1000);
         }
 
@@ -134,7 +139,6 @@ public class Ambients {
             newVolume += 1.0f;
             volumeControl.setValue(newVolume);
             
-            System.out.println(newVolume);
             Thread.sleep(1000);
         }
 
@@ -170,7 +174,6 @@ public class Ambients {
             newVolume += 1.0f;
             volumeControl.setValue(newVolume);
             
-            System.out.println(newVolume);
             Thread.sleep(1000);
         }
 

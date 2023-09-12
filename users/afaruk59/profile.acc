@@ -1,5 +1,5 @@
 #PROFILE#
-#Mon Sep 11 22:10:35 TRT 2023
+#Tue Sep 12 20:22:08 TRT 2023
 Theme=0
 bmi=0
 bmiType=
@@ -10,16 +10,16 @@ calorieGoal=2500
 calorieToday=0
 carbGoal=350
 carbToday=0
-day=11
+day=12
 fatGoal=60
 fatToday=0
-lang=tr
+lang=eng
 month=09
 proteinGoal=200
 proteinToday=0
 weeklyCal_0=0
-weeklyCal_1=750.0
-weeklyCal_2=0
+weeklyCal_1=0
+weeklyCal_2=750.0
 weeklyCal_3=0
 weeklyCal_4=0
 weeklyCal_5=0
@@ -38,12 +38,12 @@ weeklyMacros_18=0
 weeklyMacros_19=0
 weeklyMacros_2=0
 weeklyMacros_20=0
-weeklyMacros_3=30.0
-weeklyMacros_4=51.0
-weeklyMacros_5=47.0
-weeklyMacros_6=0
-weeklyMacros_7=0
-weeklyMacros_8=0
+weeklyMacros_3=0
+weeklyMacros_4=0
+weeklyMacros_5=0
+weeklyMacros_6=30.0
+weeklyMacros_7=51.0
+weeklyMacros_8=47.0
 weeklyMacros_9=0
 welcomeScreen=0
 year=2023
