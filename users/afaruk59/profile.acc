@@ -1,6 +1,6 @@
 #PROFILE#
-#Tue Sep 12 20:22:08 TRT 2023
-Theme=0
+#Tue Sep 12 22:18:56 TRT 2023
+Theme=1
 bmi=0
 bmiType=
 bodyFat=0
@@ -13,7 +13,7 @@ carbToday=0
 day=12
 fatGoal=60
 fatToday=0
-lang=eng
+lang=tr
 month=09
 proteinGoal=200
 proteinToday=0

@@ -36,13 +36,13 @@ public class DateAndTime extends gUI{
             	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss");
             	String clock = currentDate.format(timeFormat); 
             	time.setText(clock);
-            	datePanel.setBounds(385,8,300,40);
+            	datePanel.setBounds(325,8,300,40);
             }
             else if(Data.profile.getProperty("lang").equals("tr") == true) {
             	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss", new Locale("tr"));
             	String saat = currentDate.format(timeFormat); 
             	time.setText(saat);
-            	datePanel.setBounds(415,8,300,40);
+            	datePanel.setBounds(325,8,300,40);
             }
             
         	DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");

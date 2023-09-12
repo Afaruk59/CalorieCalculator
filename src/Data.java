@@ -29,7 +29,7 @@ public class Data {
 	static Properties profile = new Properties();
 		
 	public void addFood(String newName, String newProtein, String newCarb, String newFat, String newCal) throws IOException{
-		
+				
 		File file= new File("users\\" + User.userName + "\\foods.acc");
 		
 		FileWriter fWrite= new FileWriter(file, false);

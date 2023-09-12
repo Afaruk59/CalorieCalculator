@@ -191,11 +191,6 @@ public class gUI{
 	JLabel calResult = new JLabel("0 Calories/Day");
 	JLabel calResultType = new JLabel("Maintain Weight");
 	
-	//STATS PANEL
-	JScrollPane scrollPane = new JScrollPane();
-	JPanel statsPage = new JPanel();
-	
-	
 	//SETTINGS PANEL
 	JPanel settingsPage = new JPanel();
 	JLabel themeTitleLbl= new JLabel();
@@ -1151,32 +1146,6 @@ public class gUI{
 		calResultType.setBounds(185, 492, 120, 30);
 		bPanel_3.add(calResultType);
 		calResultType.setFont(labelFont);
-				
-//---------------------------------------------------------------------------------------------
-		//STATS PANE
-		if(Data.profile.getProperty("lang").equals("eng") == true) {
-			tabbedPane.addTab("Stats", null, scrollPane, null);
-		}
-		else if(Data.profile.getProperty("lang").equals("tr") == true) {
-			tabbedPane.addTab("İstatistikler", null, scrollPane, null);
-		}
-		
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setViewportView(statsPage);
-		
-		statsPage.setLayout(new BoxLayout(statsPage, BoxLayout.X_AXIS));
-		
-		JPanel monthlyPanel = new JPanel();
-		monthlyPanel.setLayout(new BoxLayout(monthlyPanel, BoxLayout.Y_AXIS));
-		monthlyPanel.setPreferredSize(new Dimension(1120,500));
-		statsPage.add(monthlyPanel);
-		
-		JPanel bodyPanel = new JPanel();
-		bodyPanel.setLayout(null);
-		bodyPanel.setPreferredSize(new Dimension(1120,500));
-		statsPage.add(bodyPanel);
-		bodyPanel.setBorder(title14);
-		title14.setTitleFont(titleFont);
 		
 //---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
@@ -1376,8 +1345,7 @@ public class gUI{
 		tabbedPane.setTitleAt(1, Language.lang.getProperty("tab2"));
 		tabbedPane.setTitleAt(2, Language.lang.getProperty("tab3"));
 		tabbedPane.setTitleAt(3, Language.lang.getProperty("tab4"));
-		tabbedPane.setTitleAt(4, Language.lang.getProperty("tab5"));
-		tabbedPane.setTitleAt(5, Language.lang.getProperty("tab6"));
+		tabbedPane.setTitleAt(4, Language.lang.getProperty("tab6"));
 
 		title1.setTitle(Language.lang.getProperty("title1"));
 		title2.setTitle(Language.lang.getProperty("title2"));
