@@ -192,6 +192,7 @@ public class User{
 		bWrite.close();
 	}
 	
+	@SuppressWarnings("resource")
 	public void readProfiles() throws IOException {
 		
 		Path userPath = Paths.get("users\\");

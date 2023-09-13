@@ -16,6 +16,7 @@ public class DateAndTime extends gUI{
 	static String month;
 	static String year;
 	
+	@SuppressWarnings("deprecation")
 	public void getTime() throws InterruptedException, IOException {
 				
 		JPanel datePanel = new JPanel();
