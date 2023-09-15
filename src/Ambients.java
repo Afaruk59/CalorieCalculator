@@ -20,14 +20,13 @@ public class Ambients {
 	static Clip music_1;
 	static Clip music_2;
 	static Clip music_3;
+	static String clock;
 	
 	public void musicStarter() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-		
-		Thread.sleep(10000);
-		
+				
 		LocalDateTime currentDate = LocalDateTime.now();
 		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-		String clock = currentDate.format(timeFormat);
+		clock = currentDate.format(timeFormat);
 				
 		if(clock.compareTo("06:00") >= 0 && clock.compareTo("18:00") < 0) {
 			
@@ -78,6 +77,18 @@ public class Ambients {
 			t2.start();
 		}
 	}
+	
+	public void music1Stopper() {
+		music_1.close();
+	}
+	
+	public void music2Stopper() {
+		music_2.close();
+	}
+	
+	public void music3Stopper() {
+		music_3.close();
+	}
 
 	public void playAmbient1() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		
@@ -112,6 +123,8 @@ public class Ambients {
         }
         
         music_1.close();
+        
+        playAmbient1();
 	}
 	
 	public void playAmbient2() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
@@ -147,6 +160,8 @@ public class Ambients {
         }
         
         music_2.close();
+        
+        playAmbient2();
 	}
 	
 	public void playAmbient3() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
@@ -182,5 +197,7 @@ public class Ambients {
         }
         
         music_3.close();
+        
+        playAmbient3();
 	}
 }

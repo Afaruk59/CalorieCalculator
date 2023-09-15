@@ -37,7 +37,6 @@ public class Main {
 		WelcomeScreen w = new WelcomeScreen();
 		ProfileName p = new ProfileName();
 		DateAndTime t = new DateAndTime();
-		Ambients a = new Ambients();
 		
 		//USER SCREEN
 		u.userScreen();
@@ -111,8 +110,5 @@ public class Main {
 		if(gui.welcomeScrenCb.isSelected()) {
 			w.welcomeFrame();
 		}
-		
-		//AMBIENT SOUNDS
-		a.musicStarter();
 	}
 }

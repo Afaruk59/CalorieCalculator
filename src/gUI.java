@@ -10,6 +10,8 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -32,9 +34,10 @@ public class gUI{
 	User u= new User();
 	Body b = new Body();
 	Language l = new Language();
-		
+	Ambients a = new Ambients();
+	
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator build_9.11.23");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.1.0");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -202,6 +205,8 @@ public class gUI{
     JButton deleteProfileBtn = new JButton();
     JLabel langSettingLbl = new JLabel();
     JComboBox<String> langComboBox= new JComboBox<String>();
+	JLabel soundLbl = new JLabel("Ambients:");
+	JComboBox<String> soundBox = new JComboBox<String>();
 	
 	public void gui() throws IOException {
 		
@@ -1294,7 +1299,7 @@ public class gUI{
 		langSettingLbl.setBounds(41,290,300,30);
 		settingsPage.add(langSettingLbl);
 		
-		langComboBox.setBounds(110,290,230,30);
+		langComboBox.setBounds(120,290,220,30);
 		langComboBox.addItem("English");
 		langComboBox.addItem("Türkçe");
 		settingsPage.add(langComboBox);
@@ -1326,6 +1331,61 @@ public class gUI{
 				}
 			}
         });
+		
+		soundLbl.setBounds(41,350,300,30);
+		settingsPage.add(soundLbl);
+		
+		soundBox.setBounds(120,350,220,30);
+		soundBox.addItem("On");
+		soundBox.addItem("Off");
+		settingsPage.add(soundBox);
+		soundBox.setSelectedIndex(d.readAmbSetting());
+		Thread t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				
+				if(soundBox.getSelectedIndex() == 0) {
+					try {
+						Thread.sleep(10000);
+						a.musicStarter();
+					} catch (UnsupportedAudioFileException | LineUnavailableException | InterruptedException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		t.start();
+		soundBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if(soundBox.getSelectedIndex() == 0) {
+					try {
+						d.writeAmbSetting("0");
+						a.musicStarter();
+					} catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
+				else if(soundBox.getSelectedIndex() == 1) {
+					try {
+						d.writeAmbSetting("1");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
+					if(Ambients.clock.compareTo("06:00") >= 0 && Ambients.clock.compareTo("18:00") < 0) {
+						Ambients.music_1.close();
+					}
+					else {
+						Ambients.music_2.close();
+						Ambients.music_3.close();
+					}
+				}
+			}
+		});
 		
 		SwingUtilities.updateComponentTreeUI(settingsPage);
         
@@ -1399,6 +1459,7 @@ public class gUI{
 		gitPageTitleLbl.setText(Language.lang.getProperty("gitPageTitleLbl"));
 		deleteProfileBtn.setText(Language.lang.getProperty("deleteProfileBtn"));
 		langSettingLbl.setText(Language.lang.getProperty("langSettingLbl"));
+		soundLbl.setText(Language.lang.getProperty("soundLbl"));
 		
 		lblWaist.setText(Language.lang.getProperty("lblWaist"));
 		lblGender.setText(Language.lang.getProperty("lblGender"));

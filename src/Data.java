@@ -183,9 +183,7 @@ public class Data {
 		profile.setProperty("bmiType", "");
 		profile.setProperty("calorie", "0");
 		profile.setProperty("lang", "eng");
-		profile.setProperty("lang", "eng");
-		profile.setProperty("lang", "eng");
-		profile.setProperty("lang", "eng");
+		profile.setProperty("Amb", "0");
 		
 		LocalDateTime currentDate = LocalDateTime.now();
 		
@@ -295,6 +293,28 @@ public class Data {
 			index = 0;
 		}
 		else if(profile.getProperty("lang").equals("tr") == true) {
+			index = 1;
+		}
+		return index;
+	}
+	
+	public void writeAmbSetting(String setting) throws IOException {
+		
+		profile.setProperty("Amb", setting);
+		
+		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
+		profile.store(output, "PROFILE#");
+		output.close();
+	}
+	
+	public int readAmbSetting() {
+		
+		int index = 0;
+		
+		if(profile.getProperty("Amb").equals("0") == true) {
+			index = 0;
+		}
+		else if(profile.getProperty("Amb").equals("1") == true) {
 			index = 1;
 		}
 		return index;

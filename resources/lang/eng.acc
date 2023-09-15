@@ -54,6 +54,7 @@ setCarbGoalLbl=Carb (g)\:
 setFatGoalLbl=Fat (g)\:
 setGoalBtn=Set
 setProGoalLbl=Protein (g)\:
+soundLbl=Ambients\:
 tab1=Summary
 tab2=Food
 tab3=Goals
