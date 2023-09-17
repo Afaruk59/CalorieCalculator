@@ -105,7 +105,7 @@ public class Main {
         
         //SHOW PROFILE NAME
         p.profileName();
-        
+                
 		//SHOW WELCOME SCREEN
 		if(gui.welcomeScrenCb.isSelected()) {
 			w.welcomeFrame();

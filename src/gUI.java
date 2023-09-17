@@ -16,6 +16,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.StandardChartTheme;
@@ -37,7 +39,7 @@ public class gUI{
 	Ambients a = new Ambients();
 	
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.1.0");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.1.1");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -115,12 +117,12 @@ public class gUI{
 	JButton addNewBtn = new JButton();
 	JButton removeMealsBtn = new JButton();
 	
-	JTable table = new JTable(d.table_1, l.tableTitlesEng);
+	JTable table = new JTable(d.table_1, Language.tableTitles);
 	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 	JPanel fPanelEast = new JPanel();
 	JScrollPane fPanelUp_2 = new JScrollPane(table);
 	
-	JTable table_2 = new JTable(d.table_2, l.tableTitlesEng);
+	JTable table_2 = new JTable(d.table_2, Language.tableTitles);
 	JScrollPane fPanelDown_2 = new JScrollPane(table_2);
 	JPopupMenu popMenu = new JPopupMenu();
     JMenuItem addFavItem = new JMenuItem();
@@ -209,7 +211,7 @@ public class gUI{
 	JComboBox<String> soundBox = new JComboBox<String>();
 	
 	public void gui() throws IOException {
-		
+				
 		//READ SAVED DATA
 		d.loadProfile();
 		d.readFoods();
@@ -411,6 +413,11 @@ public class gUI{
 			public void actionPerformed(ActionEvent e) {
 						
 				if(comboBox.getSelectedItem() == null) {
+					try {
+						Effects.playErrorSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(mainFrame, "Please add a meal or add to Favourites a food.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
@@ -451,6 +458,11 @@ public class gUI{
 					progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
 					progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 					
+					try {
+						Effects.playMessageSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(mainFrame, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				}
 
@@ -484,6 +496,11 @@ public class gUI{
 				
 				c.pieChart("0", "0", "0");
 				
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(mainFrame, "All meals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -552,8 +569,13 @@ public class gUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(textField.getText().isEmpty() == true) {
-					JOptionPane.showMessageDialog(mainFrame, "Please enter the new meal's name.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+				if(textField.getText().isEmpty() || textField.getText().startsWith(" ") || textField.getText().endsWith(" ")) {
+					try {
+						Effects.playErrorSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(mainFrame, "New meals name is empty or invalid.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					try {
@@ -571,10 +593,16 @@ public class gUI{
 					d.writeTable1();
 					foodPage.remove(fPanelEast);
 					foodPage.add(fPanelEast);
+					
+					try {
+						Effects.playMessageSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(mainFrame, "The new meal has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
-		});
+		}); 
 		
 		//REMOVE ALL BUTTON
 		removeMealsBtn.setBounds(120, 260, 279, 34);
@@ -603,6 +631,12 @@ public class gUI{
 				}
 				foodPage.remove(fPanelEast);
 				foodPage.add(fPanelEast);
+				
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(mainFrame, "All saved meals have been removed.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -654,6 +688,11 @@ public class gUI{
 					foodPage.add(fPanelEast);
 				}
 				else if(tableValue == null) {
+					try {
+						Effects.playErrorSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(contentPane, "Food name is null.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -784,6 +823,12 @@ public class gUI{
 				progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 				
 				calGoalValueLbl.setText(d.goals[0]);
+				
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(mainFrame, "Goals have been set.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -809,6 +854,12 @@ public class gUI{
 					e1.printStackTrace();
 				}
 				calGoalValueLbl.setText(d.goals[0]);
+				
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(mainFrame, "Goals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
 				
 			}
@@ -1239,12 +1290,22 @@ public class gUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				int result = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Reset Profile", JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
 						d.resetProfile();
 						d.removeFoods();
+						try {
+							Effects.playMessageSound();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(mainFrame, "Profile has been reset.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
 						System.exit(0);
 					} catch (IOException e1) {
@@ -1267,6 +1328,12 @@ public class gUI{
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					Effects.playButtonSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
+				try {
 					URI url = new URI("https://github.com/Afaruk59/CalorieCalculator");
 					java.awt.Desktop.getDesktop().browse(url);
 				} catch (URISyntaxException | IOException e1) {
@@ -1282,11 +1349,21 @@ public class gUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				int result = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Delete Profile", JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
 						u.deleteProfile();
+						try {
+							Effects.playMessageSound();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(mainFrame, "Profile removed.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
 						System.exit(0);
 					} catch (IOException e1) {
@@ -1400,6 +1477,17 @@ public class gUI{
 	}
 	
 	public void langTranslator() throws IOException {
+		
+        TableColumnModel columnModel = table_2.getColumnModel();
+        for(int i=0; i<5; i++) {
+            TableColumn column = columnModel.getColumn(i);
+            column.setHeaderValue(Language.tableTitles[i]);
+        }
+        TableColumnModel columnModel_2 = table.getColumnModel();
+        for(int i=0; i<5; i++) {
+            TableColumn column = columnModel_2.getColumn(i);
+            column.setHeaderValue(Language.tableTitles[i]);
+        }
 				
 		tabbedPane.setTitleAt(0, Language.lang.getProperty("tab1"));
 		tabbedPane.setTitleAt(1, Language.lang.getProperty("tab2"));

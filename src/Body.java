@@ -1,4 +1,8 @@
+import java.io.IOException;
 import java.text.DecimalFormat;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 
 public class Body {
@@ -17,10 +21,20 @@ public class Body {
 		double bodyFat = 0;
 		
 		if(male == false && female == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Please select a gender.", "Gender not found", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			if(height.isEmpty() ==true || neck.isEmpty() ==true || waist.isEmpty() ==true) {
+				try {
+					Effects.playErrorSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
@@ -29,15 +43,29 @@ public class Body {
 				int waist_ = Integer.parseInt(waist);
 				
 				if(male == true) {
+					try {
+						Effects.playButtonSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					bodyFat = (495 / (1.0324 - 0.19077 * Math.log10(waist_ - neck_) + 0.15456 * Math.log10(height_))) - 450;
 				}
 				else if(female == true) {
 					if(hip.isEmpty() == false) {
-						
+						try {
+							Effects.playButtonSound();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
 						int hip_ = Integer.parseInt(hip);
 						bodyFat = (495 / (1.29579 - 0.35004 * Math.log10(waist_ + hip_ - neck_) + 0.22100 * Math.log10(height_))) - 450;
 					}
 					else {
+						try {
+							Effects.playErrorSound();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(null, "Hip is missing.", "", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -55,9 +83,19 @@ public class Body {
 		double bmi = 0;
 		
 		if(weight.isEmpty() == true || height.isEmpty() == true) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
+			try {
+				Effects.playButtonSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			int weight_ = Integer.parseInt(weight);
 			int height_ = Integer.parseInt(height);
 			
@@ -76,13 +114,28 @@ public class Body {
 		double bmr = 0;
 		
 		if(male == false && female == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(null, "Please select a gender.", "Gender not found", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			if(age.isEmpty() ==true || weight.isEmpty() ==true || height.isEmpty() ==true) {
 				JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
+				try {
+					Effects.playButtonSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				int age_ = Integer.parseInt(age);
 				int weight_ = Integer.parseInt(weight);
 				int height_ = Integer.parseInt(height);

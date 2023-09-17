@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -85,6 +87,18 @@ public class User{
 				userBox.addItem(users[i]);
 			}
 		}
+		userBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					Effects.playButtonSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		selectButton.setBounds(380, 80, 150, 50);
 		panelUp.add(selectButton);
@@ -94,6 +108,11 @@ public class User{
 			public void actionPerformed(ActionEvent e) {
 
 				if(userBox.getSelectedItem() == null) {
+					try {
+						Effects.playErrorSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(contentPane, "First, create a user.", "Invalid Option", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
@@ -117,8 +136,13 @@ public class User{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(newUserName.getText().equals("")) {
-					JOptionPane.showMessageDialog(contentPane, "Please enter a name.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+				if(newUserName.getText().equals("") || newUserName.getText().startsWith(" ") || newUserName.getText().endsWith(" ")) {
+					try {
+						Effects.playErrorSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(contentPane, "The name is empty or invalid.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					
@@ -152,6 +176,11 @@ public class User{
 						}
 					}
 					else if(isSame == true) {
+						try {
+							Effects.playErrorSound();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(contentPane, "This name is already taken.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 					}
 				}
