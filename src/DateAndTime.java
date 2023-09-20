@@ -15,9 +15,10 @@ public class DateAndTime extends gUI{
 	static String day;
 	static String month;
 	static String year;
+	static boolean run = true;
 	
 	@SuppressWarnings("deprecation")
-	public void getTime() throws InterruptedException, IOException {
+	public void getTime() {
 				
 		JPanel datePanel = new JPanel();
 		datePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -29,40 +30,53 @@ public class DateAndTime extends gUI{
 		
 		SwingUtilities.updateComponentTreeUI(time);
 		
-        while (true) {
-        	
-            LocalDateTime currentDate = LocalDateTime.now(); 
-            
-            if(Data.profile.getProperty("lang").equals("eng") == true) {
-            	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss");
-            	String clock = currentDate.format(timeFormat); 
-            	time.setText(clock);
-            	datePanel.setBounds(325,8,300,40);
-            }
-            else if(Data.profile.getProperty("lang").equals("tr") == true) {
-            	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss", new Locale("tr"));
-            	String saat = currentDate.format(timeFormat); 
-            	time.setText(saat);
-            	datePanel.setBounds(325,8,300,40);
-            }
-            
-        	DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
-        	day = currentDate.format(dayFormat); 
-        	Data.profile.setProperty("day", day);
-        	
-        	DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MM");
-        	month = currentDate.format(monthFormat); 
-        	Data.profile.setProperty("month", month);
-        	
-        	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("yyyy");
-        	year = currentDate.format(yearFormat); 
-        	Data.profile.setProperty("year", year);
-        	
-    		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
-    		Data.profile.store(output, "PROFILE#");
-    		output.close();
-            
-            Thread.sleep(1000);
-        }
+		Thread trd = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+		        while (run) {
+		        	
+		            LocalDateTime currentDate = LocalDateTime.now(); 
+		            
+		            if(Data.profile.getProperty("lang").equals("eng") == true) {
+		            	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss");
+		            	String clock = currentDate.format(timeFormat); 
+		            	time.setText(clock);
+		            	datePanel.setBounds(325,8,300,40);
+		            }
+		            else if(Data.profile.getProperty("lang").equals("tr") == true) {
+		            	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("|   dd/MM/yyyy EEEE HH:mm:ss", new Locale("tr"));
+		            	String saat = currentDate.format(timeFormat); 
+		            	time.setText(saat);
+		            	datePanel.setBounds(325,8,300,40);
+		            }
+		            
+		        	DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
+		        	day = currentDate.format(dayFormat); 
+		        	Data.profile.setProperty("day", day);
+		        	
+		        	DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MM");
+		        	month = currentDate.format(monthFormat); 
+		        	Data.profile.setProperty("month", month);
+		        	
+		        	DateTimeFormatter yearFormat = DateTimeFormatter.ofPattern("yyyy");
+		        	year = currentDate.format(yearFormat); 
+		        	Data.profile.setProperty("year", year);
+		        	
+		    		FileOutputStream output;
+					try {
+						output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
+			    		Data.profile.store(output, "PROFILE#");
+			    		output.close();
+			            
+			            Thread.sleep(1000);
+					} catch (IOException | InterruptedException e) {
+						e.printStackTrace();
+					}
+		        }
+			}
+		});
+		trd.start();
 	}
 }

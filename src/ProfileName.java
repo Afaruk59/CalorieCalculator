@@ -14,7 +14,7 @@ public class ProfileName extends gUI{
 	 * @author Afaruk59
 	 */
 
-	public void coffeeAnimation() throws InterruptedException {
+	public static void coffeeAnimation() {
 				
 		JPanel coffeePanel = new JPanel();
 		coffeePanel.setLayout(new BoxLayout(coffeePanel, BoxLayout.X_AXIS));
@@ -49,27 +49,39 @@ public class ProfileName extends gUI{
         coffeePanel.add(imgLab4);
         imgLab4.setVisible(false);
         
-        while(true) {
-    		if(Data.profile.getProperty("Theme").equals("1") == true) {
-				imgLab3.setVisible(true);
-				Thread.sleep(1000);
-				imgLab3.setVisible(false);
-				imgLab4.setVisible(true);
-				Thread.sleep(1000);
-				imgLab4.setVisible(false);
-    		}
-    		else if(Data.profile.getProperty("Theme").equals("0") == true) {
-				imgLab1.setVisible(true);
-				Thread.sleep(1000);
-				imgLab1.setVisible(false);
-				imgLab2.setVisible(true);
-				Thread.sleep(1000);
-				imgLab2.setVisible(false);
+        Thread trd = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+		        while(true) {
+		        	try {
+			    		if(Data.profile.getProperty("Theme").equals("1") == true) {
+							imgLab3.setVisible(true);
+							Thread.sleep(1000);
+							imgLab3.setVisible(false);
+							imgLab4.setVisible(true);
+							Thread.sleep(1000);
+							imgLab4.setVisible(false);
+			    		}
+			    		else if(Data.profile.getProperty("Theme").equals("0") == true) {
+							imgLab1.setVisible(true);
+							Thread.sleep(1000);
+							imgLab1.setVisible(false);
+							imgLab2.setVisible(true);
+							Thread.sleep(1000);
+							imgLab2.setVisible(false);
+						}
+		        	} catch (InterruptedException e) {
+							e.printStackTrace();
+					}
+		        }
 			}
-        }
+        });
+        trd.start();
 	}
 	
-	public void profileName() throws InterruptedException {
+	public static void profileName() throws InterruptedException {
 				
 		JPanel profilePanel = new JPanel();
 		profilePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));

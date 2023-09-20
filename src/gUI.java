@@ -1358,6 +1358,7 @@ public class gUI{
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
+						DateAndTime.run = false;
 						u.deleteProfile();
 						try {
 							Effects.playMessageSound();

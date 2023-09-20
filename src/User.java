@@ -58,7 +58,7 @@ public class User{
 	public void userScreen() throws UnsupportedLookAndFeelException, IOException {
 		
 		Data d = new Data();
-		
+				
 		readProfiles();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,18 +87,6 @@ public class User{
 				userBox.addItem(users[i]);
 			}
 		}
-		userBox.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					Effects.playButtonSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
 		
 		selectButton.setBounds(380, 80, 150, 50);
 		panelUp.add(selectButton);
@@ -116,6 +104,11 @@ public class User{
 					JOptionPane.showMessageDialog(contentPane, "First, create a user.", "Invalid Option", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
+					try {
+						Effects.playButtonSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					frame.setVisible(false);
 					
 					userName = (String) userBox.getSelectedItem();
@@ -145,6 +138,11 @@ public class User{
 					JOptionPane.showMessageDialog(contentPane, "The name is empty or invalid.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
+					try {
+						Effects.playButtonSound();
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					
 					boolean isSame = false;
 					

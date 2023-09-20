@@ -18,7 +18,7 @@ public class WelcomeScreen {
 	 * @author Afaruk59
 	 */
 		
-	public void welcomeFrame() throws InterruptedException, IOException {
+	public static void welcomeFrame() throws InterruptedException, IOException {
 				
 		JFrame frame= new JFrame("Welcome to ACC v3.1.1");
 		frame.setBounds(620, 300, 750, 500);

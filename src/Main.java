@@ -1,4 +1,4 @@
-	/*
+/*
 _______________                    ______ ___________________        
 ___    |__  __/_____ ___________  ____  /____  ____/_  __ \( )_______
 __  /| |_  /_ _  __ `/_  ___/  / / /_  //_/_____ \ _  /_/ /|/__  ___/
@@ -11,7 +11,7 @@ _  /    _  __ `/_  /_  __ \_  ___/_  /_  _ \     _  /    _  __ `/_  /_  ___/  / 
 / /___  / /_/ /_  / / /_/ /  /   _  / /  __/     / /___  / /_/ /_  / / /__ / /_/ /_  / / /_/ // /_ / /_/ /  /    
 \____/  \__,_/ /_/  \____//_/    /_/  \___/      \____/  \__,_/ /_/  \___/ \__,_/ /_/  \__,_/ \__/ \____//_/     
                                                                                                                                                                                       
-	 */
+*/
 
 import java.io.IOException;
 
@@ -34,9 +34,10 @@ public class Main {
 		Data d = new Data();
 		Language l = new Language();
 		Charts c = new Charts();
-		WelcomeScreen w = new WelcomeScreen();
-		ProfileName p = new ProfileName();
 		DateAndTime t = new DateAndTime();
+		
+		//STARTUP LOGO
+		Startup.showWindow();
 		
 		//USER SCREEN
 		u.userScreen();
@@ -75,40 +76,17 @@ public class Main {
 		SwingUtilities.updateComponentTreeUI(gui.summaryPage);
 		
 		//COFFEE ANIMATION
-        Thread t1 = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					p.coffeeAnimation();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-        });
+		ProfileName.coffeeAnimation();
         
         //DATE AND TIME
-        Thread t2 = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					t.getTime();
-				} catch (InterruptedException | IOException e) {
-					e.printStackTrace();
-				}
-			}
-        });
-        
-        t1.start();
-        t2.start();
+		t.getTime();
         
         //SHOW PROFILE NAME
-        p.profileName();
+        ProfileName.profileName();
                 
 		//SHOW WELCOME SCREEN
 		if(gui.welcomeScrenCb.isSelected()) {
-			w.welcomeFrame();
+			WelcomeScreen.welcomeFrame();
 		}
 	}
 }
