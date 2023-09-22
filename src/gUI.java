@@ -1249,11 +1249,7 @@ public class gUI{
         });
 		themeComboBox.setBounds(40,70,300,30);
         settingsPage.add(themeComboBox);
-        try {
-        	themeComboBox.setSelectedIndex(d.readThemeSetting());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+        themeComboBox.setSelectedIndex(d.readThemeSetting());
         
         welcomeScrenCb.setBounds(40,120,500,30);
         welcomeScrenCb.setBackground(null);
