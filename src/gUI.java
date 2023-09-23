@@ -39,7 +39,7 @@ public class gUI{
 	Ambients a = new Ambients();
 	
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.1.1");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.2.0");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -209,6 +209,7 @@ public class gUI{
     JComboBox<String> langComboBox= new JComboBox<String>();
 	JLabel soundLbl = new JLabel("Ambients:");
 	JComboBox<String> soundBox = new JComboBox<String>();
+	JButton verBtn = new JButton();
 	
 	public void gui() throws IOException {
 				
@@ -1461,6 +1462,24 @@ public class gUI{
 			}
 		});
 		
+		verBtn.setBounds(40,410,300,30);
+		settingsPage.add(verBtn);
+		verBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				VersionCheck v = new VersionCheck();
+				
+				try {
+					Effects.playButtonSound();
+					v.verCheck();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		SwingUtilities.updateComponentTreeUI(settingsPage);
         
 		//FRAME		
@@ -1545,6 +1564,7 @@ public class gUI{
 		deleteProfileBtn.setText(Language.lang.getProperty("deleteProfileBtn"));
 		langSettingLbl.setText(Language.lang.getProperty("langSettingLbl"));
 		soundLbl.setText(Language.lang.getProperty("soundLbl"));
+		verBtn.setText(Language.lang.getProperty("verBtn"));
 		
 		lblWaist.setText(Language.lang.getProperty("lblWaist"));
 		lblGender.setText(Language.lang.getProperty("lblGender"));

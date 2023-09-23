@@ -20,7 +20,7 @@ public class WelcomeScreen {
 		
 	public static void welcomeFrame() throws InterruptedException, IOException {
 				
-		JFrame frame= new JFrame("Welcome to ACC v3.1.1");
+		JFrame frame= new JFrame("Welcome to ACC v3.2.0");
 		frame.setBounds(620, 300, 750, 500);
 		frame.setResizable(false);
 		
