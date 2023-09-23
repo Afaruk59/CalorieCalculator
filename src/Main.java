@@ -37,7 +37,7 @@ public class Main {
 		DateAndTime t = new DateAndTime();
 		
 		//STARTUP LOGO
-		//Startup.showWindow();
+		Startup.showWindow();
 		
 		//USER SCREEN
 		u.userScreen();
