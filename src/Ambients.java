@@ -77,18 +77,6 @@ public class Ambients {
 			t2.start();
 		}
 	}
-	
-	public void music1Stopper() {
-		music_1.close();
-	}
-	
-	public void music2Stopper() {
-		music_2.close();
-	}
-	
-	public void music3Stopper() {
-		music_3.close();
-	}
 
 	public void playAmbient1() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		

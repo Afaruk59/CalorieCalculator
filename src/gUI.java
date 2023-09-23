@@ -1451,13 +1451,34 @@ public class gUI{
 						e1.printStackTrace();
 					}
 					
-					if(Ambients.clock.compareTo("06:00") >= 0 && Ambients.clock.compareTo("18:00") < 0) {
-						Ambients.music_1.close();
-					}
-					else {
-						Ambients.music_2.close();
-						Ambients.music_3.close();
-					}
+					Thread t1 = new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+
+							Ambients.music_1.close();
+						}
+					});
+					Thread t2 = new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+
+							Ambients.music_2.close();
+						}
+					});
+					Thread t3 = new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+
+							Ambients.music_3.close();
+						}
+					});
+					
+					t1.start();
+					t2.start();
+					t3.start();
 				}
 			}
 		});
