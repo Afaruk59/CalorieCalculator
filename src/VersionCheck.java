@@ -25,7 +25,7 @@ public class VersionCheck {
 		
 		int currentVer = Integer.parseInt(ver.getProperty("ver"));
 		
-        String urlStr = "https://drive.usercontent.google.com/download?id=1jICZmepjsmCRoU6jGLtKF5WaA12FabjV&export=download&authuser=0&confirm=t&uuid=60559db2-4f32-4941-9dec-be900a4315db&at=APZUnTXZCF1ZKHER5JeZUOEST_QM:1695469892299";
+        String urlStr = "https://drive.usercontent.google.com/download?id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I&export=download&authuser=1&confirm=t&uuid=830832d8-841b-4dc4-b105-32ef53120220&at=APZUnTXJUuRo3hiiphdWgDGe6BIs:1695574834293";
         String savePath = "";
 
         try {
@@ -80,7 +80,7 @@ public class VersionCheck {
 			
 			if(result == JOptionPane.YES_OPTION) {
 				
-		        urlStr = "https://drive.usercontent.google.com/download?id=1-8ILUUtwjWNG3SeepGDU7qGFAA2ysKTG&export=download&authuser=0&confirm=t&uuid=ecaa57bb-cdb3-48a6-8063-a732cab35d78&at=APZUnTVuBkvEJxpRg1b1qAhhhwB2:1695470895567";
+		        urlStr = "https://drive.usercontent.google.com/download?id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt&export=download&authuser=1&confirm=t&uuid=f6e26f29-4812-479d-a16b-661abe082ba1&at=APZUnTWeLPeC1kBTl23SfIUHLQE_:1695574856030";
 		        savePath = "resources\\jar\\";
 
 		        try {
