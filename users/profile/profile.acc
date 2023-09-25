@@ -1,6 +1,6 @@
 #PROFILE#
-#Sun Sep 24 20:02:14 TRT 2023
-Amb=1
+#Mon Sep 25 14:56:32 TRT 2023
+Amb=0
 Theme=0
 bmi=0
 bmiType=
@@ -11,13 +11,14 @@ calorieGoal=0
 calorieToday=0
 carbGoal=0
 carbToday=0
-day=24
+day=25
 fatGoal=0
 fatToday=0
 lang=tr
 month=09
 proteinGoal=0
 proteinToday=0
+vol=-20
 weeklyCal_0=0
 weeklyCal_1=0
 weeklyCal_2=0

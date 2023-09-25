@@ -87,23 +87,15 @@ public class Ambients {
 		
 		music_1 = AudioSystem.getClip();
 		music_1.open(audioInputStream);
-           
-        FloatControl volumeControl = (FloatControl) music_1.getControl(FloatControl.Type.MASTER_GAIN);
-        float newVolume = -40.0f;
+		
+        FloatControl volumeControl = (FloatControl) Ambients.music_1.getControl(FloatControl.Type.MASTER_GAIN);
+        float newVolume = -80f;
         volumeControl.setValue(newVolume);
         
         music_1.start();
         
         while (!music_1.isRunning()) {
             Thread.sleep(10);
-        }
-        
-        while(!(newVolume == -10.0f)) {
-        	
-            newVolume += 1.0f;
-            volumeControl.setValue(newVolume);
-            
-            Thread.sleep(1000);
         }
 
         while (music_1.isRunning()) {
@@ -124,23 +116,15 @@ public class Ambients {
 		
 		music_2 = AudioSystem.getClip();
 		music_2.open(audioInputStream);
-           
-        FloatControl volumeControl = (FloatControl) music_2.getControl(FloatControl.Type.MASTER_GAIN);
-        float newVolume = -40.0f;
+		
+        FloatControl volumeControl = (FloatControl) Ambients.music_2.getControl(FloatControl.Type.MASTER_GAIN);
+        float newVolume = -80f;
         volumeControl.setValue(newVolume);
         
         music_2.start();
         
         while (!music_2.isRunning()) {
             Thread.sleep(10);
-        }
-        
-        while(!(newVolume == -10.0f)) {
-        	
-            newVolume += 1.0f;
-            volumeControl.setValue(newVolume);
-            
-            Thread.sleep(1000);
         }
 
         while (music_2.isRunning()) {
@@ -161,23 +145,15 @@ public class Ambients {
 		
 		music_3 = AudioSystem.getClip();
 		music_3.open(audioInputStream);
-           
-        FloatControl volumeControl = (FloatControl) music_3.getControl(FloatControl.Type.MASTER_GAIN);
-        float newVolume = -40.0f;
+		
+        FloatControl volumeControl = (FloatControl) Ambients.music_3.getControl(FloatControl.Type.MASTER_GAIN);
+        float newVolume = -80f;
         volumeControl.setValue(newVolume);
         
         music_3.start();
         
         while (!music_3.isRunning()) {
             Thread.sleep(10);
-        }
-        
-        while(!(newVolume == -12.0f)) {
-        	
-            newVolume += 1.0f;
-            volumeControl.setValue(newVolume);
-            
-            Thread.sleep(1000);
         }
 
         while (music_3.isRunning()) {

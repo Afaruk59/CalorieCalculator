@@ -35,12 +35,16 @@ public class Main {
 		Language l = new Language();
 		Charts c = new Charts();
 		DateAndTime t = new DateAndTime();
+		Ambients a = new Ambients();
 		
 		//STARTUP LOGO
 		Startup.showWindow();
 		
 		//USER SCREEN
 		u.userScreen();
+		
+		//AMBIENTS
+		a.musicStarter();
 		
 		//LOAD SAVED DATA
 		d.loadProfile();

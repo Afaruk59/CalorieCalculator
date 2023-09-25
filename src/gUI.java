@@ -10,11 +10,14 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -208,7 +211,7 @@ public class gUI{
     JLabel langSettingLbl = new JLabel();
     JComboBox<String> langComboBox= new JComboBox<String>();
 	JLabel soundLbl = new JLabel("Ambients:");
-	JComboBox<String> soundBox = new JComboBox<String>();
+	JSlider volume = new JSlider(-80, -10);
 	JButton verBtn = new JButton();
 	
 	public void gui() throws IOException {
@@ -1331,7 +1334,7 @@ public class gUI{
 				}
 				
 				try {
-					URI url = new URI("https://github.com/Afaruk59/CalorieCalculator");
+					URI url = new URI("https://github.com/Afaruk59/CalorieCalculator/releases");
 					java.awt.Desktop.getDesktop().browse(url);
 				} catch (URISyntaxException | IOException e1) {
 					e1.printStackTrace();
@@ -1410,78 +1413,40 @@ public class gUI{
 		soundLbl.setBounds(41,350,300,30);
 		settingsPage.add(soundLbl);
 		
-		soundBox.setBounds(120,350,220,30);
-		soundBox.addItem("On");
-		soundBox.addItem("Off");
-		settingsPage.add(soundBox);
-		soundBox.setSelectedIndex(d.readAmbSetting());
-		Thread t = new Thread(new Runnable() {
+		volume.setBounds(120,350,220,30);
+		settingsPage.add(volume);
+		volume.addChangeListener(new ChangeListener() {
 
 			@Override
-			public void run() {
+			public void stateChanged(ChangeEvent e) {
 				
-				if(soundBox.getSelectedIndex() == 0) {
-					try {
-						Thread.sleep(10000);
-						a.musicStarter();
-					} catch (UnsupportedAudioFileException | LineUnavailableException | InterruptedException | IOException e1) {
-						e1.printStackTrace();
-					}
+				try {
+					d.writeVolSetting(Integer.toString(volume.getValue()));
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
+
+				if(Ambients.clock.compareTo("06:00") >= 0 && Ambients.clock.compareTo("18:00") < 0) {
+					float vol = volume.getValue();
+			        FloatControl volumeControl = (FloatControl) Ambients.music_1.getControl(FloatControl.Type.MASTER_GAIN);
+			        float newVolume = vol;
+			        volumeControl.setValue(newVolume);
+				}
+				else {
+					float vol2 = volume.getValue();
+			        FloatControl volumeControl2 = (FloatControl) Ambients.music_2.getControl(FloatControl.Type.MASTER_GAIN);
+			        float newVolume2 = vol2;
+			        volumeControl2.setValue(newVolume2);
+			        
+					float vol3 = volume.getValue();
+			        FloatControl volumeControl3 = (FloatControl) Ambients.music_3.getControl(FloatControl.Type.MASTER_GAIN);
+			        float newVolume3 = vol3;
+			        volumeControl3.setValue(newVolume3);
+				}
+				
 			}
 		});
-		t.start();
-		soundBox.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if(soundBox.getSelectedIndex() == 0) {
-					try {
-						d.writeAmbSetting("0");
-						a.musicStarter();
-					} catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-				}
-				else if(soundBox.getSelectedIndex() == 1) {
-					try {
-						d.writeAmbSetting("1");
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					
-					Thread t1 = new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-
-							Ambients.music_1.close();
-						}
-					});
-					Thread t2 = new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-
-							Ambients.music_2.close();
-						}
-					});
-					Thread t3 = new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-
-							Ambients.music_3.close();
-						}
-					});
-					
-					t1.start();
-					t2.start();
-					t3.start();
-				}
-			}
-		});
+		volume.setValue(d.readVolSetting());
 		
 		verBtn.setBounds(40,410,300,30);
 		settingsPage.add(verBtn);

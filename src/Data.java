@@ -184,6 +184,7 @@ public class Data {
 		profile.setProperty("calorie", "0");
 		profile.setProperty("lang", "eng");
 		profile.setProperty("Amb", "0");
+		profile.setProperty("vol", "-30");
 		
 		LocalDateTime currentDate = LocalDateTime.now();
 		
@@ -298,26 +299,18 @@ public class Data {
 		return index;
 	}
 	
-	public void writeAmbSetting(String setting) throws IOException {
+	public void writeVolSetting(String vol) throws IOException {
 		
-		profile.setProperty("Amb", setting);
+		profile.setProperty("vol", vol);
 		
 		FileOutputStream output = new FileOutputStream("users\\" + User.userName + "\\profile.acc");
 		profile.store(output, "PROFILE#");
 		output.close();
 	}
 	
-	public int readAmbSetting() {
+	public int readVolSetting() {
 		
-		int index = 0;
-		
-		if(profile.getProperty("Amb").equals("0") == true) {
-			index = 0;
-		}
-		else if(profile.getProperty("Amb").equals("1") == true) {
-			index = 1;
-		}
-		return index;
+		return Integer.parseInt(profile.getProperty("vol"));
 	}
 	
 	public void writeBodyFatResult(String bodyFat) throws IOException {

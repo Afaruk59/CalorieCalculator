@@ -25,7 +25,7 @@ public class VersionCheck {
 		
 		int currentVer = Integer.parseInt(ver.getProperty("ver"));
 		
-        String urlStr = "https://drive.usercontent.google.com/download?id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I&export=download&authuser=1&confirm=t&uuid=830832d8-841b-4dc4-b105-32ef53120220&at=APZUnTXJUuRo3hiiphdWgDGe6BIs:1695574834293";
+        String urlStr = "https://drive.google.com/uc?export=download&id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I";
         String savePath = "";
 
         try {
@@ -76,11 +76,11 @@ public class VersionCheck {
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			int result = JOptionPane.showConfirmDialog(null, "Download the new version?", "Confirmation", JOptionPane.YES_NO_OPTION);
+			int result = JOptionPane.showConfirmDialog(null, "Download the new version? ", "Confirmation", JOptionPane.YES_NO_OPTION);
 			
 			if(result == JOptionPane.YES_OPTION) {
 				
-		        urlStr = "https://drive.usercontent.google.com/download?id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt&export=download&authuser=1&confirm=t&uuid=f6e26f29-4812-479d-a16b-661abe082ba1&at=APZUnTWeLPeC1kBTl23SfIUHLQE_:1695574856030";
+		        urlStr = "https://drive.google.com/uc?export=download&id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt";
 		        savePath = "resources\\jar\\";
 
 		        try {
@@ -109,7 +109,7 @@ public class VersionCheck {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
 						e1.printStackTrace();
 					}
-		            JOptionPane.showMessageDialog(null, "The new version Successfully downloaded.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "The new version successfully downloaded.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
 		            
 					ver.setProperty("ver", Integer.toString(newVer));
 					FileOutputStream output = new FileOutputStream("resources\\ver.ini");
