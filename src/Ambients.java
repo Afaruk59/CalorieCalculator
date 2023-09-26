@@ -9,6 +9,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
 
 public class Ambients {
 	
@@ -83,6 +84,10 @@ public class Ambients {
 		String path = "resources\\sound\\ambient1.wav";
 		File file = new File(path);
 		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "ambient1.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
+		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		
 		music_1 = AudioSystem.getClip();
@@ -112,6 +117,10 @@ public class Ambients {
 		String path = "resources\\sound\\ambient2.wav";
 		File file = new File(path);
 		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "ambient2.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
+		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		
 		music_2 = AudioSystem.getClip();
@@ -140,6 +149,10 @@ public class Ambients {
 		
 		String path = "resources\\sound\\ambient3.wav";
 		File file = new File(path);
+		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "ambient3.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		

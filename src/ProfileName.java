@@ -1,10 +1,15 @@
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ProfileName extends gUI{
@@ -21,13 +26,26 @@ public class ProfileName extends gUI{
 		coffeePanel.setBounds(1101,6,25,25);
 		mainFrame.add(coffeePanel);
 				
+		File file1 = new File("resources\\img\\acc1.png");
+		File file2 = new File("resources\\img\\acc2.png");
+		File file3 = new File("resources\\img\\acc3.png");
+		File file4 = new File("resources\\img\\acc4.png");
+		
+		if(file1.exists() == false || file2.exists() == false || file3.exists() == false || file4.exists() == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "accx.png files not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		ImageIcon img1 = new ImageIcon("resources\\img\\acc1.png");
 		Image scaledImage1 = img1.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JLabel imgLab1 = new JLabel(scaledIcon1);
         coffeePanel.add(imgLab1);
         imgLab1.setVisible(false);
-        
+
 		ImageIcon img2 = new ImageIcon("resources\\img\\acc2.png");
 		Image scaledImage2 = img2.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
@@ -88,6 +106,15 @@ public class ProfileName extends gUI{
 		profilePanel.setBounds(890,3,200,40);
 		mainFrame.add(profilePanel);
 		
+		File file1 = new File("resources\\img\\user.png");
+		if(file1.exists() == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "user.png not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		ImageIcon img1 = new ImageIcon("resources\\img\\user.png");
 		Image scaledImage1 = img1.getImage().getScaledInstance(25, 25, Image.SCALE_FAST);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);

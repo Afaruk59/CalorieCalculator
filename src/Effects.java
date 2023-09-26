@@ -7,13 +7,17 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
 
 public class Effects {
 
 	public static void playErrorSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		
-		String path = "resources\\sound\\error.wav";
-		File file = new File(path);
+		File file = new File("resources\\sound\\error.wav");
+		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "error.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		
@@ -55,8 +59,11 @@ public class Effects {
 	
 	public static void playMessageSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		
-		String path = "resources\\sound\\message.wav";
-		File file = new File(path);
+		File file = new File("resources\\sound\\message.wav");
+		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "message.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		
@@ -98,8 +105,11 @@ public class Effects {
 	
 	public static void playButtonSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 		
-		String path = "resources\\sound\\button.wav";
-		File file = new File(path);
+		File file = new File("resources\\sound\\button.wav");
+		
+		if(file.exists() == false) {
+			JOptionPane.showMessageDialog(null, "button.wav not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 		

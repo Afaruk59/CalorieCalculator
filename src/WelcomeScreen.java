@@ -1,13 +1,17 @@
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -33,6 +37,22 @@ public class WelcomeScreen {
 		fotoPanel.setBounds(10, 11, 714, 405);
 		fotoPanel.setLayout(new BoxLayout(fotoPanel, BoxLayout.X_AXIS));
 		contentPane.add(fotoPanel);
+		
+		File file1 = new File("resources\\img\\tutorial_1.png");
+		File file2 = new File("resources\\img\\tutorial_2.png");
+		File file3 = new File("resources\\img\\tutorial_3.png");
+		File file4 = new File("resources\\img\\tutorial_a.png");
+		File file5 = new File("resources\\img\\tutorial_b.png");
+		File file6 = new File("resources\\img\\tutorial_c.png");
+		
+		if(file1.exists() == false || file2.exists() == false || file3.exists() == false || file4.exists() == false || file5.exists() == false || file6.exists() == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "tutorial_x.png files not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		ImageIcon img1 = new ImageIcon("resources\\img\\tutorial_1.png");
 		Image scaledImage1 = img1.getImage().getScaledInstance(714, 405, Image.SCALE_SMOOTH);

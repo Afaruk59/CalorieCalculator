@@ -26,7 +26,7 @@ public class Language {
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "tr.acc not found", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "tr.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 		else {
@@ -51,7 +51,7 @@ public class Language {
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(null, "eng.acc not found", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "eng.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 		else {

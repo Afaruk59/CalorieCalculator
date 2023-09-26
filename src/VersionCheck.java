@@ -19,6 +19,17 @@ public class VersionCheck {
 
 		Properties ver = new Properties();
 		
+		File verini = new File("resources\\ver.ini");
+		if(verini.exists() == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "ver.ini not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+		
 		FileInputStream input = new FileInputStream("resources\\ver.ini");
 		ver.load(input);
 		input.close();

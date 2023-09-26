@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
+
 public class Data {
 	
 	/**
@@ -97,9 +101,16 @@ public class Data {
 	public void readDefaultFoods() throws IOException {
 		
 		if(profile.getProperty("lang").equals("eng") == true) {
+		
 			File file= new File("resources\\defFoodsEng.acc");
 			if(file.exists() == false) {
-				file.createNewFile();
+				try {
+					Effects.playErrorSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "defFoodsEng.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
 			}
 			
 			FileReader fRead= new FileReader(file);        
@@ -113,7 +124,13 @@ public class Data {
 		else if(profile.getProperty("lang").equals("tr") == true) {
 			File file= new File("resources\\defFoodsTr.acc");
 			if(file.exists() == false) {
-				file.createNewFile();
+				try {
+					Effects.playErrorSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "defFoodsTr.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
 			}
 			
 			FileReader fRead= new FileReader(file);        
@@ -203,6 +220,17 @@ public class Data {
 	}
 	
 	public void loadProfile() throws IOException {
+		
+		File file = new File("users\\" + User.userName + "\\profile.acc");
+		if(file.exists() == false) {
+			try {
+				Effects.playErrorSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "profile.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 		
 		FileInputStream input = new FileInputStream("users\\" + User.userName + "\\profile.acc");
 		profile.load(input);
