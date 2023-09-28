@@ -104,15 +104,8 @@ public class Data {
 		
 			File file= new File("resources\\defFoodsEng.acc");
 			if(file.exists() == false) {
-				try {
-					Effects.playErrorSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "defFoodsEng.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
-				System.exit(0);
+				file.createNewFile();
 			}
-			
 			FileReader fRead= new FileReader(file);        
 			BufferedReader bRead= new BufferedReader(fRead);
 			
@@ -122,17 +115,11 @@ public class Data {
 			bRead.close();
 		}
 		else if(profile.getProperty("lang").equals("tr") == true) {
+			
 			File file= new File("resources\\defFoodsTr.acc");
 			if(file.exists() == false) {
-				try {
-					Effects.playErrorSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "defFoodsTr.acc not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
-				System.exit(0);
+				file.createNewFile();
 			}
-			
 			FileReader fRead= new FileReader(file);        
 			BufferedReader bRead= new BufferedReader(fRead);
 			

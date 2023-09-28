@@ -15,7 +15,7 @@ public class Charts extends gUI{
 	 */
 	
 	public void pieChart(String pro, String carb, String fat) {
-		
+				
 		double p = Double.parseDouble(pro);
 		double c = Double.parseDouble(carb);
 		double f = Double.parseDouble(fat);

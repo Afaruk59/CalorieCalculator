@@ -128,6 +128,8 @@ public class gUI{
 	JTable table_2 = new JTable(d.table_2, Language.tableTitles);
 	JScrollPane fPanelDown_2 = new JScrollPane(table_2);
 	JPopupMenu popMenu = new JPopupMenu();
+    JPanel btnPanel = new JPanel();
+    JButton syncBtn = new JButton();
     JMenuItem addFavItem = new JMenuItem();
     Object tableValue;
 	
@@ -652,6 +654,7 @@ public class gUI{
 		fPanelEast.add(fPanelUp_2);
 		fPanelUp_2.setBorder(BorderFactory.createTitledBorder(title8));
 		title8.setTitleFont(titleFont);
+		fPanelUp_2.setPreferredSize(new Dimension(0,505));
 		
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(renderer);
@@ -672,6 +675,36 @@ public class gUI{
         table_2.getColumnModel().getColumn(3).setCellRenderer(renderer);
         table_2.getColumnModel().getColumn(4).setCellRenderer(renderer);
         table_2.setEnabled(false);
+        
+        fPanelEast.add(btnPanel);
+        btnPanel.add(syncBtn);
+        syncBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if(Data.profile.getProperty("lang").equals("eng") == true) {
+					SyncFoods.syncEng();
+				}
+				else if(Data.profile.getProperty("lang").equals("tr") == true) {
+					SyncFoods.syncTr();
+				}
+				try {
+					d.readDefaultFoods();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				d.writeTable2();
+				
+				SwingUtilities.updateComponentTreeUI(fPanelDown_2);
+				try {
+					Effects.playMessageSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+	            JOptionPane.showMessageDialog(null, "Synchronization successful.", "Information", JOptionPane.INFORMATION_MESSAGE);
+			}
+        });
         
         popMenu.add(addFavItem);        
         addFavItem.addActionListener(new ActionListener() {
@@ -1533,6 +1566,7 @@ public class gUI{
 		addNewBtn.setText(Language.lang.getProperty("addNewBtn"));
 		removeMealsBtn.setText(Language.lang.getProperty("removeMealsBtn"));
 		
+		syncBtn.setText(Language.lang.getProperty("syncBtn"));
 		addFavItem.setText(Language.lang.getProperty("addFavItem"));
 		
 		setCalGoalLbl.setText(Language.lang.getProperty("setCalGoalLbl"));

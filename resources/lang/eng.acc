@@ -57,6 +57,7 @@ setProGoalLbl=Protein (g)\:
 soundBox_1=On
 soundBox_2=Off
 soundLbl=Ambients\:
+syncBtn=Refresh
 tab1=Summary
 tab2=Food
 tab3=Goals
