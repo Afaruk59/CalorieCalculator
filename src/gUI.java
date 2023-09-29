@@ -42,7 +42,7 @@ public class gUI{
 	Ambients a = new Ambients();
 	
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.2.0");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.2.1");
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	

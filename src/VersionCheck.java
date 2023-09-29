@@ -90,31 +90,12 @@ public class VersionCheck {
 			int result = JOptionPane.showConfirmDialog(null, "Download the new version? ", "Confirmation", JOptionPane.YES_NO_OPTION);
 			
 			if(result == JOptionPane.YES_OPTION) {
-				
-		        urlStr = "https://drive.google.com/uc?export=download&id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt";
-		        savePath = "resources\\jar\\";
 
 		        try {
-		            URL url = new URL(urlStr);
-		            
-		            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		            
-		            InputStream inputStream = connection.getInputStream();
-		            
-		            String fileName = "ACC.jar";
-		            String filePath = savePath + fileName;
-		            
-		            OutputStream outputStream = new FileOutputStream(filePath);
-		            
-		            byte[] buffer = new byte[4096];
-		            int bytesRead;
-		            while ((bytesRead = inputStream.read(buffer)) != -1) {
-		                outputStream.write(buffer, 0, bytesRead);
-		            }
-		            
-		            inputStream.close();
-		            outputStream.close();
-		            
+
+		        	download("https://drive.google.com/uc?export=download&id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt", "resources\\jar\\", "ACC.jar");
+		        	download("https://drive.google.com/uc?export=download&id=1Uj4uM2n4MQsVkhx4e2hftm_SbW1n6O3w", "resources\\lang\\", "eng.acc");
+		        	download("https://drive.google.com/uc?export=download&id=1hijy1zK37pkOcHLAOrVrsMt4tYaSXULA", "resources\\lang\\", "tr.acc");
 					try {
 						Effects.playMessageSound();
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
@@ -147,5 +128,29 @@ public class VersionCheck {
 			}
 			JOptionPane.showMessageDialog(null, "The program is up to date.", "Information", JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void download(String urlStr, String savePath, String name) throws IOException {
+        
+        URL url = new URL(urlStr);
+        
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        
+        InputStream inputStream = connection.getInputStream();
+        
+        String fileName = name;
+        String filePath = savePath + fileName;
+        
+        OutputStream outputStream = new FileOutputStream(filePath);
+        
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        
+        inputStream.close();
+        outputStream.close();
 	}
 }
