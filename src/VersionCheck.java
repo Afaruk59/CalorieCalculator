@@ -14,10 +14,7 @@ import javax.swing.JOptionPane;
 
 public class VersionCheck {
 
-	@SuppressWarnings("deprecation")
 	public void verCheck() throws IOException {
-
-		Properties ver = new Properties();
 		
 		File verini = new File("resources\\ver.ini");
 		if(verini.exists() == false) {
@@ -31,35 +28,14 @@ public class VersionCheck {
 		}
 		
 		FileInputStream input = new FileInputStream("resources\\ver.ini");
+		Properties ver = new Properties();
 		ver.load(input);
 		input.close();
 		
 		int currentVer = Integer.parseInt(ver.getProperty("ver"));
-		
-        String urlStr = "https://drive.google.com/uc?export=download&id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I";
-        String savePath = "";
 
         try {
-            URL url = new URL(urlStr);
-            
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            
-            InputStream inputStream = connection.getInputStream();
-            
-            String fileName = "ver.ini";
-            String filePath = savePath + fileName;
-            
-            OutputStream outputStream = new FileOutputStream(filePath);
-            
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            
-            inputStream.close();
-            outputStream.close();
-            
+            download("https://drive.google.com/uc?export=download&id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I", "", "ver.ini");
         } catch (IOException e) {
             e.printStackTrace();
 			try {
@@ -71,7 +47,6 @@ public class VersionCheck {
         }
         
 		Properties ver2 = new Properties();
-		
 		FileInputStream input2 = new FileInputStream("ver.ini");
 		ver2.load(input2);
 		input2.close();
@@ -92,7 +67,6 @@ public class VersionCheck {
 			if(result == JOptionPane.YES_OPTION) {
 
 		        try {
-
 		        	download("https://drive.google.com/uc?export=download&id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt", "resources\\jar\\", "ACC.jar");
 		        	download("https://drive.google.com/uc?export=download&id=1Uj4uM2n4MQsVkhx4e2hftm_SbW1n6O3w", "resources\\lang\\", "eng.acc");
 		        	download("https://drive.google.com/uc?export=download&id=1hijy1zK37pkOcHLAOrVrsMt4tYaSXULA", "resources\\lang\\", "tr.acc");

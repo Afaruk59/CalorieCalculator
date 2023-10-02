@@ -143,7 +143,7 @@ public class Data {
 	
 	public void resetProfile() throws IOException {
 		
-		profile.setProperty("Theme", "0");
+		profile.setProperty("Theme", "2");
 		profile.setProperty("welcomeScreen", "1");
 		profile.setProperty("calorieGoal", "0");
 		profile.setProperty("proteinGoal", "0");

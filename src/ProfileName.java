@@ -90,6 +90,24 @@ public class ProfileName extends gUI{
 							Thread.sleep(1000);
 							imgLab2.setVisible(false);
 						}
+			    		else if(Data.profile.getProperty("Theme").equals("2") == true) {
+			    			if(Ambients.clock.compareTo("06:00") >= 0 && Ambients.clock.compareTo("18:00") < 0) {
+								imgLab1.setVisible(true);
+								Thread.sleep(1000);
+								imgLab1.setVisible(false);
+								imgLab2.setVisible(true);
+								Thread.sleep(1000);
+								imgLab2.setVisible(false);
+			    			}
+			    			else {
+								imgLab3.setVisible(true);
+								Thread.sleep(1000);
+								imgLab3.setVisible(false);
+								imgLab4.setVisible(true);
+								Thread.sleep(1000);
+								imgLab4.setVisible(false);
+			    			}
+			    		}
 		        	} catch (InterruptedException e) {
 							e.printStackTrace();
 					}

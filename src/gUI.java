@@ -42,7 +42,7 @@ public class gUI{
 	Ambients a = new Ambients();
 	
 	//MAIN FRAME
-	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator v3.2.1");
+	static JFrame mainFrame= new JFrame("Afaruk59's Calorie Calculator " + Main.version);
 	JPanel contentPane = new JPanel();
 	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
@@ -1257,6 +1257,7 @@ public class gUI{
 
 		themeComboBox.addItem("Light");
 		themeComboBox.addItem("Dark");
+		themeComboBox.addItem("Auto");
 		themeComboBox.addActionListener(new ActionListener() {
 
 			@Override
@@ -1281,6 +1282,29 @@ public class gUI{
 			        } catch( Exception ex ) {
 			            System.err.println( "Failed to initialize LaF" );
 			        }
+				}
+				else if(themeComboBox.getSelectedIndex()==2) {
+					
+					if(Ambients.clock.compareTo("06:00") >= 0 && Ambients.clock.compareTo("18:00") < 0) {
+						try {
+				            UIManager.setLookAndFeel( new FlatLightLaf() );
+				            SwingUtilities.updateComponentTreeUI(mainFrame);
+				            SwingUtilities.updateComponentTreeUI(popMenu);
+				            d.writeThemeSetting(2);
+				        } catch( Exception ex ) {
+				            System.err.println( "Failed to initialize LaF" );
+				        }
+					}
+					else {
+						try {
+				            UIManager.setLookAndFeel( new FlatDarkLaf() );
+				            SwingUtilities.updateComponentTreeUI(mainFrame);
+				            SwingUtilities.updateComponentTreeUI(popMenu);
+				            d.writeThemeSetting(2);
+				        } catch( Exception ex ) {
+				            System.err.println( "Failed to initialize LaF" );
+				        }
+					}
 				}
 			}
         });
