@@ -419,12 +419,7 @@ public class gUI{
 			public void actionPerformed(ActionEvent e) {
 						
 				if(comboBox.getSelectedItem() == null) {
-					try {
-						Effects.playErrorSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(mainFrame, "Please add a meal or add to Favourites a food.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
+					PopupMessages.errorMessage("Please add a meal or add to Favourites a food.", "Invalid Food");
 				}
 				else {
 					double pro,carb,fat,cal;
@@ -464,14 +459,8 @@ public class gUI{
 					progressBar_2.setValue((int) Double.parseDouble(d.today[2]));
 					progressBar_3.setValue((int) Double.parseDouble(d.today[3]));
 					
-					try {
-						Effects.playMessageSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(mainFrame, "The food has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+					PopupMessages.infoMessage("The food has been added.", "Successful");
 				}
-
 			}
 		});
 		
@@ -502,12 +491,7 @@ public class gUI{
 				
 				c.pieChart("0", "0", "0");
 				
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(mainFrame, "All meals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				PopupMessages.infoMessage("All meals have been reset.", "Successful");
 			}
 		});
 		
@@ -576,12 +560,7 @@ public class gUI{
 			public void actionPerformed(ActionEvent e) {
 				
 				if(textField.getText().isEmpty() || textField.getText().startsWith(" ") || textField.getText().endsWith(" ")) {
-					try {
-						Effects.playErrorSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(mainFrame, "New meals name is empty or invalid.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+					PopupMessages.errorMessage("New meals name is empty or invalid.", "Invalid Name");
 				}
 				else {
 					try {
@@ -600,12 +579,7 @@ public class gUI{
 					foodPage.remove(fPanelEast);
 					foodPage.add(fPanelEast);
 					
-					try {
-						Effects.playMessageSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(mainFrame, "The new meal has been added.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+					PopupMessages.infoMessage("The new meal has been added.", "Successful");
 				}
 			}
 		}); 
@@ -637,13 +611,8 @@ public class gUI{
 				}
 				foodPage.remove(fPanelEast);
 				foodPage.add(fPanelEast);
-				
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(mainFrame, "All saved meals have been removed.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+
+				PopupMessages.infoMessage("All saved meals have been removed.", "Successful");
 			}
 		});
 		
@@ -697,12 +666,7 @@ public class gUI{
 				d.writeTable2();
 				
 				SwingUtilities.updateComponentTreeUI(fPanelDown_2);
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-	            JOptionPane.showMessageDialog(null, "Synchronization successful.", "Information", JOptionPane.INFORMATION_MESSAGE);
+	            PopupMessages.infoMessage("Synchronization successful.", "Information");
 			}
         });
         
@@ -725,12 +689,7 @@ public class gUI{
 					foodPage.add(fPanelEast);
 				}
 				else if(tableValue == null) {
-					try {
-						Effects.playErrorSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(contentPane, "Food name is null.", "Invalid Food", JOptionPane.ERROR_MESSAGE);
+					PopupMessages.errorMessage("Food name is null.", "Invalid Food");
 				}
 			}
         });
@@ -861,12 +820,7 @@ public class gUI{
 				
 				calGoalValueLbl.setText(d.goals[0]);
 				
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(mainFrame, "Goals have been set.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+				PopupMessages.infoMessage("Goals have been set.", "Successful");
 			}
 		});
 		
@@ -892,13 +846,7 @@ public class gUI{
 				}
 				calGoalValueLbl.setText(d.goals[0]);
 				
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(mainFrame, "Goals have been reset.", "Successful", JOptionPane.INFORMATION_MESSAGE);
-				
+				PopupMessages.infoMessage("Goals have been reset.", "Successful");
 			}
 		});
 		
@@ -1347,23 +1295,13 @@ public class gUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				int result = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Reset Profile", JOptionPane.YES_NO_OPTION);
+				int result = PopupMessages.confirmMessage("Are you sure?", "Reset Profile");
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
 						d.resetProfile();
 						d.removeFoods();
-						try {
-							Effects.playMessageSound();
-						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog(mainFrame, "Profile has been reset.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
+						PopupMessages.infoMessage("Profile has been reset.\nYou need to reopen the program.", "Information");
 						System.exit(0);
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -1406,23 +1344,13 @@ public class gUI{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					Effects.playMessageSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				int result = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Delete Profile", JOptionPane.YES_NO_OPTION);
+				int result = PopupMessages.confirmMessage("Are you sure?", "Delete Profile");
 				
 				if(result == JOptionPane.YES_OPTION) {
 					try {
 						DateAndTime.run = false;
 						u.deleteProfile();
-						try {
-							Effects.playMessageSound();
-						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog(mainFrame, "Profile removed.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
+						PopupMessages.infoMessage("Profile has been removed.\nYou need to reopen the program.", "Information");
 						System.exit(0);
 					} catch (IOException e1) {
 						e1.printStackTrace();
