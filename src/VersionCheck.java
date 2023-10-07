@@ -7,9 +7,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 
 public class VersionCheck {
@@ -18,12 +15,7 @@ public class VersionCheck {
 		
 		File verini = new File("resources\\ver.ini");
 		if(verini.exists() == false) {
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "ver.ini not found.\nYou can download from github.", "The File is Missing", JOptionPane.ERROR_MESSAGE);
+			PopupMessages.errorMessage("ver.ini not found.\nYou can download from github.", "The File is Missing");
 			System.exit(0);
 		}
 		
@@ -38,12 +30,7 @@ public class VersionCheck {
             download("https://drive.google.com/uc?export=download&id=1kTOnHQOKdflHNzO8ngvoFtBMulWLUp3I", "", "ver.ini");
         } catch (IOException e) {
             e.printStackTrace();
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-            JOptionPane.showMessageDialog(null, "Checking Failed.\nPlease retry.", "Error", JOptionPane.ERROR_MESSAGE);
+            PopupMessages.errorMessage("Checking Failed.\nPlease retry.", "Error");
         }
         
 		Properties ver2 = new Properties();
@@ -56,13 +43,9 @@ public class VersionCheck {
 		File file = new File("ver.ini");
 		file.delete();
 		
-		if(currentVer != newVer) {			
-			try {
-				Effects.playMessageSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			int result = JOptionPane.showConfirmDialog(null, "Download the new version? ", "Confirmation", JOptionPane.YES_NO_OPTION);
+		if(currentVer != newVer) {
+			
+			int result = PopupMessages.confirmMessage("Are you sure to download new version?", "Confirmation");
 			
 			if(result == JOptionPane.YES_OPTION) {
 
@@ -70,12 +53,8 @@ public class VersionCheck {
 		        	download("https://drive.google.com/uc?export=download&id=1o_QIPh1XS34c1p3eq6v1r0WQMT9DKoVt", "resources\\jar\\", "ACC.jar");
 		        	download("https://drive.google.com/uc?export=download&id=1Uj4uM2n4MQsVkhx4e2hftm_SbW1n6O3w", "resources\\lang\\", "eng.acc");
 		        	download("https://drive.google.com/uc?export=download&id=1hijy1zK37pkOcHLAOrVrsMt4tYaSXULA", "resources\\lang\\", "tr.acc");
-					try {
-						Effects.playMessageSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-		            JOptionPane.showMessageDialog(null, "The new version successfully downloaded.\nYou need to reopen the program.", "Information", JOptionPane.INFORMATION_MESSAGE);
+		        	
+		            PopupMessages.infoMessage("The new version successfully downloaded.\nYou need to reopen the program.", "Successful");
 		            
 					ver.setProperty("ver", Integer.toString(newVer));
 					FileOutputStream output = new FileOutputStream("resources\\ver.ini");
@@ -85,22 +64,12 @@ public class VersionCheck {
 		            System.exit(0);
 		        } catch (IOException e) {
 		            e.printStackTrace();
-					try {
-						Effects.playErrorSound();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-						e1.printStackTrace();
-					}
-		            JOptionPane.showMessageDialog(null, "Download Failed.\nPlease retry.", "Error", JOptionPane.ERROR_MESSAGE);
+		            PopupMessages.errorMessage("Download Failed.\nPlease retry.", "Error");
 		        }
 			}
 		}
 		else {
-			try {
-				Effects.playMessageSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "The program is up to date.", "Information", JOptionPane.INFORMATION_MESSAGE);
+			PopupMessages.infoMessage("You're up to date.", "Information");
 		}
 	}
 	
