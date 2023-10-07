@@ -3,7 +3,6 @@ import java.text.DecimalFormat;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JOptionPane;
 
 public class Body {
 	
@@ -21,21 +20,11 @@ public class Body {
 		double bodyFat = 0;
 		
 		if(male == false && female == false) {
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "Please select a gender.", "Gender not found", JOptionPane.ERROR_MESSAGE);
+			PopupMessages.errorMessage("Please select a gender.", "Gender not found");
 		}
 		else {
 			if(height.isEmpty() ==true || neck.isEmpty() ==true || waist.isEmpty() ==true) {
-				try {
-					Effects.playErrorSound();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
+				PopupMessages.errorMessage("Please enter missing informations.", "Missing Information");
 			}
 			else {
 				int height_ = Integer.parseInt(height);
@@ -51,7 +40,7 @@ public class Body {
 					bodyFat = (495 / (1.0324 - 0.19077 * Math.log10(waist_ - neck_) + 0.15456 * Math.log10(height_))) - 450;
 				}
 				else if(female == true) {
-					if(hip.isEmpty() == false) {
+					if(hip.isEmpty() == false && hip.equals("(for Females)") == false) {
 						try {
 							Effects.playButtonSound();
 						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
@@ -61,12 +50,7 @@ public class Body {
 						bodyFat = (495 / (1.29579 - 0.35004 * Math.log10(waist_ + hip_ - neck_) + 0.22100 * Math.log10(height_))) - 450;
 					}
 					else {
-						try {
-							Effects.playErrorSound();
-						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog(null, "Hip is missing.", "", JOptionPane.ERROR_MESSAGE);
+						PopupMessages.errorMessage("Hip is missing.", "Error");
 					}
 				}
 			}
@@ -83,12 +67,7 @@ public class Body {
 		double bmi = 0;
 		
 		if(weight.isEmpty() == true || height.isEmpty() == true) {
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
+			PopupMessages.errorMessage("Please enter missing informations.", "Missing Information");
 		}
 		else {
 			try {
@@ -114,21 +93,12 @@ public class Body {
 		double bmr = 0;
 		
 		if(male == false && female == false) {
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "Please select a gender.", "Gender not found", JOptionPane.ERROR_MESSAGE);
+			PopupMessages.errorMessage("Please select a gender.", "Gender not found");
+			
 		}
 		else {
-			try {
-				Effects.playErrorSound();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-				e1.printStackTrace();
-			}
 			if(age.isEmpty() ==true || weight.isEmpty() ==true || height.isEmpty() ==true) {
-				JOptionPane.showMessageDialog(null, "Please enter missing informations.", "Missing Information", JOptionPane.ERROR_MESSAGE);
+				PopupMessages.errorMessage("Please enter missing informations.", "Missing Information");
 			}
 			else {
 				try {

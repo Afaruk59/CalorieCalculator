@@ -911,7 +911,7 @@ public class gUI{
 		hipTF.setBounds(156, 216, 130, 25);
 		bPanel_1.add(hipTF);
 		hipTF.setColumns(10);
-		hipTF.setText(null);
+		hipTF.setText("(for Females)");
 		
 		heightTF.setColumns(10);
 		heightTF.setBounds(156, 257, 130, 25);
