@@ -61,7 +61,8 @@ public class User{
 		readProfiles();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(620, 300, 680, 465);
+		frame.setSize(680, 465);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -25,7 +25,8 @@ public class WelcomeScreen {
 	public static void welcomeFrame() throws InterruptedException, IOException {
 				
 		JFrame frame= new JFrame("Welcome to ACC " + Main.version);
-		frame.setBounds(620, 300, 750, 500);
+		frame.setSize(750, 500);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		
 		JPanel contentPane = new JPanel();
