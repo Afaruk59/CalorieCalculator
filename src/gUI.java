@@ -1455,8 +1455,9 @@ public class gUI{
         
 		//FRAME		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setBounds(420, 150, 1150, 800);
+        mainFrame.setSize(1150, 800);
         mainFrame.setResizable(false);
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
         

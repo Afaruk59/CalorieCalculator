@@ -58,7 +58,7 @@ public class VersionCheck {
 		            
 					ver.setProperty("ver", Integer.toString(newVer));
 					FileOutputStream output = new FileOutputStream("resources\\ver.ini");
-					ver.store(output, "PROFILE#");
+					ver.store(output, "VERSION#");
 					output.close();
 					
 		            System.exit(0);
