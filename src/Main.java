@@ -40,7 +40,7 @@ public class Main {
 		Ambients a = new Ambients();
 		
 		//STARTUP LOGO
-		Startup.showWindow();
+		//Startup.showWindow();
 		
 		//USER SCREEN
 		u.userScreen();

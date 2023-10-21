@@ -15,7 +15,7 @@ public class Language {
 	 */
 		
 	static Properties lang = new Properties();
-	static String[] tableTitles = {"", "", "", "", ""};
+	static String[] foodTableTitles = {"", "", "", "", ""};
 	
 	public void turkish() throws IOException {
 		
@@ -34,11 +34,9 @@ public class Language {
 			lang.load(input);
 			input.close();
 			
-			tableTitles[0] = lang.getProperty("tableTitles_1");
-			tableTitles[1] = lang.getProperty("tableTitles_2");
-			tableTitles[2] = lang.getProperty("tableTitles_3");
-			tableTitles[3] = lang.getProperty("tableTitles_4");
-			tableTitles[4] = lang.getProperty("tableTitles_5");
+			for(int i=0; i<5; i++) {
+				foodTableTitles[i] = lang.getProperty("tableTitles_" + Integer.toString(i+1));
+			}
 		}
 	}
 	
@@ -59,11 +57,9 @@ public class Language {
 			lang.load(input);
 			input.close();
 			
-			tableTitles[0] = lang.getProperty("tableTitles_1");
-			tableTitles[1] = lang.getProperty("tableTitles_2");
-			tableTitles[2] = lang.getProperty("tableTitles_3");
-			tableTitles[3] = lang.getProperty("tableTitles_4");
-			tableTitles[4] = lang.getProperty("tableTitles_5");
+			for(int i=0; i<5; i++) {
+				foodTableTitles[i] = lang.getProperty("tableTitles_" + Integer.toString(i+1));
+			}
 		}
 	}
 }

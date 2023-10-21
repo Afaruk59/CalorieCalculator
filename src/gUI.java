@@ -120,12 +120,12 @@ public class gUI{
 	JButton addNewBtn = new JButton();
 	JButton removeMealsBtn = new JButton();
 	
-	JTable table = new JTable(d.table_1, Language.tableTitles);
+	JTable table = new JTable(d.table_1, Language.foodTableTitles);
 	DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 	JPanel fPanelEast = new JPanel();
 	JScrollPane fPanelUp_2 = new JScrollPane(table);
 	
-	JTable table_2 = new JTable(d.table_2, Language.tableTitles);
+	JTable table_2 = new JTable(d.table_2, Language.foodTableTitles);
 	JScrollPane fPanelDown_2 = new JScrollPane(table_2);
 	JPopupMenu popMenu = new JPopupMenu();
     JPanel btnPanel = new JPanel();
@@ -200,6 +200,11 @@ public class gUI{
 	JLabel calResultTitle = new JLabel();
 	JLabel calResult = new JLabel("0 Calories/Day");
 	JLabel calResultType = new JLabel("Maintain Weight");
+	
+	//TRAINING PANEL
+	JPanel trainingPage = new JPanel();
+	
+	
 	
 	//SETTINGS PANEL
 	JPanel settingsPage = new JPanel();
@@ -1189,6 +1194,20 @@ public class gUI{
 		calResultType.setFont(labelFont);
 		
 //---------------------------------------------------------------------------------------------
+		//TRAINING PANE
+		if(Data.profile.getProperty("lang").equals("eng") == true) {
+			tabbedPane.addTab("Training", null, trainingPage, null);
+		}
+		else if(Data.profile.getProperty("lang").equals("tr") == true) {
+			tabbedPane.addTab("Antrenman", null, trainingPage, null);
+		}
+		trainingPage.setLayout(null);
+		trainingPage.setBorder(new EmptyBorder(10,10,10,10));
+		
+		
+		
+		
+//---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
 		if(Data.profile.getProperty("lang").equals("eng") == true) {
 			tabbedPane.addTab("Settings", null, settingsPage, null);
@@ -1469,19 +1488,20 @@ public class gUI{
         TableColumnModel columnModel = table_2.getColumnModel();
         for(int i=0; i<5; i++) {
             TableColumn column = columnModel.getColumn(i);
-            column.setHeaderValue(Language.tableTitles[i]);
+            column.setHeaderValue(Language.foodTableTitles[i]);
         }
         TableColumnModel columnModel_2 = table.getColumnModel();
         for(int i=0; i<5; i++) {
             TableColumn column = columnModel_2.getColumn(i);
-            column.setHeaderValue(Language.tableTitles[i]);
+            column.setHeaderValue(Language.foodTableTitles[i]);
         }
 				
 		tabbedPane.setTitleAt(0, Language.lang.getProperty("tab1"));
 		tabbedPane.setTitleAt(1, Language.lang.getProperty("tab2"));
 		tabbedPane.setTitleAt(2, Language.lang.getProperty("tab3"));
 		tabbedPane.setTitleAt(3, Language.lang.getProperty("tab4"));
-		tabbedPane.setTitleAt(4, Language.lang.getProperty("tab6"));
+		tabbedPane.setTitleAt(4, Language.lang.getProperty("tab5"));
+		tabbedPane.setTitleAt(5, Language.lang.getProperty("tab6"));
 
 		title1.setTitle(Language.lang.getProperty("title1"));
 		title2.setTitle(Language.lang.getProperty("title2"));
