@@ -15,6 +15,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -66,6 +67,9 @@ public class gUI{
 	TitledBorder title12= new TitledBorder("BMI Calculator");
 	TitledBorder title13= new TitledBorder("Calorie Calculator");
 	TitledBorder title14= new TitledBorder("Body Stats");
+	TitledBorder title15= new TitledBorder("Add An Exercise");
+	TitledBorder title16= new TitledBorder("Remove An Exercise");
+	TitledBorder title17= new TitledBorder("Training Plan");
 	
     //SUMMARY PANELS
 	JPanel summaryPage = new JPanel();
@@ -100,8 +104,7 @@ public class gUI{
 	JPanel fPanelWest = new JPanel();
 	JPanel fPanelUp = new JPanel();
 	JComboBox<String> comboBox = new JComboBox<String>();
-	SpinnerNumberModel model = new SpinnerNumberModel(1, 1, null, 1);
-	JSpinner spinner = new JSpinner(model);
+	JSpinner spinner = new JSpinner();
 	JLabel amountLbl = new JLabel();
 	JButton addBtn = new JButton();
 	JButton resetAllFoodBtn = new JButton();
@@ -203,8 +206,29 @@ public class gUI{
 	
 	//TRAINING PANEL
 	JPanel trainingPage = new JPanel();
+	JPanel tPanelUp = new JPanel();
 	
+	JPanel tPanel1 = new JPanel();
+	JLabel lblNewLabel = new JLabel("Exercise Name:");
+	JLabel lblSetCount = new JLabel("Set Count:");
+	JLabel lblRepCount = new JLabel("Rep Count:");
+	JLabel lblWeightkglbs = new JLabel("Weight (kg/lbs):");
+	JLabel lblAddTo = new JLabel("Add to:");
+	JTextField exerciseNameTF = new JTextField();
+	JSpinner setSpinner = new JSpinner();
+	JSpinner repSpinner = new JSpinner();
+	JSpinner weightSpinner = new JSpinner();
+	JSpinner daySpinner = new JSpinner();
+	JButton btnNewButton = new JButton("Add");
 	
+	JPanel tPanel2 = new JPanel();
+	JLabel dayLbl = new JLabel("Day:");
+	JLabel exerciseLbl = new JLabel("Exercise:");
+	JSpinner daySpinner2 = new JSpinner();
+	JComboBox<String> exerciseCB = new JComboBox<String>();
+	JButton removeExerciseBtn = new JButton("Remove");
+	
+	JPanel tPanelDown = new JPanel();
 	
 	//SETTINGS PANEL
 	JPanel settingsPage = new JPanel();
@@ -409,6 +433,7 @@ public class gUI{
 		fPanelUp.add(comboBox);
 		
 		spinner.setBounds(246, 130, 156, 20);
+		spinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 		fPanelUp.add(spinner);
 		
 		amountLbl.setBounds(123, 109, 177, 60);
@@ -1201,12 +1226,149 @@ public class gUI{
 		else if(Data.profile.getProperty("lang").equals("tr") == true) {
 			tabbedPane.addTab("Antrenman", null, trainingPage, null);
 		}
-		trainingPage.setLayout(null);
+		trainingPage.setLayout(new BoxLayout(trainingPage, BoxLayout.Y_AXIS));
 		trainingPage.setBorder(new EmptyBorder(10,10,10,10));
 		
+		tPanelUp.setLayout(new BoxLayout(tPanelUp, BoxLayout.X_AXIS));
+		trainingPage.add(tPanelUp);
 		
+		//ADD AN EXERCISE
+		tPanelUp.add(tPanel1);
+		tPanel1.setLayout(null);
+		tPanel1.setBorder(title15);
+		title15.setTitleFont(titleFont);
 		
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setBounds(88, 53, 120, 30);
+		tPanel1.add(lblNewLabel);
 		
+		lblSetCount.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSetCount.setBounds(88, 94, 120, 30);
+		tPanel1.add(lblSetCount);
+		
+		lblRepCount.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblRepCount.setBounds(88, 135, 120, 30);
+		tPanel1.add(lblRepCount);
+		
+		lblWeightkglbs.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblWeightkglbs.setBounds(88, 176, 120, 30);
+		tPanel1.add(lblWeightkglbs);
+		
+		lblAddTo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAddTo.setBounds(88, 217, 120, 30);
+		tPanel1.add(lblAddTo);
+		
+		exerciseNameTF.setBounds(231, 53, 150, 30);
+		tPanel1.add(exerciseNameTF);
+		exerciseNameTF.setColumns(10);
+		
+		setSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		setSpinner.setBounds(231, 98, 150, 30);
+		tPanel1.add(setSpinner);
+		
+		repSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		repSpinner.setBounds(231, 140, 150, 30);
+		tPanel1.add(repSpinner);
+		
+		weightSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		weightSpinner.setBounds(231, 181, 150, 30);
+		tPanel1.add(weightSpinner);
+		
+		daySpinner.setModel(new SpinnerNumberModel(1, 1, 7, 1));
+		daySpinner.setBounds(231, 222, 150, 30);
+		tPanel1.add(daySpinner);
+		
+		btnNewButton.setBounds(231, 263, 150, 30);
+		tPanel1.add(btnNewButton);
+		
+		//REMOVE AN EXERCISE
+		tPanelUp.add(tPanel2);
+		tPanel2.setLayout(null);
+		tPanel2.setBorder(title16);
+		title16.setTitleFont(titleFont);
+		
+		dayLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		dayLbl.setBounds(88, 103, 120, 30);
+		tPanel2.add(dayLbl);
+		
+		exerciseLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		exerciseLbl.setBounds(88, 144, 120, 30);
+		tPanel2.add(exerciseLbl);
+		
+		daySpinner2.setModel(new SpinnerNumberModel(1, 1, 7, 1));
+		daySpinner2.setBounds(231, 103, 150, 30);
+		tPanel2.add(daySpinner2);
+		
+		exerciseCB.setBounds(231, 144, 150, 30);
+		tPanel2.add(exerciseCB);
+		
+		removeExerciseBtn.setBounds(231, 185, 150, 30);
+		tPanel2.add(removeExerciseBtn);
+		
+		//TRAINING TABLE
+		trainingPage.add(tPanelDown);
+		tPanelDown.setBorder(title17);
+		tPanelDown.setLayout(new BoxLayout(tPanelDown, BoxLayout.X_AXIS));
+		title17.setTitleFont(titleFont);
+		title17.setTitlePosition(5);
+		
+		JPanel day1 = new JPanel();
+		tPanelDown.add(day1);
+		day1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day1Lbl = new JLabel("Day-1");
+		day1.add(day1Lbl);
+		day1Lbl.setFont(tabFont);
+		
+		JPanel day2 = new JPanel();
+		tPanelDown.add(day2);
+		day2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day2Lbl = new JLabel("Day-2");
+		day2.add(day2Lbl);
+		day2Lbl.setFont(tabFont);
+		
+		JPanel day3 = new JPanel();
+		tPanelDown.add(day3);
+		day3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day3Lbl = new JLabel("Day-3");
+		day3.add(day3Lbl);
+		day3Lbl.setFont(tabFont);
+		
+		JPanel day4 = new JPanel();
+		tPanelDown.add(day4);
+		day4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day4Lbl = new JLabel("Day-4");
+		day4.add(day4Lbl);
+		day4Lbl.setFont(tabFont);
+		
+		JPanel day5 = new JPanel();
+		tPanelDown.add(day5);
+		day5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day5Lbl = new JLabel("Day-5");
+		day5.add(day5Lbl);
+		day5Lbl.setFont(tabFont);
+		
+		JPanel day6 = new JPanel();
+		tPanelDown.add(day6);
+		day6.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day6Lbl = new JLabel("Day-6");
+		day6.add(day6Lbl);
+		day6Lbl.setFont(tabFont);
+		
+		JPanel day7 = new JPanel();
+		tPanelDown.add(day7);
+		day7.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JLabel day7Lbl = new JLabel("Day-7");
+		day7.add(day7Lbl);
+		day7Lbl.setFont(tabFont);
+		
+		SwingUtilities.updateComponentTreeUI(trainingPage);
 //---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
 		if(Data.profile.getProperty("lang").equals("eng") == true) {
@@ -1475,7 +1637,7 @@ public class gUI{
 		//FRAME		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(1150, 800);
-        mainFrame.setResizable(false);
+        mainFrame.setResizable(true);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
