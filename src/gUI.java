@@ -15,7 +15,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -229,6 +228,8 @@ public class gUI{
 	JButton removeExerciseBtn = new JButton("Remove");
 	
 	JPanel tPanelDown = new JPanel();
+	JTable trainingTable = new JTable(15,7);
+	JScrollPane trTableSP = new JScrollPane(trainingTable);
 	
 	//SETTINGS PANEL
 	JPanel settingsPage = new JPanel();
@@ -1231,6 +1232,7 @@ public class gUI{
 		
 		tPanelUp.setLayout(new BoxLayout(tPanelUp, BoxLayout.X_AXIS));
 		trainingPage.add(tPanelUp);
+		tPanelUp.setPreferredSize(new Dimension(0, 400));
 		
 		//ADD AN EXERCISE
 		tPanelUp.add(tPanel1);
@@ -1239,46 +1241,46 @@ public class gUI{
 		title15.setTitleFont(titleFont);
 		
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(88, 53, 120, 30);
+		lblNewLabel.setBounds(88, 43, 120, 30);
 		tPanel1.add(lblNewLabel);
 		
 		lblSetCount.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSetCount.setBounds(88, 94, 120, 30);
+		lblSetCount.setBounds(88, 84, 120, 30);
 		tPanel1.add(lblSetCount);
 		
 		lblRepCount.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRepCount.setBounds(88, 135, 120, 30);
+		lblRepCount.setBounds(88, 125, 120, 30);
 		tPanel1.add(lblRepCount);
 		
 		lblWeightkglbs.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblWeightkglbs.setBounds(88, 176, 120, 30);
+		lblWeightkglbs.setBounds(88, 166, 120, 30);
 		tPanel1.add(lblWeightkglbs);
 		
 		lblAddTo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAddTo.setBounds(88, 217, 120, 30);
+		lblAddTo.setBounds(88, 207, 120, 30);
 		tPanel1.add(lblAddTo);
 		
-		exerciseNameTF.setBounds(231, 53, 150, 30);
+		exerciseNameTF.setBounds(231, 47, 150, 30);
 		tPanel1.add(exerciseNameTF);
 		exerciseNameTF.setColumns(10);
 		
 		setSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		setSpinner.setBounds(231, 98, 150, 30);
+		setSpinner.setBounds(231, 88, 150, 30);
 		tPanel1.add(setSpinner);
 		
 		repSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		repSpinner.setBounds(231, 140, 150, 30);
+		repSpinner.setBounds(231, 130, 150, 30);
 		tPanel1.add(repSpinner);
 		
 		weightSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		weightSpinner.setBounds(231, 181, 150, 30);
+		weightSpinner.setBounds(231, 171, 150, 30);
 		tPanel1.add(weightSpinner);
 		
 		daySpinner.setModel(new SpinnerNumberModel(1, 1, 7, 1));
-		daySpinner.setBounds(231, 222, 150, 30);
+		daySpinner.setBounds(231, 212, 150, 30);
 		tPanel1.add(daySpinner);
 		
-		btnNewButton.setBounds(231, 263, 150, 30);
+		btnNewButton.setBounds(231, 253, 150, 30);
 		tPanel1.add(btnNewButton);
 		
 		//REMOVE AN EXERCISE
@@ -1311,63 +1313,16 @@ public class gUI{
 		tPanelDown.setLayout(new BoxLayout(tPanelDown, BoxLayout.X_AXIS));
 		title17.setTitleFont(titleFont);
 		title17.setTitlePosition(5);
-		
-		JPanel day1 = new JPanel();
-		tPanelDown.add(day1);
-		day1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day1Lbl = new JLabel("Day-1");
-		day1.add(day1Lbl);
-		day1Lbl.setFont(tabFont);
-		
-		JPanel day2 = new JPanel();
-		tPanelDown.add(day2);
-		day2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day2Lbl = new JLabel("Day-2");
-		day2.add(day2Lbl);
-		day2Lbl.setFont(tabFont);
-		
-		JPanel day3 = new JPanel();
-		tPanelDown.add(day3);
-		day3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day3Lbl = new JLabel("Day-3");
-		day3.add(day3Lbl);
-		day3Lbl.setFont(tabFont);
-		
-		JPanel day4 = new JPanel();
-		tPanelDown.add(day4);
-		day4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day4Lbl = new JLabel("Day-4");
-		day4.add(day4Lbl);
-		day4Lbl.setFont(tabFont);
-		
-		JPanel day5 = new JPanel();
-		tPanelDown.add(day5);
-		day5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day5Lbl = new JLabel("Day-5");
-		day5.add(day5Lbl);
-		day5Lbl.setFont(tabFont);
-		
-		JPanel day6 = new JPanel();
-		tPanelDown.add(day6);
-		day6.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day6Lbl = new JLabel("Day-6");
-		day6.add(day6Lbl);
-		day6Lbl.setFont(tabFont);
-		
-		JPanel day7 = new JPanel();
-		tPanelDown.add(day7);
-		day7.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JLabel day7Lbl = new JLabel("Day-7");
-		day7.add(day7Lbl);
-		day7Lbl.setFont(tabFont);
-		
+
+		TableColumnModel trTableCM = trainingTable.getColumnModel();
+        for(int i=0; i<7; i++) {
+            TableColumn column = trTableCM.getColumn(i);
+            column.setHeaderValue("Day - " + (i+1));
+            trTableCM.getColumn(i).setCellRenderer(renderer);
+        }
+		tPanelDown.add(trTableSP);
+		trainingTable.setEnabled(false);
+				
 		SwingUtilities.updateComponentTreeUI(trainingPage);
 //---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
@@ -1637,7 +1592,7 @@ public class gUI{
 		//FRAME		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(1150, 800);
-        mainFrame.setResizable(true);
+        mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
         mainFrame.setLayout(null);
