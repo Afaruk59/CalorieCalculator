@@ -254,6 +254,8 @@ public class gUI{
 		d.readDefaultFoods();
 		d.writeTable1();
 		d.writeTable2();
+		d.readExercises();
+		d.writeTrTable();
 		
 		Charts c = new Charts();
 				
@@ -1282,6 +1284,33 @@ public class gUI{
 		
 		btnNewButton.setBounds(231, 253, 150, 30);
 		tPanel1.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String cell;
+				cell = exerciseNameTF.getText() + " " + repSpinner.getValue() + "x" + setSpinner.getValue() + " " + weightSpinner.getValue() + " kg";
+				
+				boolean isAdded = false;
+				for(int i=0; i<15; i++) {
+					
+					if(trainingTable.getValueAt(i,  (int) daySpinner.getValue() - 1) == null) {
+						trainingTable.setValueAt(cell, i , (int) daySpinner.getValue() - 1);
+						isAdded = true;
+						break;
+					}
+				}
+				if(isAdded == false) {
+					PopupMessages.errorMessage("No more empty exercise cell.", "Error");
+				}
+				try {
+					d.writeExercises();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		//REMOVE AN EXERCISE
 		tPanelUp.add(tPanel2);

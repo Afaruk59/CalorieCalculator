@@ -52,6 +52,7 @@ public class Main {
 		d.loadProfile();
 		d.readFoods();
 		d.readDefaultFoods();
+		d.readExercises();
 		
 		//LOAD LANGUAGE
 		if(Data.profile.getProperty("lang").equals("eng") == true) {

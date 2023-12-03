@@ -30,6 +30,7 @@ public class Data {
 	String[] weeklyMacros = new String[21];
 	String[][] table_1 = new String[200][5];
 	String[][] table_2 = new String[200][5];
+	String[][] trainingTable = new String[15][7];
 	static Properties profile = new Properties();
 		
 	public void addFood(String newName, String newProtein, String newCarb, String newFat, String newCal) throws IOException{
@@ -540,6 +541,64 @@ public class Data {
 			i+=1;
 			if(k >= 1000) {
 				break;
+			}
+		}
+	}
+	
+	public void readExercises() throws IOException {
+		
+		File file= new File("users\\" + User.userName + "\\exercises.acc");
+		if(file.exists() == false) {
+			file.createNewFile();
+		}
+		
+		FileReader fRead= new FileReader(file);        
+		BufferedReader bRead= new BufferedReader(fRead);
+		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<15; j++) {
+				this.trainingTable[j][i] = bRead.readLine();
+			}
+		}
+		bRead.close();
+	}
+	
+	public void writeExercises() throws IOException {
+		
+		gUI g = new gUI();
+		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<15; j++) {
+				this.trainingTable[j][i] = (String) g.trainingTable.getValueAt(j, i);
+			}
+		}
+		
+		File file= new File("users\\" + User.userName + "\\exercises.acc");
+		
+		FileWriter fWrite= new FileWriter(file, false);
+		BufferedWriter bWrite= new BufferedWriter(fWrite);
+		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<15; j++) {
+				
+				String line= trainingTable[j][i];
+				bWrite.write(line + "\n");
+			}
+		}
+		
+		for(int i=0; i<1000; i++) {
+
+		}
+		bWrite.close();
+	}
+	
+	public void writeTrTable() {
+		
+		gUI g = new gUI();
+		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<15; j++) {
+				g.trainingTable.setValueAt(this.trainingTable[j][i], j, i);
 			}
 		}
 	}
