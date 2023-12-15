@@ -212,24 +212,18 @@ public class gUI{
 	JLabel lblSetCount = new JLabel("Set Count:");
 	JLabel lblRepCount = new JLabel("Rep Count:");
 	JLabel lblWeightkglbs = new JLabel("Weight (kg/lbs):");
-	JLabel lblAddTo = new JLabel("Add to:");
 	JTextField exerciseNameTF = new JTextField();
 	JSpinner setSpinner = new JSpinner();
 	JSpinner repSpinner = new JSpinner();
 	JSpinner weightSpinner = new JSpinner();
-	JSpinner daySpinner = new JSpinner();
-	JButton btnNewButton = new JButton("Add");
-	
-	JPanel tPanel2 = new JPanel();
-	JLabel dayLbl = new JLabel("Day:");
-	JLabel exerciseLbl = new JLabel("Exercise:");
-	JSpinner daySpinner2 = new JSpinner();
-	JComboBox<String> exerciseCB = new JComboBox<String>();
-	JButton removeExerciseBtn = new JButton("Remove");
 	
 	JPanel tPanelDown = new JPanel();
-	JTable trainingTable = new JTable(15,7);
+	JTable trainingTable = new JTable(12,7);
 	JScrollPane trTableSP = new JScrollPane(trainingTable);
+	JPopupMenu popMenu2 = new JPopupMenu();
+    JMenuItem addItem = new JMenuItem();
+    JMenuItem removeItem = new JMenuItem();
+    static int row, column;
 	
 	//SETTINGS PANEL
 	JPanel settingsPage = new JPanel();
@@ -254,8 +248,7 @@ public class gUI{
 		d.readDefaultFoods();
 		d.writeTable1();
 		d.writeTable2();
-		d.readExercises();
-		d.writeTrTable();
+		d.loadTrainingTable();
 		
 		Charts c = new Charts();
 				
@@ -1234,7 +1227,7 @@ public class gUI{
 		
 		tPanelUp.setLayout(new BoxLayout(tPanelUp, BoxLayout.X_AXIS));
 		trainingPage.add(tPanelUp);
-		tPanelUp.setPreferredSize(new Dimension(0, 400));
+		tPanelUp.setPreferredSize(new Dimension(0, 300));
 		
 		//ADD AN EXERCISE
 		tPanelUp.add(tPanel1);
@@ -1243,98 +1236,36 @@ public class gUI{
 		title15.setTitleFont(titleFont);
 		
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(88, 43, 120, 30);
+		lblNewLabel.setBounds(88, 63, 120, 30);
 		tPanel1.add(lblNewLabel);
 		
 		lblSetCount.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSetCount.setBounds(88, 84, 120, 30);
+		lblSetCount.setBounds(88, 104, 120, 30);
 		tPanel1.add(lblSetCount);
 		
 		lblRepCount.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRepCount.setBounds(88, 125, 120, 30);
+		lblRepCount.setBounds(88, 145, 120, 30);
 		tPanel1.add(lblRepCount);
 		
 		lblWeightkglbs.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblWeightkglbs.setBounds(88, 166, 120, 30);
+		lblWeightkglbs.setBounds(88, 186, 120, 30);
 		tPanel1.add(lblWeightkglbs);
 		
-		lblAddTo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAddTo.setBounds(88, 207, 120, 30);
-		tPanel1.add(lblAddTo);
-		
-		exerciseNameTF.setBounds(231, 47, 150, 30);
+		exerciseNameTF.setBounds(231, 67, 150, 30);
 		tPanel1.add(exerciseNameTF);
 		exerciseNameTF.setColumns(10);
 		
 		setSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		setSpinner.setBounds(231, 88, 150, 30);
+		setSpinner.setBounds(231, 108, 150, 30);
 		tPanel1.add(setSpinner);
 		
 		repSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		repSpinner.setBounds(231, 130, 150, 30);
+		repSpinner.setBounds(231, 150, 150, 30);
 		tPanel1.add(repSpinner);
 		
 		weightSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		weightSpinner.setBounds(231, 171, 150, 30);
+		weightSpinner.setBounds(231, 191, 150, 30);
 		tPanel1.add(weightSpinner);
-		
-		daySpinner.setModel(new SpinnerNumberModel(1, 1, 7, 1));
-		daySpinner.setBounds(231, 212, 150, 30);
-		tPanel1.add(daySpinner);
-		
-		btnNewButton.setBounds(231, 253, 150, 30);
-		tPanel1.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				String cell;
-				cell = exerciseNameTF.getText() + " " + repSpinner.getValue() + "x" + setSpinner.getValue() + " " + weightSpinner.getValue() + " kg";
-				
-				boolean isAdded = false;
-				for(int i=0; i<15; i++) {
-					
-					if(trainingTable.getValueAt(i,  (int) daySpinner.getValue() - 1) == null) {
-						trainingTable.setValueAt(cell, i , (int) daySpinner.getValue() - 1);
-						isAdded = true;
-						break;
-					}
-				}
-				if(isAdded == false) {
-					PopupMessages.errorMessage("No more empty exercise cell.", "Error");
-				}
-				try {
-					d.writeExercises();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		//REMOVE AN EXERCISE
-		tPanelUp.add(tPanel2);
-		tPanel2.setLayout(null);
-		tPanel2.setBorder(title16);
-		title16.setTitleFont(titleFont);
-		
-		dayLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		dayLbl.setBounds(88, 103, 120, 30);
-		tPanel2.add(dayLbl);
-		
-		exerciseLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		exerciseLbl.setBounds(88, 144, 120, 30);
-		tPanel2.add(exerciseLbl);
-		
-		daySpinner2.setModel(new SpinnerNumberModel(1, 1, 7, 1));
-		daySpinner2.setBounds(231, 103, 150, 30);
-		tPanel2.add(daySpinner2);
-		
-		exerciseCB.setBounds(231, 144, 150, 30);
-		tPanel2.add(exerciseCB);
-		
-		removeExerciseBtn.setBounds(231, 185, 150, 30);
-		tPanel2.add(removeExerciseBtn);
 		
 		//TRAINING TABLE
 		trainingPage.add(tPanelDown);
@@ -1351,7 +1282,85 @@ public class gUI{
         }
 		tPanelDown.add(trTableSP);
 		trainingTable.setEnabled(false);
+		trainingTable.setRowHeight(30);
+		
+		for(int i=0; i<12; i++) {
+			for(int j=0; j<7; j++) {
+				if(Data.table_3[j][i] == "null") {
+					trainingTable.setValueAt(null, i, j);
+				}else {
+					trainingTable.setValueAt(Data.table_3[j][i], i, j);
+				}
+			}
+		}
+		for(int i=0; i<12; i++) {
+			for(int j=0; j<7; j++) {
+				if(trainingTable.getValueAt(i, j).equals("null") == true) {
+					trainingTable.setValueAt(null, i, j);
+				}
+			}
+		}
+		
+		popMenu2.add(addItem);
+		popMenu2.add(removeItem);
+		
+		trainingTable.addMouseListener(new MouseAdapter() {
+        	
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                	
+                	trainingPage.requestFocusInWindow();
+                	SwingUtilities.updateComponentTreeUI(popMenu2);
+                	
+                    row = trainingTable.rowAtPoint(e.getPoint());
+                    column = trainingTable.columnAtPoint(e.getPoint());                    
+                                        
+                    popMenu2.show(trainingTable, e.getX(), e.getY());
+                }
+            }
+        });
+		
+		addItem.setText("Add an Exercise");
+		addItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String value = exerciseNameTF.getText() + " " + weightSpinner.getValue() + "kg/lbs " + setSpinner.getValue() + "x" + repSpinner.getValue();
+				trainingTable.setValueAt(value, row, column);
 				
+				for(int i=0; i<12; i++) {
+					for(int j=0; j<7; j++) {
+						Data.table_3[j][i] = (String) trainingTable.getValueAt(i, j);
+					}
+				}
+				try {
+					d.saveTrainingTable();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		removeItem.setText("Remove an Exercise");
+		removeItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				trainingTable.setValueAt(null, row, column);
+				
+				for(int i=0; i<12; i++) {
+					for(int j=0; j<7; j++) {
+						Data.table_3[j][i] = (String) trainingTable.getValueAt(i, j);
+					}
+				}
+				try {
+					d.saveTrainingTable();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		SwingUtilities.updateComponentTreeUI(trainingPage);
 //---------------------------------------------------------------------------------------------
 		//SETTINGS PANE
