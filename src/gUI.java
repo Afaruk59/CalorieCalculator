@@ -216,6 +216,7 @@ public class gUI{
 	JSpinner setSpinner = new JSpinner();
 	JSpinner repSpinner = new JSpinner();
 	JSpinner weightSpinner = new JSpinner();
+	JButton clearTableBtn = new JButton("Clear The Plan");
 	
 	JPanel tPanelDown = new JPanel();
 	JTable trainingTable = new JTable(12,7);
@@ -1266,6 +1267,31 @@ public class gUI{
 		weightSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 		weightSpinner.setBounds(231, 191, 150, 30);
 		tPanel1.add(weightSpinner);
+		
+		clearTableBtn.setBounds(875, 200, 200, 50);
+		tPanel1.add(clearTableBtn);
+		clearTableBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int result = PopupMessages.confirmMessage("Are you sure?", "Clear The Plan");
+				
+				if(result == JOptionPane.YES_OPTION) {
+					for(int i=0; i<12; i++) {
+						for(int j=0; j<7; j++) {
+							trainingTable.setValueAt(null, i, j);
+							Data.table_3[j][i] = null;
+						}
+					}
+					try {
+						d.saveTrainingTable();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		//TRAINING TABLE
 		trainingPage.add(tPanelDown);

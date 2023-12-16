@@ -566,6 +566,17 @@ public class Data {
 		File file= new File("users\\" + User.userName + "\\exercises.acc");
 		if(file.exists() == false) {
 			file.createNewFile();
+			
+			FileWriter fWrite= new FileWriter(file, false);
+			BufferedWriter bWrite= new BufferedWriter(fWrite);
+			
+			for(int i=0; i<12; i++) {
+				for(int j=0; j<7; j++) {
+					String line = "null";
+					bWrite.write(line + "\n");
+				}
+			}
+			bWrite.close();
 		}
 		
 		FileReader fRead= new FileReader(file);        

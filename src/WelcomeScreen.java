@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -99,8 +101,19 @@ public class WelcomeScreen {
         
         if(Data.profile.getProperty("Theme").equals("0") == true) {
 			imgLab4.setVisible(true);
-        }else {
+        }else if(Data.profile.getProperty("Theme").equals("1") == true){
         	imgLab1.setVisible(true);
+        }else if(Data.profile.getProperty("Theme").equals("2") == true) {
+        	
+    		LocalDateTime currentDate = LocalDateTime.now();
+    		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+    		String clock = currentDate.format(timeFormat);
+    				
+    		if(clock.compareTo("06:00") >= 0 && clock.compareTo("18:00") < 0) {
+    			imgLab4.setVisible(true);
+    		}else {
+    			imgLab1.setVisible(true);
+    		}
         }
 		
 		JButton nextButton = new JButton("Next");
