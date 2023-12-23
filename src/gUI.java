@@ -65,10 +65,8 @@ public class gUI{
 	TitledBorder title11= new TitledBorder("Body Fat Calculator");
 	TitledBorder title12= new TitledBorder("BMI Calculator");
 	TitledBorder title13= new TitledBorder("Calorie Calculator");
-	TitledBorder title14= new TitledBorder("Body Stats");
-	TitledBorder title15= new TitledBorder("Add An Exercise");
-	TitledBorder title16= new TitledBorder("Remove An Exercise");
-	TitledBorder title17= new TitledBorder("Training Plan");
+	TitledBorder title14= new TitledBorder("Add An Exercise");
+	TitledBorder title15= new TitledBorder("Training Plan");
 	
     //SUMMARY PANELS
 	JPanel summaryPage = new JPanel();
@@ -208,15 +206,15 @@ public class gUI{
 	JPanel tPanelUp = new JPanel();
 	
 	JPanel tPanel1 = new JPanel();
-	JLabel lblNewLabel = new JLabel("Exercise Name:");
-	JLabel lblSetCount = new JLabel("Set Count:");
-	JLabel lblRepCount = new JLabel("Rep Count:");
-	JLabel lblWeightkglbs = new JLabel("Weight (kg/lbs):");
+	JLabel lblNewLabel = new JLabel();
+	JLabel lblSetCount = new JLabel();
+	JLabel lblRepCount = new JLabel();
+	JLabel lblWeightkglbs = new JLabel();
 	JTextField exerciseNameTF = new JTextField();
 	JSpinner setSpinner = new JSpinner();
 	JSpinner repSpinner = new JSpinner();
 	JSpinner weightSpinner = new JSpinner();
-	JButton clearTableBtn = new JButton("Clear The Plan");
+	JButton clearTableBtn = new JButton();
 	
 	JPanel tPanelDown = new JPanel();
 	JTable trainingTable = new JTable(12,7);
@@ -1233,8 +1231,8 @@ public class gUI{
 		//ADD AN EXERCISE
 		tPanelUp.add(tPanel1);
 		tPanel1.setLayout(null);
-		tPanel1.setBorder(title15);
-		title15.setTitleFont(titleFont);
+		tPanel1.setBorder(title14);
+		title14.setTitleFont(titleFont);
 		
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(88, 63, 120, 30);
@@ -1295,10 +1293,10 @@ public class gUI{
 		
 		//TRAINING TABLE
 		trainingPage.add(tPanelDown);
-		tPanelDown.setBorder(title17);
+		tPanelDown.setBorder(title15);
 		tPanelDown.setLayout(new BoxLayout(tPanelDown, BoxLayout.X_AXIS));
-		title17.setTitleFont(titleFont);
-		title17.setTitlePosition(5);
+		title15.setTitleFont(titleFont);
+		title15.setTitlePosition(5);
 
 		TableColumnModel trTableCM = trainingTable.getColumnModel();
         for(int i=0; i<7; i++) {
@@ -1628,7 +1626,6 @@ public class gUI{
 			        float newVolume3 = vol3;
 			        volumeControl3.setValue(newVolume3);
 				}
-				
 			}
 		});
 		volume.setValue(d.readVolSetting());
@@ -1697,6 +1694,8 @@ public class gUI{
 		title11.setTitle(Language.lang.getProperty("title11"));
 		title12.setTitle(Language.lang.getProperty("title12"));
 		title13.setTitle(Language.lang.getProperty("title13"));
+		title14.setTitle(Language.lang.getProperty("title14"));
+		title15.setTitle(Language.lang.getProperty("title15"));
 		
 		diaryProteinLbl.setText(Language.lang.getProperty("diaryProteinLbl"));
 		diaryCarbLbl.setText(Language.lang.getProperty("diaryCarbLbl"));
@@ -1765,6 +1764,12 @@ public class gUI{
 		calBtn.setText(Language.lang.getProperty("calBtn"));
 		calResultTitle.setText(Language.lang.getProperty("calResultTitle"));
 		calResultType.setText(Language.lang.getProperty("calResultType"));
+		
+		lblNewLabel.setText(Language.lang.getProperty("lblNewLabel"));
+		lblSetCount.setText(Language.lang.getProperty("lblSetCount"));
+		lblRepCount.setText(Language.lang.getProperty("lblRepCount"));
+		lblWeightkglbs.setText(Language.lang.getProperty("lblWeightkglbs"));
+		clearTableBtn.setText(Language.lang.getProperty("clearTableBtn"));
 		
 		d.readDefaultFoods();
 		d.writeTable2();

@@ -27,7 +27,7 @@ public class Main {
 	 * @author Afaruk59
 	 */
 	
-	static String version = "build";
+	static String version = "3.3.0";
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException{
 		
